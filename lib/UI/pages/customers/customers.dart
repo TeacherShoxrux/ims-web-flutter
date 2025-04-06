@@ -1,0 +1,207 @@
+import 'package:flutter/material.dart';
+import 'package:ims_web/UI/pages/customers/widgets/add_customer_alert.dart';
+
+class CustomerListPage extends StatefulWidget {
+  @override
+  _CustomerListPageState createState() => _CustomerListPageState();
+}
+
+class _CustomerListPageState extends State<CustomerListPage> {
+  // Ro'yxat uchun ma'lumotlar
+  final List<Map<String, String>> customers = [
+    {'sr': '1', 'name': 'Cash', 'phone': '-', 'email': 'cash@gmail.com', 'address': '-'},
+    {'sr': '2', 'name': 'Customer 2', 'phone': '25335', 'email': 'jkd@hotmail.com', 'address': '15353'},
+    {'sr': '3', 'name': 'Customer 1', 'phone': '0355', 'email': 'abc@gmail.com', 'address': 'New Address'},
+  ];
+  void _showAddCustomerDialog() {
+    String newCustomerName = '';
+    String newPhone = '';
+    String newEmail = '';
+    String newAddress = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AddCustomerAlert();
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[200], // Fon rangi
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Qidiruv paneli
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Search Here',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
+              ),
+            ),
+            SizedBox(height: 16),
+            // Sarlavha va Add New tugmasi
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Customer List',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () {
+                    // Add New tugmasi bosilganda bajariladigan kod
+                    _showAddCustomerDialog();
+                  },
+                  icon: Icon(Icons.add),
+                  label: Text('Add New'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.purple, // Tugma rangi
+                    foregroundColor: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 16),
+            // Ro'yxat sarlavhasi
+            Container(
+              color: Colors.purple[300],
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 1,
+                    child: Text(
+                      'Sr#',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Name',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Phone',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Text(
+                      'Email',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Address',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 1,
+                    child: SizedBox(), // Bo'sh joy ikonlar uchun
+                  ),
+                ],
+              ),
+            ),
+            // Ro'yxat elementlari
+            Expanded(
+              child: ListView.builder(
+                itemCount: customers.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    color: index % 2 == 0 ? Colors.white : Colors.grey[100],
+                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Text(customers[index]['sr']!),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(customers[index]['name']!),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(customers[index]['phone']!),
+                        ),
+                        Expanded(
+                          flex: 3,
+                          child: Text(customers[index]['email']!),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Text(customers[index]['address']!),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  // Edit tugmasi bosilganda
+                                  print('Edit bosildi: ${customers[index]['name']}');
+                                },
+                                icon: Icon(Icons.edit, color: Colors.yellow[700]),
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  // Delete tugmasi bosilganda
+                                  setState(() {
+                                    customers.removeAt(index);
+                                  });
+                                },
+                                icon: Icon(Icons.delete, color: Colors.blue),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
