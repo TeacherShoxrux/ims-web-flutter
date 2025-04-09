@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
     var result= await authService.login(_emailController.text, _passwordController.text);
     ProgressService.hide(context);
    if(result)Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c)=>HomePage()), (e)=>true);
-
+   if(!result)  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login xatolik!')),);
   }
 
   void _showErrorDialog(BuildContext context, String message) {
@@ -53,114 +53,120 @@ class _LoginPageState extends State<LoginPage> {
     final double screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      backgroundColor: Colors.grey[200], // Fon rangi
-      body: Center(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: screenWidth > 1200
-                  ? 400
-                  : screenWidth > 600
-                  ? 200
-                  : 32,
-              vertical: 16,
-            ),
-            child: Card(
-              elevation: 8,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
+      backgroundColor: Colors.grey[200],
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Center(
+            child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.all(screenWidth > 600 ? 32 : 24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Sarlavha
-                    Center(
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                          fontSize: screenWidth > 600 ? 28 : 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.purple,
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 32),
-                    // Email maydoni
-                    Text(
-                      'Email',
-                      style: TextStyle(
-                        fontSize: screenWidth > 600 ? 16 : 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    TextField(
-                      controller: _emailController,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: InputDecoration(
-                        hintText: 'Enter your email',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                      ),
-                    ),
-                    SizedBox(height: 16),
-                    // Parol maydoni
-                    Text(
-                      'Password',
-                      style: TextStyle(
-                        fontSize: screenWidth > 600 ? 16 : 14,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                    SizedBox(height: 8),
-                    TextField(
-                      controller: _passwordController,
-                      obscureText: true, // Parolni yashirish
-                      decoration: InputDecoration(
-                        hintText: 'Enter your password',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        filled: true,
-                        fillColor: Colors.grey[100],
-                      ),
-                    ),
-                    SizedBox(height: 32),
-                    // Login tugmasi
-                    Center(
-                      child: ElevatedButton(
-                        onPressed: () => _handleLogin(context),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.purple,
-                          foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: screenWidth > 600 ? 48 : 32,
-                            vertical: 16,
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
+                padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth > 1200
+                      ? 400
+                      : screenWidth > 600
+                      ? 200
+                      : 32,
+                  vertical: 16,
+                ),
+                child: Card(
+                  elevation: 8,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(screenWidth > 600 ? 32 : 24),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Sarlavha
+                        Center(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              fontSize: screenWidth > 600 ? 28 : 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.purple,
+                            ),
                           ),
                         ),
-                        child: Text(
-                          'Login',
+                        SizedBox(height: 32),
+                        // Email maydoni
+                        Text(
+                          'Email',
                           style: TextStyle(
-                            fontSize: screenWidth > 600 ? 18 : 16,
+                            fontSize: screenWidth > 600 ? 16 : 14,
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
-                      ),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: _emailController,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            hintText: 'Enter your email',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey[100],
+                          ),
+                        ),
+                        SizedBox(height: 16),
+                        // Parol maydoni
+                        Text(
+                          'Password',
+                          style: TextStyle(
+                            fontSize: screenWidth > 600 ? 16 : 14,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        SizedBox(height: 8),
+                        TextField(
+                          controller: _passwordController,
+                          obscureText: true, // Parolni yashirish
+                          decoration: InputDecoration(
+                            hintText: 'Enter your password',
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            filled: true,
+                            fillColor: Colors.grey[100],
+                          ),
+                        ),
+                        SizedBox(height: 32),
+                        // Login tugmasi
+                        Center(
+                          child: ElevatedButton(
+                            onPressed: () => _handleLogin(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.purple,
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(
+                                horizontal: screenWidth > 600 ? 48 : 32,
+                                vertical: 16,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            child: Text(
+                              'Login',
+                              style: TextStyle(
+                                fontSize: screenWidth > 600 ? 18 : 16,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

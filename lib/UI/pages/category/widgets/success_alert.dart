@@ -31,7 +31,7 @@ class SuccessAlert extends StatelessWidget {
           ),
           SizedBox(height: 8),
           Text(
-            'Saved Successfully',
+            'Kategoriya muvaffqaiyatli yaratildi!!!',
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class SuccessAlert extends StatelessWidget {
           SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop(); // Dialogni yopish
+              Navigator.of(context).pop(true); // Dialogni yopish
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.blue, // OK tugmasi rangi

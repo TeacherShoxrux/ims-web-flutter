@@ -1,18 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/category/widgets/success_alert.dart';
 
-class AddAlert extends StatelessWidget {
-  const AddAlert({super.key});
+import '../../../../services/category_service.dart';
 
-  void _showSuccessDialog( BuildContext context) {
-    showDialog(
+class AddAlert extends StatelessWidget {
+  AddAlert({super.key, required this.categoryService});
+  final CategoryService categoryService;
+  void _showSuccessDialog( BuildContext context)async {
+   var result = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return SuccessAlert();
       },
     );
+   if(result==true)
+     {
+       Navigator.pop(context,result);
+     }
   }
-
+final categoryNameController=TextEditingController();
+final categoryDescriptionController=TextEditingController();
   @override
   Widget build(BuildContext context) {
     return  AlertDialog(
@@ -31,31 +38,40 @@ class AddAlert extends StatelessWidget {
               ),
               SizedBox(width: 8),
               Text(
-                'Category',
+                'Kategoriya yaratish',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
           SizedBox(height: 16),
           // Kategoriya nomi uchun matn maydoni
-          Text(
-            'Category Name',
-            style: TextStyle(fontSize: 16),
-          ),
+          // Text(
+          //   'Kategoriya nomini kiriting',
+          //   style: TextStyle(fontSize: 16),
+          // ),
           SizedBox(height: 8),
           TextField(
-            onChanged: (value) {
-              _showSuccessDialog(context);
-            },
+            controller: categoryNameController,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
-              hintText: 'Enter category name',
+              labelText: 'Nomi',
+            ),
+          ),
+          SizedBox(height: 8),
+
+          TextField(
+          controller: categoryDescriptionController,
+            decoration: InputDecoration(
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              labelText: 'kategoriya haqida (ixtiyoriy)',
             ),
           ),
           SizedBox(height: 16),
@@ -64,8 +80,14 @@ class AddAlert extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               ElevatedButton(
-                onPressed: () {
-
+                onPressed: ()async {
+               var result = await categoryService.createCategory({
+                  "name": categoryNameController.text,
+                  "description": categoryDescriptionController.text
+                });
+               if(result){
+                _showSuccessDialog(context);
+               }
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple, // SAVE tugmasi rangi

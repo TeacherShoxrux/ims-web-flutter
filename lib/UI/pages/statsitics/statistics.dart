@@ -1,26 +1,45 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/statistics_service.dart';
 
-class StatisticsPage extends StatelessWidget {
-// Statistik ma'lumotlar (haqiqiy loyihada bu ma'lumotlar bazadan olinadi)
-  final int totalCustomers = 3; // Mijozlar soni
-  final int totalSuppliers = 4; // Yetkazib beruvchilar soni
-  final int totalProducts = 14; // Mahsulotlar soni
-  final double totalPurchasesAmount = 13295.0; // Xaridlar summasi
 
+class StatisticsPage extends StatefulWidget {
+  const StatisticsPage({super.key});
+  @override
+  State<StatisticsPage> createState() => _StatisticsPageState();
+}
+
+class _StatisticsPageState extends State<StatisticsPage> {
+ final statService = StatisticService();
+
+  final int totalCustomers = 3;
+
+  final int totalSuppliers = 4;
+
+  final int totalProducts = 14;
+
+  final double totalPurchasesAmount = 13295.0;
+
+ // Xaridlar summasi
+getData()async{
+  var result= await statService.getDashboardStats();
+  print(result);
+}
+@override
+  void initState() {
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-    // Ekran kengligini aniqlash
     final double screenWidth = MediaQuery.of(context).size.width;
-
-    // CrossAxisCount ni ekran kengligiga qarab aniqlash
     int crossAxisCount;
     if (screenWidth > 1200) {
-      crossAxisCount = 4; // Katta ekranlar uchun 4 ta karta yonma-yon
+      crossAxisCount = 4;
     } else if (screenWidth > 600) {
-      crossAxisCount = 2; // O'rta ekranlar uchun 2 ta karta yonma-yon
+      crossAxisCount = 2;
     } else {
-      crossAxisCount = 1; // Kichik ekranlar uchun 1 ta karta (vertikal)
+      crossAxisCount = 1;
     }
 
     return Scaffold(
@@ -64,51 +83,59 @@ class StatisticsPage extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Statistik kartalar
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
-                childAspectRatio: screenWidth > 1200
-                    ? 2
-                    : screenWidth > 600
-                    ? 1.5
-                    : 3, // Kartalarning o'lcham nisbati
-                children: [
-                  // Total Customers karta
-                  StatCard(
-                    title: 'Total Customers',
-                    value: totalCustomers.toString(),
-                    icon: Icons.person,
-                    color: Colors.blue,
-                    screenWidth: screenWidth,
+            FutureBuilder(
+              future: statService.getDashboardStats(),
+              builder: (context,snapshot) {
+                if(snapshot.hasData) {
+                  return Expanded(
+                  child: GridView.count(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                    childAspectRatio: screenWidth > 1200
+                        ? 2
+                        : screenWidth > 600
+                        ? 1.5
+                        : 3, // Kartalarning o'lcham nisbati
+                    children: [
+                      // Total Customers karta
+                      StatCard(
+                        title: 'Barcha Mijozlar',
+                        value: "${snapshot.data?['data']['totalCustomer']}",
+                        icon: Icons.person,
+                        color: Colors.blue,
+                        screenWidth: screenWidth,
+                      ),
+                      // Total Suppliers karta
+                      StatCard(
+                        title: 'Barcha Sotuvlar',
+                        value: "${snapshot.data?['data']['totalSales']}",
+                        icon: Icons.local_shipping,
+                        color: Colors.green,
+                        screenWidth: screenWidth,
+                      ),
+                      // Total Products karta
+                      StatCard(
+                        title: 'Barcha Mahsulotlar',
+                        value: "${snapshot.data?['data']['totalCustomer']}",
+                        icon: Icons.inventory,
+                        color: Colors.orange,
+                        screenWidth: screenWidth,
+                      ),
+                      // Total Purchases Amount karta
+                      StatCard(
+                        title: 'Top Mahsulot ',
+                        value: "${snapshot.data?['data']['topProduct']}",
+                        icon: Icons.attach_money,
+                        color: Colors.purple,
+                        screenWidth: screenWidth,
+                      ),
+                    ],
                   ),
-                  // Total Suppliers karta
-                  StatCard(
-                    title: 'Total Suppliers',
-                    value: totalSuppliers.toString(),
-                    icon: Icons.local_shipping,
-                    color: Colors.green,
-                    screenWidth: screenWidth,
-                  ),
-                  // Total Products karta
-                  StatCard(
-                    title: 'Total Products',
-                    value: totalProducts.toString(),
-                    icon: Icons.inventory,
-                    color: Colors.orange,
-                    screenWidth: screenWidth,
-                  ),
-                  // Total Purchases Amount karta
-                  StatCard(
-                    title: 'Total Purchases Amount',
-                    value: totalPurchasesAmount.toStringAsFixed(2),
-                    icon: Icons.attach_money,
-                    color: Colors.purple,
-                    screenWidth: screenWidth,
-                  ),
-                ],
-              ),
+                );
+                }
+                return Center(child: CircularProgressIndicator());
+              },
             ),
           ],
         ),
