@@ -5,6 +5,7 @@ import '../category/category.dart';
 import '../customers/customers.dart';
 import '../products/products.dart';
 import '../purchases/purchases.dart';
+import '../reports/reports.dart';
 import '../saffs/staffs.dart';
 import '../statsitics/statistics.dart';
 
@@ -25,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     CustomerListPage(),
     PurchasesListPage(),
     StaffsListPage(),
-    const Center(child: Text("Report Page")),
+    ReportsPage(),
   ];
 
   void _onItemSelected(int index) {

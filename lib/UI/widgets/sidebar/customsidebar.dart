@@ -38,11 +38,11 @@ class CustomSidebar extends StatelessWidget {
           const SizedBox(height: 40),
           CircleAvatar(
             radius: 40,
-            backgroundImage: AssetImage('assets/images/profile.jpg'),
+            backgroundImage: NetworkImage('https://picsum.photos/200'),
           ),
           const SizedBox(height: 10),
           const Text(
-            'Waqar Ahmad',
+            'Shokhrukh',
             style: TextStyle(color: Colors.white, fontSize: 16),
           ),
           const Divider(color: Colors.white54, height: 30),
