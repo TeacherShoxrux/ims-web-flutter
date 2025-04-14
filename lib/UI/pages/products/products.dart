@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/products/widgets/add_product_alert.dart';
+import 'package:ims_web/services/product_service.dart';
 
 class ProductsListPage extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class ProductsListPage extends StatefulWidget {
 }
 
 class _ProductsListPageState extends State<ProductsListPage> {
+  final _productService=ProductService();
   // Ro'yxat uchun ma'lumotlar
   final List<Map<String, String>> products = [
     {'sr': '1', 'name': 'Coca Coal TINE', 'category': 'Category 2', 'purPrice': '48.00', 'salePrice': '50.00'},
@@ -37,6 +39,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,7 +98,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'Sr#',
+                      'S #',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -103,15 +106,15 @@ class _ProductsListPageState extends State<ProductsListPage> {
                     ),
                   ),
                   Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Name',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
+                        flex: 3,
+                        child: Text(
+                          'Name',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
                   Expanded(
                     flex: 2,
                     child: Text(
@@ -150,9 +153,13 @@ class _ProductsListPageState extends State<ProductsListPage> {
               ),
             ),
             // Ro'yxat elementlari
-            Expanded(
+            FutureBuilder(
+                future: _productService.getAllProducts(),
+                builder: (context,snapshot) {
+                  return
+                    Expanded(
               child: ListView.builder(
-                itemCount: products.length,
+                itemCount: snapshot.data?.length??0,
                 itemBuilder: (context, index) {
                   return Container(
                     color: index % 2 == 0 ? Colors.white : Colors.grey[100],
@@ -161,23 +168,23 @@ class _ProductsListPageState extends State<ProductsListPage> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text(products[index]['sr']!),
+                          child: Text("${snapshot.data?[index].id}"),
                         ),
                         Expanded(
                           flex: 3,
-                          child: Text(products[index]['name']!),
+                          child: Text("${snapshot.data?[index].name}"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text(products[index]['category']!),
+                          child: Text("${snapshot.data?[index].quantity}"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text(products[index]['purPrice']!),
+                          child: Text("${snapshot.data?[index].quantity}"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text(products[index]['salePrice']!),
+                          child: Text("${snapshot.data?[index].quantity}"),
                         ),
                         Expanded(
                           flex: 1,
@@ -208,7 +215,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   );
                 },
               ),
-            ),
+            );}),
           ],
         ),
       ),

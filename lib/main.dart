@@ -5,17 +5,17 @@ import 'UI/pages/Home/home.dart';
 import 'UI/pages/login/login.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-  final aht=true;
+   MyApp({super.key});
+  var aht=false;
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Sidebar Example',
-      home: aht? HomePage(): LoginPage(),
+      home: aht? HomePage() : LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }

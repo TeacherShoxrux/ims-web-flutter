@@ -1,13 +1,14 @@
+import '../models/category_model.dart';
 import 'api_service.dart';
 
 class CategoryService {
   final ApiService _api = ApiService();
 
-  Future<List<Map<String, dynamic>>> getAllCategories() async {
+  Future<List<CategoryModel>> getAllCategories() async {
     try {
-      final response = await _api.get('api/Category/GetCategories');
+      List response = await _api.get('api/Category/GetCategories');
       print(response);
-      return List<Map<String, dynamic>>.from(response);
+      return response.map((e)=>CategoryModel.fromJson(e)).toList();
     } catch (e) {
       print("Kategoriyalarni olishda xatolik: $e");
       return [];

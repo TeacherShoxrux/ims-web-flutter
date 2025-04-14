@@ -1,18 +1,50 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:ims_web/models/category_model.dart';
+import 'package:ims_web/services/category_service.dart';
 
+class AddProductAlert extends StatefulWidget {
+ const AddProductAlert({super.key});
 
-class AddProductAlert extends StatelessWidget {
-   AddProductAlert({super.key});
-  String newProductName = '';
-  String newPurchasePrice = '';
-  String newSalePrice = '';
-  String selectedCategory = 'Category 1';
+  @override
+  State<AddProductAlert> createState() => _AddProductAlertState();
+}
+
+class _AddProductAlertState extends State<AddProductAlert> {
+  final _productName = TextEditingController();
+
+  final _purchasePrice = TextEditingController();
+
+  final _salePrice = TextEditingController();
+
+  final _categoryService = CategoryService();
+
+  Uint8List? base64Image;
+
+  Future<void> pickImageWeb() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? pickedFile = await picker.pickImage(
+      source: ImageSource.gallery,
+    );
+
+    if (pickedFile != null) {
+      base64Image = await pickedFile.readAsBytes();
+      setState(() {});
+    }
+else{
+
+    }
+  }
+
+  CategoryModel? _selectedCategory;
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -20,10 +52,7 @@ class AddProductAlert extends StatelessWidget {
             // Sarlavha va ikonka
             Row(
               children: [
-                Icon(
-                  Icons.inventory,
-                  color: Colors.white,
-                ),
+                Icon(Icons.inventory, color: Colors.white),
                 SizedBox(width: 8),
                 Text(
                   'Product Details',
@@ -37,15 +66,10 @@ class AddProductAlert extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Name maydoni
-            Text(
-              'Name',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Name', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
-              onChanged: (value) {
-                // newProductName = value; // Kiritilgan matnni saqlash
-              },
+              controller: _productName,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -61,21 +85,16 @@ class AddProductAlert extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Purchase Price',
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      Text('Kirish narxi', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       TextField(
-                        onChanged: (value) {
-                          // newPurchasePrice = value;
-                        },
+                        controller: _purchasePrice,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Enter purchase price',
+                          hintText: 'Kirish narxi?',
                         ),
                       ),
                     ],
@@ -86,21 +105,16 @@ class AddProductAlert extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Sale Price',
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      Text('Sotish narxi', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       TextField(
-                        onChanged: (value) {
-                          // newSalePrice = value;
-                        },
+                        controller: _salePrice,
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Enter sale price',
+                          hintText: 'Sotish narxi',
                         ),
                       ),
                     ],
@@ -110,27 +124,33 @@ class AddProductAlert extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Category dropdown
-            Text(
-              'Category',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Kategoriyasi', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: selectedCategory,
-              items: ['Category 1', 'Category 2'].map((String category) {
-                return DropdownMenuItem<String>(
-                  value: category,
-                  child: Text(category),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                selectedCategory = newValue!;
+            FutureBuilder<List<CategoryModel>>(
+              future: _categoryService.getAllCategories(),
+              builder: (context, snapshot) {
+                if (snapshot.data is List) {
+                  return DropdownButtonFormField<CategoryModel>(
+                    value: _selectedCategory,
+                    items:
+                        snapshot.data?.map((CategoryModel category) {
+                          return DropdownMenuItem<CategoryModel>(
+                            value: category,
+                            child: Text(category.name),
+                          );
+                        }).toList(),
+                    onChanged: (CategoryModel? newValue) {
+                      _selectedCategory = newValue;
+                    },
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                    ),
+                  );
+                }
+                return CircularProgressIndicator();
               },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
             ),
             SizedBox(height: 16),
             // Product Picture qismi
@@ -140,10 +160,7 @@ class AddProductAlert extends StatelessWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Product Picture',
-                      style: TextStyle(fontSize: 16),
-                    ),
+                    Text('Product Picture', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 8),
                     Container(
                       width: 100,
@@ -153,11 +170,10 @@ class AddProductAlert extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
-                        child: Icon(
-                          Icons.image,
-                          size: 50,
-                          color: Colors.grey,
-                        ), // Standart placeholder rasm
+                        child:
+                            base64Image != null
+                                ? Image.memory(base64Image!)
+                                : Icon(Icons.image,size: 50, color: Colors.grey),
                       ),
                     ),
                   ],
@@ -165,10 +181,7 @@ class AddProductAlert extends StatelessWidget {
                 Column(
                   children: [
                     ElevatedButton(
-                      onPressed: () {
-                        // Browse tugmasi bosilganda rasm tanlash logikasi
-                        print('Browse bosildi');
-                      },
+                      onPressed: pickImageWeb,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.purple,
                         foregroundColor: Colors.white,

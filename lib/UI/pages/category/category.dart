@@ -124,7 +124,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                             ),
                             Expanded(
                               flex: 3,
-                              child: Text( snapshot.data?[index]['name']??'null'),
+                              child: Text( snapshot.data?[index].name??'null'),
                             ),
                             Expanded(
                               flex: 1,
@@ -140,9 +140,9 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                   ),
                                   IconButton(
                                     onPressed: ()async {
-                                    var confirm= await  showDeleteConfirmationDialog(context,snapshot.data?[index]['name']);
+                                    var confirm= await  showDeleteConfirmationDialog(context,snapshot.data?[index].name??'null');
                                     if(confirm){
-                                      var success= await categroyService.deleteCategory(snapshot.data?[index]['id']);
+                                      var success= await categroyService.deleteCategory(snapshot.data?[index].id??0);
                                       if(success){
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(content: Text("Kategoriya o‘chirildi")),

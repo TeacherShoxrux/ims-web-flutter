@@ -101,16 +101,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(height: 8),
-                        TextField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            hintText: 'Enter your email',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            controller: _emailController,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: InputDecoration(
+                              hintText: 'Enter your email',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[100],
                             ),
-                            filled: true,
-                            fillColor: Colors.grey[100],
                           ),
                         ),
                         SizedBox(height: 16),
@@ -123,16 +126,19 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         SizedBox(height: 8),
-                        TextField(
-                          controller: _passwordController,
-                          obscureText: true, // Parolni yashirish
-                          decoration: InputDecoration(
-                            hintText: 'Enter your password',
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
+                        SizedBox(
+                          width: 300,
+                          child: TextField(
+                            controller: _passwordController,
+                            obscureText: true, // Parolni yashirish
+                            decoration: InputDecoration(
+                              hintText: 'Enter your password',
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              filled: true,
+                              fillColor: Colors.grey[100],
                             ),
-                            filled: true,
-                            fillColor: Colors.grey[100],
                           ),
                         ),
                         SizedBox(height: 32),

@@ -1,13 +1,16 @@
+import 'package:ims_web/models/product_model.dart';
+
 import 'api_service.dart';
 
 class ProductService {
   final ApiService _api = ApiService();
 
   // Barcha mahsulotlarni olish
-  Future<List<Map<String, dynamic>>> getAllProducts({int page = 1,pageSize=10}) async {
+  Future<List<ProductModel>> getAllProducts({int page = 1,pageSize=10}) async {
     try {
-      final response = await _api.get('api/Product/GetAllProductsByStoreId?pageIndex=$page&pageSize=$pageSize');
-      return List<Map<String, dynamic>>.from(response);
+      List response = await _api.get('api/Product/GetAllProductsByStoreId?pageIndex=$page&pageSize=$pageSize');
+      print(response);
+      return response.map((e)=>ProductModel.fromJson(e)).toList();
     } catch (e) {
       print("Mahsulotlar ro'yxatini olishda xatolik: $e");
       return [];
