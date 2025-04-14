@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../UI/pages/login/login.dart';
+import '../services/auth_service.dart';
 
 class AuthInterceptor implements InterceptorContract {
   @override
@@ -18,9 +22,8 @@ class AuthInterceptor implements InterceptorContract {
   @override
   Future<ResponseData> interceptResponse({required ResponseData data}) async {
     // Agar token muddati tugagan bo‘lsa, bu yerda tekshirishingiz mumkin
-    if (data.statusCode == 401) {
-      // logout yoki tokenni yangilashni boshlash
-    }
+    if (data.statusCode == 401) {}
+
 
     return data;
   }

@@ -1,14 +1,16 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:ims_web/models/category_model.dart';
 import 'package:ims_web/services/category_service.dart';
+import 'package:ims_web/services/product_service.dart';
 
 class AddProductAlert extends StatefulWidget {
- const AddProductAlert({super.key});
-
+ const AddProductAlert({super.key, required this.productService});
+  final ProductService productService;
   @override
   State<AddProductAlert> createState() => _AddProductAlertState();
 }
@@ -32,11 +34,23 @@ class _AddProductAlertState extends State<AddProductAlert> {
 
     if (pickedFile != null) {
       base64Image = await pickedFile.readAsBytes();
+
+      // if (kDebugMode) {
+      //   print(await uploadImage());
+      // }
       setState(() {});
     }
-else{
+    else
+    {
 
     }
+  }
+
+  Future<String?> uploadImage()async{
+    if(base64Image!=null) {
+      return await widget.productService.uploadImage(base64Image!);
+    }
+    return null;
   }
 
   CategoryModel? _selectedCategory;

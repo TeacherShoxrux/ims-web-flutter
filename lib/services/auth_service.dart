@@ -28,4 +28,5 @@ class AuthService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('jwt_token');
   }
+  get  getToken async=> (await SharedPreferences.getInstance()).getString("jwt_token");
 }

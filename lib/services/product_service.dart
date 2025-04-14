@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:ims_web/models/product_model.dart';
 
 import 'api_service.dart';
@@ -16,12 +18,22 @@ class ProductService {
       return [];
     }
   }
+
   Future<Map<String, dynamic>> getProductById({int page = 1,pageSize=10}) async {
     try {
       final response = await _api.get('api/Product/GetAllProductsByStoreId?pageIndex=$page&pageSize=$pageSize');
       return response;
     } catch (e) {
       print("Mahsulotni olishda xatolik: $e");
+      rethrow;
+    }
+  }
+  Future<String?> uploadImage(Uint8List image) async {
+    try {
+      final response = await _api.uploadImage('api/Image',image);
+      return response['fileName'];
+    } catch (e) {
+      print("Rasm Yuklashda xatolik: $e");
       rethrow;
     }
   }

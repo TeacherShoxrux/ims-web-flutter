@@ -35,7 +35,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AddProductAlert();
+        return AddProductAlert(productService: _productService,);
       },
     );
   }
