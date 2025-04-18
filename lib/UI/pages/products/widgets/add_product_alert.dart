@@ -35,9 +35,9 @@ class _AddProductAlertState extends State<AddProductAlert> {
     if (pickedFile != null) {
       base64Image = await pickedFile.readAsBytes();
 
-      // if (kDebugMode) {
-      //   print(await uploadImage());
-      // }
+      if (kDebugMode) {
+        print(await uploadImage());
+      }
       setState(() {});
     }
     else
@@ -79,7 +79,6 @@ class _AddProductAlertState extends State<AddProductAlert> {
               ],
             ),
             SizedBox(height: 16),
-            // Name maydoni
             Text('Name', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(

@@ -16,7 +16,7 @@ class ApiService {
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer ${await _getToken()}'
       ..files.add(http.MultipartFile.fromBytes(
-        'image', imageFile.toList(),
+        'image', imageFile,
           contentType: MediaType('multipart','form-data')));
 
     final streamedResponse = await request.send();
