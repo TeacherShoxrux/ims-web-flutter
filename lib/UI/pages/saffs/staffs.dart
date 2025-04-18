@@ -9,22 +9,6 @@ class StaffsListPage extends StatefulWidget {
 }
 
 class _SupplierListPageState extends State<StaffsListPage> {
-  // Ro'yxat uchun ma'lumotlar
-  // final List<Map<String, String>> suppliers = [
-  //   {'sr': '1', 'name': 'New Supplier', 'phone': '255354', 'email': 'abc@gamil.com', 'address': '4 f dfsdfs sdf'},
-  //   {'sr': '2', 'name': 'Cash', 'phone': '-', 'email': 'cash@gmail.com', 'address': '-'},
-  //   {'sr': '3', 'name': 'Supplier 2', 'phone': '13563', 'email': 'djd@hotmail.com', 'address': 'kcdjkl ikdfkld'},
-  //   {'sr': '4', 'name': 'Supplier 1', 'phone': '2353211', 'email': 'hb@outlook.com', 'address': 'df f dsfdfa'},
-  // ];
-
-  // void _showAddSupplierDialog() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AddAlerStaff(authService: staffsService,);
-  //     },
-  //   );
-  // }
   final staffsService = StaffsService();
 
   void _showAddCategoryDialog(BuildContext context) async {
@@ -32,7 +16,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
       context: context,
       builder: (BuildContext context) {
         return AddAlerStaff(authService: staffsService);
-      },
+      }
     );
     if (result == true) {
       setState(() {});
