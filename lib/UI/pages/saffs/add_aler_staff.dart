@@ -1,15 +1,60 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/UI/pages/Home/home.dart';
+import 'package:ims_web/UI/pages/saffs/staffs.dart';
+import 'package:ims_web/services/auth_service.dart';
+import 'package:ims_web/services/progress_service.dart';
+import 'package:ims_web/services/staffs_service.dart';
 
+class AddAlerStaff extends StatefulWidget {
+final StaffsService authService;
+  const AddAlerStaff({super.key,required this.authService });
 
-class AddAlerStaff extends StatelessWidget {
-  const AddAlerStaff({super.key});
+  @override
+  State<AddAlerStaff> createState() => _AddAlerStaffState();
+}
+
+class _AddAlerStaffState extends State<AddAlerStaff> {
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final authService = StaffsService();
+
+  void _handleAddAlerStaff(BuildContext context) async {
+    ProgressService.show(context, message: "Iltimos kuting...");
+    var result = await authService.addAlerstaff(
+      _nameController.text,
+      _phoneController.text,
+      _passwordController.text,
+    );
+    ProgressService.hide(context);
+    if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
+    if (!result)ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text('Login xatolik!')));
+  }
+
+  void _showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text(message),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("OK"),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -18,10 +63,7 @@ class AddAlerStaff extends StatelessWidget {
             // Sarlavha va ikonka
             Row(
               children: [
-                Icon(
-                  Icons.local_shipping,
-                  color: Colors.white,
-                ),
+                Icon(Icons.local_shipping, color: Colors.white),
                 SizedBox(width: 8),
                 Text(
                   'Supplier Details',
@@ -35,12 +77,11 @@ class AddAlerStaff extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Name maydoni
-            Text(
-              'Name',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Name', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
+              controller: _nameController,
+              keyboardType: TextInputType.name,
               onChanged: (value) {
                 // newSupplierName = value; // Kiritilgan matnni saqlash
               },
@@ -53,12 +94,10 @@ class AddAlerStaff extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Phone maydoni
-            Text(
-              'Phone',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Phone', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
+              controller: _phoneController,
               onChanged: (value) {
                 // newPhone = value;
               },
@@ -72,10 +111,7 @@ class AddAlerStaff extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Email maydoni
-            Text(
-              'Email',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Email', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               onChanged: (value) {
@@ -91,10 +127,7 @@ class AddAlerStaff extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Address maydoni
-            Text(
-              'Address',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Address', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               onChanged: (value) {
@@ -109,15 +142,14 @@ class AddAlerStaff extends StatelessWidget {
             ),
             SizedBox(height: 16),
             // Password maydoni
-            Text(
-              'Password',
-              style: TextStyle(fontSize: 16),
-            ),
+            Text('Password', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               onChanged: (value) {
                 // newPassword = value;
               },
+              controller: _passwordController,
+              keyboardType: TextInputType.number,
               obscureText: true, // Parolni yashirish uchun
               decoration: InputDecoration(
                 border: OutlineInputBorder(
@@ -133,6 +165,7 @@ class AddAlerStaff extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
+                    _handleAddAlerStaff(context);
                     // if (newSupplierName.isNotEmpty) {
                     //   setState(() {
                     //     // Yangi yetkazib beruvchini ro'yxatga qo'shish

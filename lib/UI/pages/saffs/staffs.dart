@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/UI/pages/category/widgets/add_alert.dart';
 import 'package:ims_web/UI/pages/saffs/add_aler_staff.dart';
-
+import 'package:ims_web/services/staffs_service.dart';
 
 class StaffsListPage extends StatefulWidget {
   @override
@@ -9,20 +10,33 @@ class StaffsListPage extends StatefulWidget {
 
 class _SupplierListPageState extends State<StaffsListPage> {
   // Ro'yxat uchun ma'lumotlar
-  final List<Map<String, String>> suppliers = [
-    {'sr': '1', 'name': 'New Supplier', 'phone': '255354', 'email': 'abc@gamil.com', 'address': '4 f dfsdfs sdf'},
-    {'sr': '2', 'name': 'Cash', 'phone': '-', 'email': 'cash@gmail.com', 'address': '-'},
-    {'sr': '3', 'name': 'Supplier 2', 'phone': '13563', 'email': 'djd@hotmail.com', 'address': 'kcdjkl ikdfkld'},
-    {'sr': '4', 'name': 'Supplier 1', 'phone': '2353211', 'email': 'hb@outlook.com', 'address': 'df f dsfdfa'},
-  ];
+  // final List<Map<String, String>> suppliers = [
+  //   {'sr': '1', 'name': 'New Supplier', 'phone': '255354', 'email': 'abc@gamil.com', 'address': '4 f dfsdfs sdf'},
+  //   {'sr': '2', 'name': 'Cash', 'phone': '-', 'email': 'cash@gmail.com', 'address': '-'},
+  //   {'sr': '3', 'name': 'Supplier 2', 'phone': '13563', 'email': 'djd@hotmail.com', 'address': 'kcdjkl ikdfkld'},
+  //   {'sr': '4', 'name': 'Supplier 1', 'phone': '2353211', 'email': 'hb@outlook.com', 'address': 'df f dsfdfa'},
+  // ];
 
-  void _showAddSupplierDialog() {
-    showDialog(
+  // void _showAddSupplierDialog() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AddAlerStaff(authService: staffsService,);
+  //     },
+  //   );
+  // }
+  final staffsService = StaffsService();
+
+  void _showAddCategoryDialog(BuildContext context) async {
+    var result = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return AddAlerStaff();
+        return AddAlerStaff(authService: staffsService);
       },
     );
+    if (result == true) {
+      setState(() {});
+    }
   }
 
   @override
@@ -54,15 +68,12 @@ class _SupplierListPageState extends State<StaffsListPage> {
               children: [
                 Text(
                   'Supplier List',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
                     // Add New tugmasi bosilganda bajariladigan kod
-                    _showAddSupplierDialog();
+                    _showAddCategoryDialog(context);
                   },
                   icon: Icon(Icons.add),
                   label: Text('Add New'),
@@ -139,61 +150,85 @@ class _SupplierListPageState extends State<StaffsListPage> {
             ),
             // Ro'yxat elementlari
             Expanded(
-              child: ListView.builder(
-                itemCount: suppliers.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: index % 2 == 0 ? Colors.white : Colors.grey[100],
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(suppliers[index]['sr']!),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(suppliers[index]['name']!),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(suppliers[index]['phone']!),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(suppliers[index]['email']!),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(suppliers[index]['address']!),
-                        ),
-                        Expanded(
-                          flex: 1,
+              child: FutureBuilder(
+                future: staffsService.getStaffs(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return Container(
+                          color:
+                              index % 2 == 0 ? Colors.white : Colors.grey[100],
+                          padding: EdgeInsets.symmetric(
+                            vertical: 10,
+                            horizontal: 16,
+                          ),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              IconButton(
-                                onPressed: () {
-                                  // Edit tugmasi bosilganda
-                                  print('Edit bosildi: ${suppliers[index]['name']}');
-                                },
-                                icon: Icon(Icons.edit, color: Colors.yellow[700]),
+                              Expanded(flex: 1, child: Text("${index + 1}")),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  snapshot.data?[index]['fullName'] ?? 'null',
+                                ),
                               ),
-                              IconButton(
-                                onPressed: () {
-                                  // Delete tugmasi bosilganda
-                                  setState(() {
-                                    suppliers.removeAt(index);
-                                  });
-                                },
-                                icon: Icon(Icons.delete, color: Colors.blue),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  snapshot.data?[index]['phone'] ?? 'null',
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  snapshot.data?[index]['password'] ?? 'null',
+                                ),
+                              ),
+                              Expanded(
+                                flex: 3,
+                                child: Text(
+                                  snapshot.data?[index]['role'] ?? 'null',
+                                ),
+                              ),
+
+                              Expanded(
+                                flex: 1,
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {
+                                        // Edit tugmasi bosilganda
+                                        //   print('Edit bosildi: ${suppliers[index]['name']}');
+                                      },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        color: Colors.yellow[700],
+                                      ),
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        // Delete tugmasi bosilganda
+                                        setState(() {
+                                          //  suppliers.removeAt(index);
+                                        });
+                                      },
+                                      icon: Icon(
+                                        Icons.delete,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      },
+                    );
+                  }
+                  return Center(child: CircularProgressIndicator());
                 },
               ),
             ),
