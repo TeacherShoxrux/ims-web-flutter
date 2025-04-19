@@ -37,14 +37,14 @@ class ProductModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['description'] = this.description;
-    data['salePrice'] = this.salePrice;
-    data['purchasePrice'] = this.purchasePrice;
-    data['quantity'] = this.quantity;
-    data['image'] = this.image;
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['name'] = name;
+    data['description'] = description;
+    data['salePrice'] = salePrice;
+    data['purchasePrice'] = purchasePrice;
+    data['quantity'] = quantity;
+    data['image'] = image;
     return data;
   }
 }

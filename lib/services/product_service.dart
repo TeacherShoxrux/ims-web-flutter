@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:ims_web/models/product_model.dart';
 
 import 'api_service.dart';
@@ -28,10 +30,11 @@ class ProductService {
       rethrow;
     }
   }
-  Future<String?> uploadImage(Uint8List image) async {
+  Future<String?> uploadImage(PlatformFile file) async {
     try {
-      final response = await _api.uploadImage('api/Image',image);
-      return response['fileName'];
+      final response = await _api.uploadImage('api/Image',file);
+      return jsonDecode(response)['fileName']
+      ;//['fileName'];
     } catch (e) {
       print("Rasm Yuklashda xatolik: $e");
       rethrow;
@@ -41,7 +44,10 @@ class ProductService {
   // Mahsulot yaratish
   Future<bool> createProduct(Map<String, dynamic> data) async {
     try {
-      await _api.post('products', data);
+      var result= await _api.post('api/Product/AddProduct', data);
+      print("------------------------------------------------");
+      print(result);
+      print("------------------------------------------------");
       return true;
     } catch (e) {
       print("Mahsulot yaratishda xatolik: $e");

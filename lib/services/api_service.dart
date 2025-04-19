@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
@@ -11,19 +12,21 @@ class ApiService {
   final http.Client httpClient = CustomHttpClient();
 
 
-  Future<Map<String,String>> uploadImage(String endpoint, Uint8List imageFile) async {
+  Future<String> uploadImage(String endpoint, PlatformFile file) async {
     final uri = Uri.parse('$baseUrl/$endpoint');
     final request = http.MultipartRequest('POST', uri)
       ..headers['Authorization'] = 'Bearer ${await _getToken()}'
       ..files.add(http.MultipartFile.fromBytes(
-        'image', imageFile,
-          contentType: MediaType('multipart','form-data')));
+
+        'image', await file.xFile.readAsBytes(),
+          filename: file.name,
+          contentType: MediaType('image','${file.identifier}')));
 
     final streamedResponse = await request.send();
     final response = await http.Response.fromStream(streamedResponse);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return jsonDecode(response.body);
+      return response.body;
     } else {
       throw Exception('Image upload error: ${response.statusCode} → ${response.body}');
     }

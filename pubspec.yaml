@@ -38,8 +38,8 @@ dependencies:
   http: ^0.13.6
   http_interceptor: ^1.0.2
   shared_preferences: ^2.2.0
-  image_picker: ^1.0.4
-  http_parser:
+  file_picker: ^10.1.2
+  get: ^4.7.2
 
 dev_dependencies:
   flutter_test:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/products/widgets/add_product_alert.dart';
+import 'package:ims_web/routes/urls.dart';
 import 'package:ims_web/services/product_service.dart';
 
 class ProductsListPage extends StatefulWidget {
@@ -68,7 +69,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Products List',
+                  'Mahsulotlar',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -80,7 +81,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                     _showAddProductDialog();
                   },
                   icon: Icon(Icons.add),
-                  label: Text('Add New'),
+                  label: Text('Yaratmoq'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // Tugma rangi
                     foregroundColor: Colors.white,
@@ -98,7 +99,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'S #',
+                      'Qoldiq',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -108,7 +109,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                         flex: 3,
                         child: Text(
-                          'Name',
+                          'Nomi',
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.bold,
@@ -118,7 +119,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Category',
+                      'Kategoriya',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -128,7 +129,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Pur Price',
+                      'Narxi',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -138,7 +139,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Sale Price',
+                      'Rasmi',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -147,7 +148,9 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   ),
                   Expanded(
                     flex: 1,
-                    child: SizedBox(), // Bo'sh joy ikonlar uchun
+                    child: SizedBox(
+
+                    ), // Bo'sh joy ikonlar uchun
                   ),
                 ],
               ),
@@ -168,7 +171,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                       children: [
                         Expanded(
                           flex: 1,
-                          child: Text("${snapshot.data?[index].id}"),
+                          child: Text("${snapshot.data?[index].quantity}"),
                         ),
                         Expanded(
                           flex: 3,
@@ -176,15 +179,15 @@ class _ProductsListPageState extends State<ProductsListPage> {
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text("${snapshot.data?[index].quantity}"),
+                          child: Text("${snapshot.data?[index].name}"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text("${snapshot.data?[index].quantity}"),
+                          child: Text("${snapshot.data?[index].salePrice}"),
                         ),
                         Expanded(
                           flex: 2,
-                          child: Text("${snapshot.data?[index].quantity}"),
+                          child:snapshot.data?[index].image==null?Icon(Icons.image):Image.network("${Urls.baseUrlImage}/${snapshot.data?[index].image}"),
                         ),
                         Expanded(
                           flex: 1,

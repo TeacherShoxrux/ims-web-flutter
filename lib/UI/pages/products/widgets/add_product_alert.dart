@@ -1,12 +1,10 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
-import 'package:flutter/foundation.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:ims_web/models/category_model.dart';
 import 'package:ims_web/services/category_service.dart';
 import 'package:ims_web/services/product_service.dart';
+
+import '../../../../services/progress_service.dart';
 
 class AddProductAlert extends StatefulWidget {
  const AddProductAlert({super.key, required this.productService});
@@ -17,43 +15,38 @@ class AddProductAlert extends StatefulWidget {
 
 class _AddProductAlertState extends State<AddProductAlert> {
   final _productName = TextEditingController();
-
+  final _productDescription = TextEditingController();
   final _purchasePrice = TextEditingController();
-
   final _salePrice = TextEditingController();
-
+  final _quantity = TextEditingController();
   final _categoryService = CategoryService();
-
-  Uint8List? base64Image;
-
+  PlatformFile? image;
+  String? imageUrl;
   Future<void> pickImageWeb() async {
-    final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(
-      source: ImageSource.gallery,
-    );
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
+    PlatformFile? file = result?.files.first;
 
-    if (pickedFile != null) {
-      base64Image = await pickedFile.readAsBytes();
-
-      if (kDebugMode) {
-        print(await uploadImage());
-      }
+    if (file != null) {
+      image = file;
+      //
+      // if (kDebugMode) {
+      //   print("-----------------------------------------------------------------------------------");
+      //   imageUrl=await uploadImage();
+      //   print(imageUrl);
+      //   print("-----------------------------------------------------------------------------------");
+      // }
       setState(() {});
-    }
-    else
-    {
-
     }
   }
 
   Future<String?> uploadImage()async{
-    if(base64Image!=null) {
-      return await widget.productService.uploadImage(base64Image!);
+    if(image!=null) {
+      return await widget.productService.uploadImage(image!);
     }
     return null;
   }
 
-  CategoryModel? _selectedCategory;
+  static CategoryModel? _selectedCategory;
 
   @override
   Widget build(BuildContext context) {
@@ -66,20 +59,20 @@ class _AddProductAlertState extends State<AddProductAlert> {
             // Sarlavha va ikonka
             Row(
               children: [
-                Icon(Icons.inventory, color: Colors.white),
+                Icon(Icons.inventory, color: Colors.purple),
                 SizedBox(width: 8),
                 Text(
-                  'Product Details',
+                  'Yangi mahsulot',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black,
                   ),
                 ),
               ],
             ),
             SizedBox(height: 16),
-            Text('Name', style: TextStyle(fontSize: 16)),
+            // Text('Nomi', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               controller: _productName,
@@ -87,18 +80,29 @@ class _AddProductAlertState extends State<AddProductAlert> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                hintText: 'Enter product name',
+                labelText: 'Mahsulot nomi?',
+              ),
+            ),
+            // Text('Mahsulot haqida?', style: TextStyle(fontSize: 16)),
+            SizedBox(height: 8),
+            TextField(
+              maxLines: 4,
+              controller: _productDescription,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                labelText: "Mahsulot haqida qisqacha ma'lumot",
               ),
             ),
             SizedBox(height: 16),
-            // Purchase Price va Sale Price maydonlari
             Row(
               children: [
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Kirish narxi', style: TextStyle(fontSize: 16)),
+                      // Text('Kirish narxi', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       TextField(
                         controller: _purchasePrice,
@@ -107,19 +111,11 @@ class _AddProductAlertState extends State<AddProductAlert> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Kirish narxi?',
+                          labelText: 'Kirish narxi?',
                         ),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Sotish narxi', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
+                      SizedBox(height: 10),
+
                       TextField(
                         controller: _salePrice,
                         keyboardType: TextInputType.number,
@@ -127,17 +123,35 @@ class _AddProductAlertState extends State<AddProductAlert> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Sotish narxi',
+                          labelText: 'Sotish narxi?',
+                        ),
+                      ),
+
+                      SizedBox(height: 10),
+
+                      TextField(
+                        controller: _quantity,
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          labelText: 'Soni',
                         ),
                       ),
                     ],
                   ),
                 ),
+
               ],
             ),
             SizedBox(height: 16),
             // Category dropdown
-            Text('Kategoriyasi', style: TextStyle(fontSize: 16)),
+            Row(
+              children: [
+                Text('Kategoriyasi', style: TextStyle(fontSize: 16)),
+              ],
+            ),
             SizedBox(height: 8),
             FutureBuilder<List<CategoryModel>>(
               future: _categoryService.getAllCategories(),
@@ -173,7 +187,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Product Picture', style: TextStyle(fontSize: 16)),
+                    Text('Mahsulot rasmi', style: TextStyle(fontSize: 16)),
                     SizedBox(height: 8),
                     Container(
                       width: 100,
@@ -183,9 +197,8 @@ class _AddProductAlertState extends State<AddProductAlert> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
-                        child:
-                            base64Image != null
-                                ? Image.memory(base64Image!)
+                        child: image != null
+                                ? Image.memory(image!.bytes!)
                                 : Icon(Icons.image,size: 50, color: Colors.grey),
                       ),
                     ),
@@ -201,10 +214,12 @@ class _AddProductAlertState extends State<AddProductAlert> {
                       ),
                       child: Text('Browse'),
                     ),
+
                     SizedBox(height: 8),
+
                     IconButton(
                       onPressed: () {
-                        // Rasmni o'chirish logikasi
+
                         print('Rasm o\'chirildi');
                       },
                       icon: Icon(Icons.delete, color: Colors.blue),
@@ -219,22 +234,33 @@ class _AddProductAlertState extends State<AddProductAlert> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: () {
-                    // if (newProductName.isNotEmpty &&
-                    //     newPurchasePrice.isNotEmpty &&
-                    //     newSalePrice.isNotEmpty) {
-                    //   setState(() {
-                    //     // Yangi mahsulotni ro'yxatga qo'shish
-                    //     products.insert(0, {
-                    //       'sr': (products.length + 1).toString(),
-                    //       'name': newProductName,
-                    //       'category': selectedCategory,
-                    //       'purPrice': newPurchasePrice,
-                    //       'salePrice': newSalePrice,
-                    //     });
-                    //   });
-                    //   Navigator.of(context).pop(); // Dialogni yopish
-                    // }
+                  onPressed: ()async {
+                    try{
+                      ProgressService.show(context, message: "Iltimos kuting...");
+                      var result= await widget.productService.createProduct({
+                        "name": _productName.text,
+                        "description": _productDescription.text,
+                        "salePrice": int.parse(_salePrice.text),
+                        "purchasePrice": int.parse(_purchasePrice.text),
+                        "quantity": int.parse(_quantity.text),
+                        "categoryId": _selectedCategory?.id,
+                        "image": await uploadImage()
+                      });
+
+                      print("------------------------------------------------");
+                      print(result);
+                      print("------------------------------------------------");
+                      ProgressService.hide (context);
+                      if(result){
+                        Navigator.of(context).pop();
+                      }
+                    }catch(e){
+
+                    }
+
+
+                       // Dialogni yopish
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi
