@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/products_lits.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/selected_products.dart';
+import 'package:ims_web/services/paymetn_service.dart';
 
 import 'dialog_header.dart';
 // Yangi xarid qo'shish dialogi
 class AddPurchaseDialog extends StatefulWidget {
+  final PaymetnService paymetnService;
   final List<Map<String, dynamic>> products;
   final List<Map<String, String>> customers;
   final Function(List<Map<String, dynamic>>, String) onSave;
 
-  AddPurchaseDialog({required this.products, required this.customers, required this.onSave});
+  AddPurchaseDialog({required this.products, required this.customers, required this.onSave, required this.paymetnService});
 
   @override
   _AddPurchaseDialogState createState() => _AddPurchaseDialogState();

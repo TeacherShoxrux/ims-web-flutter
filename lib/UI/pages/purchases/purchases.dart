@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/add_alert_purchases.dart';
+import 'package:ims_web/services/paymetn_service.dart';
 
 class PurchasesListPage extends StatefulWidget {
   @override
@@ -39,11 +40,16 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
     {'name': 'Customer 1', 'phone': '0355', 'email': 'abc@gmail.com', 'address': 'New Address'},
     {'name': 'Customer 2', 'phone': '25335', 'email': 'jkd@hotmail.com', 'address': '15353'},
   ];
+
+final paymentService = PaymetnService();
+
+
   void _showAddPurchaseDialog() {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AddPurchaseDialog(
+          paymetnService: paymentService,
           products: products,
           customers: customers,
           onSave: (selectedProducts, selectedCustomer) {
@@ -115,7 +121,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'Sr#',
+                      'Id',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -125,7 +131,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Date',
+                      'Mijoz',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -135,7 +141,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      'Supplier',
+                      'Vaqti',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -145,7 +151,17 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Total Amount',
+                      'Sotuvchi',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                   Expanded(
+                    flex: 2,
+                    child: Text(
+                      'Summasi',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -160,56 +176,69 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
               ),
             ),
             Expanded(
-              child: ListView.builder(
-                itemCount: purchases.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    color: index % 2 == 0 ? Colors.white : Colors.grey[100],
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Text(purchases[index]['sr']!),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(purchases[index]['date']!),
-                        ),
-                        Expanded(
-                          flex: 3,
-                          child: Text(purchases[index]['supplier']!),
-                        ),
-                        Expanded(
-                          flex: 2,
-                          child: Text(purchases[index]['totalAmount']!),
-                        ),
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  print('Edit bosildi: ${purchases[index]['supplier']}');
-                                },
-                                icon: Icon(Icons.edit, color: Colors.yellow[700]),
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    purchases.removeAt(index);
-                                  });
-                                },
-                                icon: Icon(Icons.delete, color: Colors.blue),
-                              ),
-                            ],
+              child: FutureBuilder(
+                future: paymentService.getPayment(),
+                builder: (context, snapshot) {
+                  if(snapshot.hasData){
+                    return   ListView.builder(
+                  itemCount: snapshot.data?.length??0,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      color: index % 2 == 0 ? Colors.white : Colors.grey[100],
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text("${index + 1}"),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                          Expanded(
+                            flex: 2,
+                            child: Text(snapshot.data?[index].customerName??'null'),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Text(snapshot.data?[index].createdAt??'null'),
+                          ),
+                            Expanded(
+                            flex: 2,
+                            child: Text('${snapshot.data?[index].userFullName}'),
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Text('${snapshot.data?[index].amount}'),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                IconButton(
+                                  onPressed: () {
+                                    print('Edit bosildi: ${purchases[index]['supplier']}');
+                                  },
+                                  icon: Icon(Icons.edit, color: Colors.yellow[700]),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      purchases.removeAt(index);
+                                    });
+                                  },
+                                  icon: Icon(Icons.delete, color: Colors.blue),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                );
+                  }return Center(child: CircularProgressIndicator());
+                }
+                
+               
               ),
             ),
           ],

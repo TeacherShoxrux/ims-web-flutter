@@ -117,7 +117,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Address',
+                      'Seller',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -153,25 +153,25 @@ class _SupplierListPageState extends State<StaffsListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index]['fullName'] ?? 'null',
+                                  snapshot.data?[index].fullName ?? 'null',
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index]['phone'] ?? 'null',
-                                ),
-                              ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  snapshot.data?[index]['password'] ?? 'null',
+                                  snapshot.data?[index].phone?? 'null',
                                 ),
                               ),
                               Expanded(
                                 flex: 3,
                                 child: Text(
-                                  snapshot.data?[index]['role'] ?? 'null',
+                                  snapshot.data?[index].password ?? 'null',
+                                ),
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: Text(
+                                  snapshot.data?[index].role?? 'null',
                                 ),
                               ),
 

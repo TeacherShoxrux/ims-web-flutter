@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:ims_web/models/StaffUserAll_model.dart';
 import 'package:ims_web/services/api_service.dart';
 
 class StaffsService{
@@ -26,11 +27,13 @@ class StaffsService{
   }
 
 
- Future<List<Map<String, dynamic>>> getStaffs() async {
+ Future<List<UselAllModel>> getStaffs() async {
     try {
       final response = await _api.get('api/User/all');
-      final  List<dynamic>data = response['data'];
-      return data.cast<Map<String,dynamic>>();
+      print(response);
+      final List<dynamic> data = response['data'];
+      return data.map((e)=>UselAllModel.fromJson(e)).toList();
+      //data.cast<Map<String,dynamic>>();
     } catch (e) {
       print("Mahsulotni olishda xatolik: $e");
       rethrow;

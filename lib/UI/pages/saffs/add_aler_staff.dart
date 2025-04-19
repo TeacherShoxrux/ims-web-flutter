@@ -127,20 +127,20 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
             ),
             SizedBox(height: 16),
             // Address maydoni
-            Text('Address', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 8),
-            TextField(
-              onChanged: (value) {
-                // newAddress = value;
-              },
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                hintText: 'Enter address',
-              ),
-            ),
-            SizedBox(height: 16),
+            // Text('Address', style: TextStyle(fontSize: 16)),
+            // SizedBox(height: 8),
+            // TextField(
+            //   onChanged: (value) {
+            //     // newAddress = value;
+            //   },
+            //   decoration: InputDecoration(
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     hintText: 'Enter address',
+            //   ),
+            // ),
+            // SizedBox(height: 16),
             // Password maydoni
             Text('Password', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
