@@ -26,8 +26,8 @@ class CustomerService {
     try {
       final response = await _api.get('api/Customer/all');
       print(response);
-    //  final List<dynamic> data = response['data'];
-      return response["data"].map((e)=>CustomerDataModel.fromJson(e)).toList();
+     final List<dynamic> data = response['data'];
+      return data.map((e)=>CustomerDataModel.fromJson(e)).toList();
       // data.cast<Map<String, dynamic>>();
     } catch (e) {
       print("Mahsulotni olishda xatolik: $e");
