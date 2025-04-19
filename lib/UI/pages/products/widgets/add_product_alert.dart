@@ -237,6 +237,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                   onPressed: ()async {
                     try{
                       ProgressService.show(context, message: "Iltimos kuting...");
+                      var image=await uploadImage();
                       var result= await widget.productService.createProduct({
                         "name": _productName.text,
                         "description": _productDescription.text,
@@ -244,7 +245,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                         "purchasePrice": int.parse(_purchasePrice.text),
                         "quantity": int.parse(_quantity.text),
                         "categoryId": _selectedCategory?.id,
-                        "image": await uploadImage()
+                        "image": image
                       });
 
                       print("------------------------------------------------");
