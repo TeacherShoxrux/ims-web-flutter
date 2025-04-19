@@ -172,13 +172,14 @@ class _CustomerListPageState extends State<CustomerListPage> {
             // Ro'yxat elementlari
             Expanded(
               child: FutureBuilder(
-                future: customerService.getCustomer(),
+                future: customerService.getAllCustomer(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (context, index) {
-                        return Container(
+                        return                        
+                         Container(
                           color:
                               index % 2 == 0 ? Colors.white : Colors.grey[100],
                           padding: EdgeInsets.symmetric(
@@ -191,13 +192,13 @@ class _CustomerListPageState extends State<CustomerListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index]['name'] ?? 'null',
+                                  snapshot.data?[index].name ?? 'null',
                                 ),
                               ),
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index]['phone'] ?? 'null',
+                                  snapshot.data?[index].phone ?? 'null',
                                 ),
                               ),
                               Expanded(
@@ -207,7 +208,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index]['createdAt'] ?? 'null',
+                                  snapshot.data?[index].createdAt?? 'null',
                                 ),
                               ),
                               Expanded(
