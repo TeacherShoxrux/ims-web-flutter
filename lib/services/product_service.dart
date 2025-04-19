@@ -20,6 +20,17 @@ class ProductService {
       return [];
     }
   }
+  // Barcha mahsulotlarni olish
+  Future<List<ProductModel>> searchAllProducts({required String text,int page = 1,pageSize=10}) async {
+    try {
+      List response = await _api.get('api/Product/GetAllProductsByStoreIdAndSearchTerm/$text?pageIndex=$page&pageSize=$pageSize');
+      print(response);
+      return response.map((e)=>ProductModel.fromJson(e)).toList();
+    } catch (e) {
+      print("Mahsulotlar ro'yxatini olishda xatolik: $e");
+      return [];
+    }
+  }
 
   Future<Map<String, dynamic>> getProductById({int page = 1,pageSize=10}) async {
     try {
