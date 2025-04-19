@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:ims_web/models/customer_model.dart';
 import 'package:ims_web/services/api_service.dart';
 
 class CustomerService {
@@ -21,14 +22,16 @@ class CustomerService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> getCustomer() async {
+  Future<List<CustomerDataModel>> getAllCustomer() async {
     try {
       final response = await _api.get('api/Customer/all');
-      final List<dynamic> data = response['data'];
-      return data.cast<Map<String, dynamic>>();
+      print(response);
+    //  final List<dynamic> data = response['data'];
+      return response["data"].map((e)=>CustomerDataModel.fromJson(e)).toList();
+      // data.cast<Map<String, dynamic>>();
     } catch (e) {
       print("Mahsulotni olishda xatolik: $e");
-      rethrow;
+      return [];
     }
   }
 }
