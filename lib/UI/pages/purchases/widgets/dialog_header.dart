@@ -5,15 +5,17 @@ import 'customer_picker.dart';
 
 class DialogHeaderWidget extends StatelessWidget {
   final List<Map<String, String>> customers;
+final Function(String) onChanged;
   final Function(String) onCustomerSelected;
   final VoidCallback onClear;
   final VoidCallback onSave;
 
-  DialogHeaderWidget({
+  DialogHeaderWidget({super.key, 
     required this.customers,
     required this.onCustomerSelected,
     required this.onClear,
-    required this.onSave,
+    required this.onSave, 
+    required this.onChanged,
   });
 
   @override
@@ -23,6 +25,7 @@ class DialogHeaderWidget extends StatelessWidget {
         Expanded(
           flex: 2,
           child: TextField(
+            onChanged: onChanged,
             decoration: InputDecoration(
               hintText: 'Search',
               prefixIcon: Icon(Icons.search),

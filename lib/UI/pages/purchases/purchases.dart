@@ -50,7 +50,7 @@ final paymentService = PaymetnService();
       builder: (BuildContext context) {
         return AddPurchaseDialog(
           paymetnService: paymentService,
-          products: products,
+        //  products: products,
           customers: customers,
           onSave: (selectedProducts, selectedCustomer) {
             setState(() {

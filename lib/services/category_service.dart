@@ -28,6 +28,8 @@ static  List<CategoryModel> categories=[];
     }
   }
 
+  
+
   Future<bool> createCategory(Map<String, dynamic> data) async {
     try {
       await _api.post('api/Category/CreateCategory', data);

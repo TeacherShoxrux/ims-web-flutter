@@ -81,9 +81,10 @@ class _LoginPageState extends State<LoginPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         // Sarlavha
-                        Center(
+                        Center(widthFactor: 1.6,
                           child: Text(
-                            'Login',
+                            'Tizimga kirish',
+                            textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: screenWidth > 600 ? 28 : 24,
                               fontWeight: FontWeight.bold,
@@ -94,7 +95,8 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 32),
                         // Email maydoni
                         Text(
-                          'Email',
+                          'Telifon',
+                          textAlign:TextAlign.start ,
                           style: TextStyle(
                             fontSize: screenWidth > 600 ? 16 : 14,
                             fontWeight: FontWeight.w500,
@@ -107,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _emailController,
                             keyboardType: TextInputType.emailAddress,
                             decoration: InputDecoration(
-                              hintText: 'Enter your email',
+                              hintText: 'Telefon raqamingizni kiriting',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -119,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                         SizedBox(height: 16),
                         // Parol maydoni
                         Text(
-                          'Password',
+                          'Parol',
                           style: TextStyle(
                             fontSize: screenWidth > 600 ? 16 : 14,
                             fontWeight: FontWeight.w500,
@@ -132,7 +134,7 @@ class _LoginPageState extends State<LoginPage> {
                             controller: _passwordController,
                             obscureText: true, // Parolni yashirish
                             decoration: InputDecoration(
-                              hintText: 'Enter your password',
+                              hintText: 'Parol kiriting',
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                               ),
@@ -143,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 32),
                         // Login tugmasi
-                        Center(
+                        Center(widthFactor: 2,
                           child: ElevatedButton(
                             onPressed: () => _handleLogin(context),
                             style: ElevatedButton.styleFrom(
@@ -158,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                             ),
                             child: Text(
-                              'Login',
+                              'Kirish',
                               style: TextStyle(
                                 fontSize: screenWidth > 600 ? 18 : 16,
                               ),

@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/products_lits.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/selected_products.dart';
+import 'package:ims_web/models/product_model.dart';
 import 'package:ims_web/services/paymetn_service.dart';
+import 'package:ims_web/services/product_service.dart';
 
 import 'dialog_header.dart';
+
 // Yangi xarid qo'shish dialogi
 class AddPurchaseDialog extends StatefulWidget {
   final PaymetnService paymetnService;
-  final List<Map<String, dynamic>> products;
+  //final List<ProductModel> products;
   final List<Map<String, String>> customers;
   final Function(List<Map<String, dynamic>>, String) onSave;
 
-  AddPurchaseDialog({required this.products, required this.customers, required this.onSave, required this.paymetnService});
+  AddPurchaseDialog({
+   // required this.products,
+    required this.customers,
+    required this.onSave,
+    required this.paymetnService,
+  });
 
   @override
   _AddPurchaseDialogState createState() => _AddPurchaseDialogState();
@@ -20,19 +28,27 @@ class AddPurchaseDialog extends StatefulWidget {
 class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
   List<Map<String, dynamic>> selectedProducts = [];
   String selectedCustomer = 'Cash';
+  List<ProductModel> products = [];
+  final _productService = ProductService();
+
+
+ String text='';
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       content: Container(
         width: MediaQuery.of(context).size.width * 0.8,
         height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
           children: [
             DialogHeaderWidget(
+              onChanged: (x) async {
+                text =x;
+                //await _productService.searchAllProducts(text: x);
+                setState(() {});
+              },
               customers: widget.customers,
               onCustomerSelected: (customer) {
                 setState(() {
@@ -56,27 +72,36 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                 children: [
                   Expanded(
                     flex: 3,
-                    child: ProductGridWidget(
-                      products: widget.products,
-                      onProductSelected: (product) {
-                        setState(() {
-                          bool exists = false;
-                          for (var item in selectedProducts) {
-                            if (item['name'] == product['name']) {
-                              item['quantity'] += 1;
-                              exists = true;
-                              break;
+                    child: FutureBuilder(
+                      future: text.length==0? _productService.getAllProducts():_productService.searchAllProducts(text: text),
+                      builder: (context, snapshot) {
+                        if(snapshot.hasData){
+                          return  ProductGridWidget(
+                        products:snapshot.data??[],
+                        onProductSelected: (product) {
+                          setState(() {
+                            bool exists = false;
+                            for (var item in selectedProducts) {
+                              if (item['name'] == product['name']) {
+                                item['quantity'] += 1;
+                                exists = true;
+                                break;
+                              }
                             }
-                          }
-                          if (!exists) {
-                            selectedProducts.add({
-                              'name': product['name'],
-                              'price': product['price'],
-                              'quantity': 1,
-                            });
-                          }
-                        });
+                            if (!exists) {
+                              selectedProducts.add({
+                                'name': product['name'],
+                                'price': product['price'],
+                                'quantity': 1,
+                              });
+                            }
+                          });
+                        },
+                      );
+                        }
+                        return Center(child: CircularProgressIndicator(),);
                       },
+                    
                     ),
                   ),
                   Expanded(

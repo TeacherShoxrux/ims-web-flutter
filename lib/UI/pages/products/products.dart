@@ -23,7 +23,8 @@ class _ProductsListPageState extends State<ProductsListPage> {
       },
     );
   }
- String text='';
+
+  String text = '';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,11 +35,9 @@ class _ProductsListPageState extends State<ProductsListPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             TextField(
-              onChanged: (x)async{
-              text=x;
-               setState(() {
-                 
-               });
+              onChanged: (x) async {
+                text = x;
+                setState(() {});
               },
               decoration: InputDecoration(
                 hintText: 'Search Here',
@@ -83,15 +82,16 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'Qoldiq',
+                      'Id',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
+
                   Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Text(
                       'Nomi',
                       style: TextStyle(
@@ -113,7 +113,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Narxi',
+                      'Qoldiq',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -122,6 +122,16 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   ),
                   Expanded(
                     flex: 2,
+                    child: Text(
+                      'Narxi',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 3,
                     child: Text(
                       'Rasmi',
                       style: TextStyle(
@@ -139,7 +149,10 @@ class _ProductsListPageState extends State<ProductsListPage> {
             ),
             // Ro'yxat elementlari
             FutureBuilder(
-              future:text.length==0? _productService.getAllProducts():_productService.searchAllProducts(text: text),
+              future:
+                  text.length == 0
+                      ? _productService.getAllProducts()
+                      : _productService.searchAllProducts(text: text),
               builder: (context, snapshot) {
                 return Expanded(
                   child: ListView.builder(
@@ -155,15 +168,20 @@ class _ProductsListPageState extends State<ProductsListPage> {
                           children: [
                             Expanded(
                               flex: 1,
-                              child: Text("${snapshot.data?[index].quantity}"),
+                              child: Text("${snapshot.data?[index].id}"),
                             ),
+
                             Expanded(
-                              flex: 3,
+                              flex: 2,
                               child: Text("${snapshot.data?[index].name}"),
                             ),
                             Expanded(
                               flex: 2,
                               child: Text("${snapshot.data?[index].name}"),
+                            ),
+                            Expanded(
+                              flex: 2,
+                              child: Text("${snapshot.data?[index].quantity}"),
                             ),
                             Expanded(
                               flex: 2,
@@ -180,12 +198,11 @@ class _ProductsListPageState extends State<ProductsListPage> {
                                               "${Urls.baseUrlImage}/${snapshot.data?[index].image}",
                                           width: 30,
                                           height: 30,
-
                                         ),
                               ),
                             ),
                             Expanded(
-                              flex: 1,
+                              flex: 2,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [

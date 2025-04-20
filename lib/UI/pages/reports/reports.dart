@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/UI/pages/login/login.dart';
+import 'package:ims_web/services/auth_service.dart';
 import 'package:intl/intl.dart'; // Sana formatlash uchun
-
 
 class ReportsPage extends StatefulWidget {
   @override
@@ -57,14 +58,18 @@ class _ReportsPageState extends State<ReportsPage> {
     }
 
     // Sana oralig'iga mos xaridlarni filtr qilish
-    List<Map<String, dynamic>> filteredPurchases = purchases.where((purchase) {
-      DateTime purchaseDate = formatter.parse(purchase['date']);
-      return purchaseDate.isAfter(startDate!.subtract(Duration(days: 1))) &&
-          purchaseDate.isBefore(endDate!.add(Duration(days: 1)));
-    }).toList();
+    List<Map<String, dynamic>> filteredPurchases =
+        purchases.where((purchase) {
+          DateTime purchaseDate = formatter.parse(purchase['date']);
+          return purchaseDate.isAfter(startDate!.subtract(Duration(days: 1))) &&
+              purchaseDate.isBefore(endDate!.add(Duration(days: 1)));
+        }).toList();
 
     // Umumiy xaridlar summasi
-    double totalPurchasesAmount = filteredPurchases.fold(0.0, (sum, item) => sum + item['totalAmount']);
+    double totalPurchasesAmount = filteredPurchases.fold(
+      0.0,
+      (sum, item) => sum + item['totalAmount'],
+    );
 
     // Xaridlar soni
     int numberOfPurchases = filteredPurchases.length;
@@ -82,6 +87,8 @@ class _ReportsPageState extends State<ReportsPage> {
       'mostPurchasedProduct': mostPurchasedProduct,
     };
   }
+
+  final authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -105,31 +112,55 @@ class _ReportsPageState extends State<ReportsPage> {
       backgroundColor: Colors.grey[200], // Fon rangi
       body: Padding(
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth > 1200
-              ? 64.0
-              : screenWidth > 600
-              ? 32.0
-              : 16.0,
+          horizontal:
+              screenWidth > 1200
+                  ? 64.0
+                  : screenWidth > 600
+                  ? 32.0
+                  : 16.0,
           vertical: 16.0,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Qidiruv paneli
-            Container(
-              width: screenWidth > 1200 ? 400 : double.infinity,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Search Here',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  width: screenWidth > 1200 ? 400 : double.infinity,
+                  child: TextField(
+                    decoration: InputDecoration(
+                      hintText: 'Search Here',
+                      prefixIcon: Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      filled: true,
+                      fillColor: Colors.white,
+                    ),
                   ),
-                  filled: true,
-                  fillColor: Colors.white,
                 ),
-              ),
+                ElevatedButton(
+                  onPressed: () {
+                    authService.logout();
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) {
+                          return LoginPage();
+                        },
+                      ),
+                      (delate) => false,
+                    );
+                  },
+                  child: Text("Chiqish", style: TextStyle(color: Colors.white)),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStatePropertyAll(Colors.red),
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 16),
             // Sarlavha
@@ -148,15 +179,15 @@ class _ReportsPageState extends State<ReportsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Start Date',
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      Text('Start Date', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       GestureDetector(
                         onTap: () => _selectDate(context, true),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(10),
@@ -177,15 +208,15 @@ class _ReportsPageState extends State<ReportsPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'End Date',
-                        style: TextStyle(fontSize: 16),
-                      ),
+                      Text('End Date', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       GestureDetector(
                         onTap: () => _selectDate(context, false),
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 12,
+                            horizontal: 16,
+                          ),
                           decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
                             borderRadius: BorderRadius.circular(10),
@@ -210,11 +241,12 @@ class _ReportsPageState extends State<ReportsPage> {
                 crossAxisCount: crossAxisCount,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
-                childAspectRatio: screenWidth > 1200
-                    ? 2
-                    : screenWidth > 600
-                    ? 1.5
-                    : 3, // Kartalarning o'lcham nisbati
+                childAspectRatio:
+                    screenWidth > 1200
+                        ? 2
+                        : screenWidth > 600
+                        ? 1.5
+                        : 3, // Kartalarning o'lcham nisbati
                 children: [
                   // Total Purchases Amount karta
                   StatCard(
@@ -270,9 +302,7 @@ class StatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
         padding: EdgeInsets.all(screenWidth > 600 ? 16.0 : 12.0),
         child: Row(

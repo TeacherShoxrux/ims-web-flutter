@@ -35,12 +35,14 @@ class CustomerDataModel {
     String name;
     String phone;
     String createdAt;
+    String? info;
 
     CustomerDataModel({
         required this.id,
         required this.name,
         required this.phone,
         required this.createdAt,
+         this.info,
     });
 
     factory CustomerDataModel.fromJson(Map<String, dynamic> json) => CustomerDataModel(
@@ -48,6 +50,7 @@ class CustomerDataModel {
         name: json["name"],
         phone: json["phone"],
         createdAt: json["createdAt"],
+        info: json['info']
     );
 
     Map<String, dynamic> toJson() => {
@@ -55,5 +58,6 @@ class CustomerDataModel {
         "name": name,
         "phone": phone,
         "createdAt": createdAt,
+        "info":info,
     };
 }

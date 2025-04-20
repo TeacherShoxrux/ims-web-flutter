@@ -115,7 +115,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'Sr#',
+                      'Id',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Name',
+                      'Ism',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -135,7 +135,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Phone',
+                      'Telefon',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -145,23 +145,23 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   Expanded(
                     flex: 3,
                     child: Text(
-                      'Email',
+                      'Malumot',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 2,
-                    child: Text(
-                      'Address',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 2,
+                  //   child: Text(
+                  //     'Address',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     flex: 1,
                     child: SizedBox(), // Bo'sh joy ikonlar uchun
@@ -178,8 +178,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                     return ListView.builder(
                       itemCount: snapshot.data?.length ?? 0,
                       itemBuilder: (context, index) {
-                        return                        
-                         Container(
+                        return Container(
                           color:
                               index % 2 == 0 ? Colors.white : Colors.grey[100],
                           padding: EdgeInsets.symmetric(
@@ -190,7 +189,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             children: [
                               Expanded(flex: 1, child: Text("${index + 1}")),
                               Expanded(
-                                flex: 2,
+                                flex: 1,
                                 child: Text(
                                   snapshot.data?[index].name ?? 'null',
                                 ),
@@ -201,14 +200,11 @@ class _CustomerListPageState extends State<CustomerListPage> {
                                   snapshot.data?[index].phone ?? 'null',
                                 ),
                               ),
-                              Expanded(
-                                flex: 3,
-                                child: Text(''),
-                              ),
+                              Expanded(flex: 0, child: Text('')),
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index].createdAt?? 'null',
+                                  snapshot.data?[index].info ?? 'null',
                                 ),
                               ),
                               Expanded(

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:ims_web/models/product_model.dart';
 
 class ProductGridWidget extends StatelessWidget {
-  final List<Map<String, dynamic>> products;
+  final List<ProductModel> products;
   final Function(Map<String, dynamic>) onProductSelected;
 
   ProductGridWidget({required this.products, required this.onProductSelected});
@@ -19,7 +20,7 @@ class ProductGridWidget extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-          onTap: () => onProductSelected(products[index]),
+         // onTap: () => onProductSelected(products[index].),
           child: Card(
             elevation: 2,
             child: Column(
@@ -32,13 +33,13 @@ class ProductGridWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 Text(
-                  products[index]['name'],
+                  products[index].name,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 14),
                 ),
                 SizedBox(height: 4),
                 Text(
-                  products[index]['price'],
+                  products[index].purchasePrice.toString(),
                   style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                 ),
               ],
