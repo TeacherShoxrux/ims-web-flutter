@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/products/widgets/add_product_alert.dart';
+import 'package:ims_web/models/product_model.dart';
 import 'package:ims_web/routes/urls.dart';
 import 'package:ims_web/services/product_service.dart';
 
@@ -13,141 +14,7 @@ class ProductsListPage extends StatefulWidget {
 class _ProductsListPageState extends State<ProductsListPage> {
   final _productService = ProductService();
   // Ro'yxat uchun ma'lumotlar
-  final List<Map<String, String>> products = [
-    {
-      'sr': '1',
-      'name': 'Coca Coal TINE',
-      'category': 'Category 2',
-      'purPrice': '48.00',
-      'salePrice': '50.00',
-    },
-    {
-      'sr': '2',
-      'name': 'Coffe MATE',
-      'category': 'Category 2',
-      'purPrice': '800.00',
-      'salePrice': '850.00',
-    },
-    {
-      'sr': '3',
-      'name': 'Nescafe 3in1',
-      'category': 'Category 1',
-      'purPrice': '35.00',
-      'salePrice': '40.00',
-    },
-    {
-      'sr': '4',
-      'name': 'Sprit Tine',
-      'category': 'Category 1',
-      'purPrice': '47.00',
-      'salePrice': '50.00',
-    },
-    {
-      'sr': '5',
-      'name': 'Pepcy Tin',
-      'category': 'Category 1',
-      'purPrice': '47.00',
-      'salePrice': '50.00',
-    },
-    {
-      'sr': '6',
-      'name': 'Candy Biscuits',
-      'category': 'Category 1',
-      'purPrice': '28.00',
-      'salePrice': '30.00',
-    },
-    {
-      'sr': '7',
-      'name': 'GALA Biscuits',
-      'category': 'Category 2',
-      'purPrice': '28.00',
-      'salePrice': '30.00',
-    },
-    {
-      'sr': '8',
-      'name': 'National Ketchup Chilli',
-      'category': 'Category 1',
-      'purPrice': '330.00',
-      'salePrice': '350.00',
-    },
-    {
-      'sr': '9',
-      'name': 'National Ketchup',
-      'category': 'Category 1',
-      'purPrice': '330.00',
-      'salePrice': '350.00',
-    },
-    {
-      'sr': '10',
-      'name': 'LAYS Salted',
-      'category': 'Category 1',
-      'purPrice': '95.00',
-      'salePrice': '100.00',
-    },
-    {
-      'sr': '11',
-      'name': 'Lays Masla',
-      'category': 'Category 1',
-      'purPrice': '55.00',
-      'salePrice': '60.00',
-    },
-    {
-      'sr': '12',
-      'name': 'Lays Yogut and Harb',
-      'category': 'Category 2',
-      'purPrice': '18.00',
-      'salePrice': '20.00',
-    },
-    {
-      'sr': '6',
-      'name': 'Candy Biscuits',
-      'category': 'Category 1',
-      'purPrice': '28.00',
-      'salePrice': '30.00',
-    },
-    {
-      'sr': '7',
-      'name': 'GALA Biscuits',
-      'category': 'Category 2',
-      'purPrice': '28.00',
-      'salePrice': '30.00',
-    },
-    {
-      'sr': '8',
-      'name': 'National Ketchup Chilli',
-      'category': 'Category 1',
-      'purPrice': '330.00',
-      'salePrice': '350.00',
-    },
-    {
-      'sr': '9',
-      'name': 'National Ketchup',
-      'category': 'Category 1',
-      'purPrice': '330.00',
-      'salePrice': '350.00',
-    },
-    {
-      'sr': '10',
-      'name': 'LAYS Salted',
-      'category': 'Category 1',
-      'purPrice': '95.00',
-      'salePrice': '100.00',
-    },
-    {
-      'sr': '11',
-      'name': 'Lays Masla',
-      'category': 'Category 1',
-      'purPrice': '55.00',
-      'salePrice': '60.00',
-    },
-    {
-      'sr': '12',
-      'name': 'Lays Yogut and Harb',
-      'category': 'Category 2',
-      'purPrice': '18.00',
-      'salePrice': '20.00',
-    },
-  ];
+
   void _showAddProductDialog() {
     showDialog(
       context: context,
@@ -156,7 +23,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
       },
     );
   }
-
+ String text='';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -166,8 +33,13 @@ class _ProductsListPageState extends State<ProductsListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Qidiruv paneli
             TextField(
+              onChanged: (x)async{
+              text=x;
+               setState(() {
+                 
+               });
+              },
               decoration: InputDecoration(
                 hintText: 'Search Here',
                 prefixIcon: Icon(Icons.search),
@@ -267,7 +139,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
             ),
             // Ro'yxat elementlari
             FutureBuilder(
-              future: _productService.getAllProducts(),
+              future:text.length==0? _productService.getAllProducts():_productService.searchAllProducts(text: text),
               builder: (context, snapshot) {
                 return Expanded(
                   child: ListView.builder(
@@ -320,9 +192,9 @@ class _ProductsListPageState extends State<ProductsListPage> {
                                   IconButton(
                                     onPressed: () {
                                       // Edit tugmasi bosilganda
-                                      print(
-                                        'Edit bosildi: ${products[index]['name']}',
-                                      );
+                                      // print(
+                                      //   'Edit bosildi: ${products[index]['name']}',
+                                      // );
                                     },
                                     icon: Icon(
                                       Icons.edit,
@@ -333,7 +205,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                                     onPressed: () {
                                       // Delete tugmasi bosilganda
                                       setState(() {
-                                        products.removeAt(index);
+                                        // products.removeAt(index);
                                       });
                                     },
                                     icon: Icon(
