@@ -39,8 +39,9 @@ class CustomerService {
  Future<List<CustomersearchModel>> searchAllCustomer({required String text,int page = 1,pageSize=10}) async {
     try {
       var response = await _api.get('api/Customer/Search?searchTerm=$text&pageIndex=$page&pageSize=$pageSize');
+      List ls=response['data'];
       print(response);
-      return response["data"].map((e)=>CustomersearchModel.fromJson(e)).toList();
+      return ls.map((e)=>CustomersearchModel.fromJson(e)).toList();
     } catch (e) {
       print("Mahsulotlar ro'yxatini olishda xatolik: $e");
       return [];
