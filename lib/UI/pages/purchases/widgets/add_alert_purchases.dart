@@ -15,7 +15,7 @@ class AddPurchaseDialog extends StatefulWidget {
   final Function(List<Map<String, dynamic>>, String) onSave;
 
   AddPurchaseDialog({
-   // required this.products,
+    // required this.products,
     required this.customers,
     required this.onSave,
     required this.paymetnService,
@@ -26,13 +26,12 @@ class AddPurchaseDialog extends StatefulWidget {
 }
 
 class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
-  List<Map<String, dynamic>> selectedProducts = [];
+  List<ProductModel> selectedProducts = [];
   String selectedCustomer = 'Cash';
   List<ProductModel> products = [];
   final _productService = ProductService();
 
-
- String text='';
+  String text = '';
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +42,15 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
         height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
           children: [
-            DialogHeaderWidget(customers: [],
+            DialogHeaderWidget(
+              customers: [],
               onChanged: (x) async {
-                text =x;
+                text = x;
                 //await _productService.searchAllProducts(text: x);
                 setState(() {});
               },
-              
-           //   customers: widget.customers,
+
+              //   customers: widget.customers,
               onCustomerSelected: (customer) {
                 setState(() {
                   selectedCustomer = customer;
@@ -62,7 +62,8 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                 });
               },
               onSave: () {
-                widget.onSave(selectedProducts, selectedCustomer);
+                // widget.onSave(
+                //   selectedProducts, selectedCustomer);
                 Navigator.of(context).pop();
               },
             ),
@@ -74,35 +75,33 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                   Expanded(
                     flex: 3,
                     child: FutureBuilder(
-                      future: text.isEmpty? _productService.getAllProducts():_productService.searchAllProducts(text: text),
+                      future:
+                          text.isEmpty
+                              ? _productService.getAllProducts()
+                              : _productService.searchAllProducts(text: text),
                       builder: (context, snapshot) {
-                        if(snapshot.hasData){
-                          return  ProductGridWidget(
-                        products:snapshot.data??[],
-                        onProductSelected: (product) {
-                          setState(() {
-                            bool exists = false;
-                            for (var item in selectedProducts) {
-                              if (item['name'] == product['name']) {
-                                item['quantity'] += 1;
-                                exists = true;
-                                break;
-                              }
-                            }
-                            if (!exists) {
-                              selectedProducts.add({
-                                'name': product['name'],
-                                'price': product['price'],
-                                'quantity': 1,
+                        if (snapshot.hasData) {
+                          return ProductGridWidget(
+                            products: snapshot.data ?? [],
+                            onProductSelected: (product) {
+                              setState(() {
+                                bool exists = false;
+                                for (var item in selectedProducts) {
+                                  if (item.name == product.name) {
+                                    item.salePrice += product.salePrice;
+                                    exists = true;
+                                    break;
+                                  }
+                                }
+                                if (!exists) {
+                                  selectedProducts.add(product);
+                                }
                               });
-                            }
-                          });
-                        },
-                      );
+                            },
+                          );
                         }
-                        return Center(child: CircularProgressIndicator(),);
+                        return Center(child: CircularProgressIndicator());
                       },
-                    
                     ),
                   ),
                   Expanded(

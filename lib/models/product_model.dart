@@ -5,6 +5,7 @@ class ProductModel {
   num salePrice;
   num purchasePrice;
   int quantity;
+  int quantityPay =1;
   String? image;
 
   ProductModel({

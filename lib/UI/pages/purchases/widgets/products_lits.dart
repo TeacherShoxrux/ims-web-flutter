@@ -6,7 +6,7 @@ import 'package:ims_web/routes/urls.dart';
 
 class ProductGridWidget extends StatelessWidget {
   final List<ProductModel> products;
-  final Function(Map<String, dynamic>) onProductSelected;
+  final Function(ProductModel) onProductSelected;
 
   ProductGridWidget({required this.products, required this.onProductSelected});
 
@@ -22,29 +22,28 @@ class ProductGridWidget extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (context, index) {
         return GestureDetector(
-         // onTap: () => onProductSelected(products[index].),
+          onTap: () => onProductSelected(products[index]..id),
           child: Card(
             elevation: 2,
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4,vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-              
-                 Expanded(
-                                flex: 2,
-                                child: Center(
-                                  child:
-                                      products[index].image == null
-                                          ? Icon(Icons.image)
-                                          : ImageViewer(
-                                            imagePath:
-                                                "${Urls.baseUrlImage}/${products[index].image}",
-                                            width: 150,
-                                            height: 220,
-                                          ),
-                                ),
+                  Expanded(
+                    flex: 2,
+                    child: Center(
+                      child:
+                          products[index].image == null
+                              ? Icon(Icons.image)
+                              : ImageViewer(
+                                imagePath:
+                                    "${Urls.baseUrlImage}/${products[index].image}",
+                                width: 150,
+                                height: 220,
                               ),
+                    ),
+                  ),
                   SizedBox(height: 8),
                   Text(
                     products[index].name,
@@ -53,10 +52,9 @@ class ProductGridWidget extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    products[index].purchasePrice.toString(),
+                    products[index].salePrice.toString(),
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                   ),
-              
                 ],
               ),
             ),

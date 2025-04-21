@@ -78,24 +78,24 @@ final paymentService = PaymetnService();
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Search Here',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: '',
+            //     prefixIcon: Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //       borderSide: BorderSide.none,
+            //     ),
+            //     filled: true,
+            //     fillColor: Colors.white,
+            //   ),
+            // ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Purchases List',
+                  "To'lovlar",
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ final paymentService = PaymetnService();
                 ElevatedButton.icon(
                   onPressed: _showAddPurchaseDialog,
                   icon: Icon(Icons.add),
-                  label: Text('Add New'),
+                  label: Text("Qo'shish"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
                     foregroundColor: Colors.white,
