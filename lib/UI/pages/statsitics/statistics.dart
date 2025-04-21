@@ -101,7 +101,7 @@ getData()async{
                       // Total Customers karta
                       StatCard(
                         title: 'Barcha Mijozlar',
-                        value: "${snapshot.data?['data']['totalCustomer']}",
+                        value: "${snapshot.data?.totalCustomer}",
                         icon: Icons.person,
                         color: Colors.blue,
                         screenWidth: screenWidth,
@@ -109,7 +109,7 @@ getData()async{
                       // Total Suppliers karta
                       StatCard(
                         title: 'Barcha Sotuvlar',
-                        value: "${snapshot.data?['data']['totalSales']}",
+                        value: "${snapshot.data?.totalSales}",
                         icon: Icons.local_shipping,
                         color: Colors.green,
                         screenWidth: screenWidth,
@@ -117,7 +117,7 @@ getData()async{
                       // Total Products karta
                       StatCard(
                         title: 'Barcha Mahsulotlar',
-                        value: "${snapshot.data?['data']['totalCustomer']}",
+                        value: "${snapshot.data?.totalProduct}",
                         icon: Icons.inventory,
                         color: Colors.orange,
                         screenWidth: screenWidth,
@@ -125,7 +125,7 @@ getData()async{
                       // Total Purchases Amount karta
                       StatCard(
                         title: 'Top Mahsulot ',
-                        value: "${snapshot.data?['data']['topProduct']}",
+                        value: "${snapshot.data?.topProduct}",
                         icon: Icons.attach_money,
                         color: Colors.purple,
                         screenWidth: screenWidth,

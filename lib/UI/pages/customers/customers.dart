@@ -73,7 +73,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
             // Qidiruv paneli
             TextField(
               decoration: InputDecoration(
-                hintText: 'Search Here',
+                hintText: 'Qidiruv',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -89,7 +89,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Customer List',
+                  'Mijozlar',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(

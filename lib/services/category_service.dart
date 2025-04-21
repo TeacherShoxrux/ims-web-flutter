@@ -5,9 +5,9 @@ class CategoryService {
   final ApiService _api = ApiService();
 static  List<CategoryModel> categories=[];
 
-  Future<List<CategoryModel>> getAllCategories() async {
+  Future<List<CategoryModel>> getAllCategories({bool update=false}) async {
     try {
-      if(categories.isEmpty) {
+      if(categories.isEmpty||update) {
         List response = await _api.get('api/Category/GetCategories');
         categories=response.map((e)=>CategoryModel.fromJson(e)).toList();
       }

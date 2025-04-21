@@ -25,11 +25,11 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
       _phoneController.text,
       _infoController.text,
     );
-    if(result == false){
+    if(result == true){
       Navigator.pop( context,result);
     }
     ProgressService.hide(context);
-    if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
+ //   if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
     if (!result)ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text('Login xatolik!')));
   }
   @override

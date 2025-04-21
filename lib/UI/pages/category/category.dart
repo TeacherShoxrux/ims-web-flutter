@@ -107,7 +107,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
             // Ro'yxat elementlari
             Expanded(
               child: FutureBuilder(
-                future: categroyService.getAllCategories(),
+                future: categroyService.getAllCategories(update: true),
                 builder: (context,snapshot) {
                   if(snapshot.hasData) {
                     return ListView.builder(

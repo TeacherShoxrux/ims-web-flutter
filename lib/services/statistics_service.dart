@@ -1,18 +1,23 @@
+import 'package:ims_web/models/statistic_model.dart';
+
 import 'api_service.dart';
 
 class StatisticService {
   final ApiService _api = ApiService();
 
-  Future<Map<String, dynamic>> getDashboardStats() async {
+  Future<StatisticModel> getDashboardStats() async {
     try {
       final response = await _api.get('api/Statistics/GetStoreTotal');
       print(response);
-      return response;
+      var statistic = response['data'];
+
+      return StatisticModel.fromJson(statistic);
     } catch (e) {
       print("📊 Statistikani olishda xatolik: $e");
       rethrow;
     }
   }
+
   //
   // Future<int> getTotalUsers() async {
   //   try {

@@ -35,7 +35,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
             // Qidiruv paneli
             TextField(
               decoration: InputDecoration(
-                hintText: 'Search Here',
+                hintText: 'Qidirmoq',
                 prefixIcon: Icon(Icons.search),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
@@ -50,7 +50,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Supplier List',
+                  'Ishchilar',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
