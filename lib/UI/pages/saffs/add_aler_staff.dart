@@ -77,7 +77,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
             ),
             SizedBox(height: 16),
             // Name maydoni
-            Text('Name', style: TextStyle(fontSize: 16)),
+            Text('Ism', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               controller: _nameController,
@@ -89,12 +89,12 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                hintText: 'Enter supplier name',
+                hintText: 'Ism kiriting',
               ),
             ),
             SizedBox(height: 16),
             // Phone maydoni
-            Text('Phone', style: TextStyle(fontSize: 16)),
+            Text('Telefon', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               controller: _phoneController,
@@ -106,7 +106,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                hintText: 'Enter phone number',
+                hintText: "Telefon no'mer kiriting",
               ),
             ),
             SizedBox(height: 16),
@@ -142,7 +142,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
             // ),
             // SizedBox(height: 16),
             // Password maydoni
-            Text('Password', style: TextStyle(fontSize: 16)),
+            Text('Parol', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               onChanged: (value) {
@@ -155,7 +155,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                hintText: 'Enter password',
+                hintText: 'Parol kiriting',
               ),
             ),
             SizedBox(height: 16),
@@ -184,7 +184,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('SAVE'),
+                  child: Text('Saqlash'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -194,7 +194,7 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
                     backgroundColor: Colors.red, // CLOSE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('CLOSE'),
+                  child: Text('Yopish'),
                 ),
               ],
             ),

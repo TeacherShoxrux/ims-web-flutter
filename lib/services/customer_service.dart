@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:ims_web/models/customer_model.dart';
+import 'package:ims_web/models/customers_model/customerSearch_model.dart';
+import 'package:ims_web/models/customers_model/customer_model.dart';
 import 'package:ims_web/services/api_service.dart';
 
 class CustomerService {
@@ -34,4 +35,28 @@ class CustomerService {
       return [];
     }
   }
+
+ Future<List<CustomersearchModel>> searchAllCustomer({required String text,int page = 1,pageSize=10}) async {
+    try {
+      var response = await _api.get('api/Customer/Search?searchTerm=$text&pageIndex=$page&pageSize=$pageSize');
+      print(response);
+      return response["data"].map((e)=>CustomersearchModel.fromJson(e)).toList();
+    } catch (e) {
+      print("Mahsulotlar ro'yxatini olishda xatolik: $e");
+      return [];
+    }
+  }
+
+
+   Future<bool> deleteCustomer(int id) async {
+    try {
+     var res= await _api.delete('api/Customer/$id');
+     print(res);
+      return true;
+    } catch (e) {
+      print("Kategoriya o‘chirishda xatolik: $e");
+      return false;
+    }
+  }
+
 }

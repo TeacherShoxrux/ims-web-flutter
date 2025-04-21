@@ -16,7 +16,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
       context: context,
       builder: (BuildContext context) {
         return AddAlerStaff(authService: staffsService);
-      }
+      },
     );
     if (result == true) {
       setState(() {});
@@ -59,7 +59,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                     _showAddCategoryDialog(context);
                   },
                   icon: Icon(Icons.add),
-                  label: Text('Add New'),
+                  label: Text("Qo'shish"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // Tugma rangi
                     foregroundColor: Colors.white,
@@ -77,7 +77,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                   Expanded(
                     flex: 1,
                     child: Text(
-                      'Sr#',
+                      'Id',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -87,7 +87,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Name',
+                      'Ism',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -97,7 +97,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Phone',
+                      'Telefon',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -117,7 +117,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Seller',
+                      'Ishchi',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
@@ -159,7 +159,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index].phone?? 'null',
+                                  snapshot.data?[index].phone ?? 'null',
                                 ),
                               ),
                               Expanded(
@@ -171,7 +171,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index].role?? 'null',
+                                  snapshot.data?[index].role ?? 'null',
                                 ),
                               ),
 
@@ -184,6 +184,8 @@ class _SupplierListPageState extends State<StaffsListPage> {
                                       onPressed: () {
                                         // Edit tugmasi bosilganda
                                         //   print('Edit bosildi: ${suppliers[index]['name']}');
+                                        
+                                        setState(() {});
                                       },
                                       icon: Icon(
                                         Icons.edit,

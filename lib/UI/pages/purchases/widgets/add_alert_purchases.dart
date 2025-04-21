@@ -43,13 +43,14 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
         height: MediaQuery.of(context).size.height * 0.8,
         child: Column(
           children: [
-            DialogHeaderWidget(
+            DialogHeaderWidget(customers: [],
               onChanged: (x) async {
                 text =x;
                 //await _productService.searchAllProducts(text: x);
                 setState(() {});
               },
-              customers: widget.customers,
+              
+           //   customers: widget.customers,
               onCustomerSelected: (customer) {
                 setState(() {
                   selectedCustomer = customer;

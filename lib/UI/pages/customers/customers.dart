@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/customers/widgets/add_customer_alert.dart';
+import 'package:ims_web/UI/pages/customers/widgets/delete_customer_alert.dart';
 import 'package:ims_web/services/customer_service.dart';
 
 class CustomerListPage extends StatefulWidget {
@@ -92,12 +93,12 @@ class _CustomerListPageState extends State<CustomerListPage> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
+                  onPressed: () async{
                     // Add New tugmasi bosilganda bajariladigan kod
                     _showAddCategoryDialog(context);
                   },
                   icon: Icon(Icons.add),
-                  label: Text('Add New'),
+                  label: Text("Qo'shish"),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // Tugma rangi
                     foregroundColor: Colors.white,
@@ -223,12 +224,20 @@ class _CustomerListPageState extends State<CustomerListPage> {
                                       ),
                                     ),
                                     IconButton(
-                                      onPressed: () {
-                                        // Delete tugmasi bosilganda
-                                        // setState(() {
-                                        //   customers.removeAt(index);
-                                        // });
-                                      },
+                                      onPressed: ()async {
+                                    var confirm= await  showDeleteCustomerDialog(context,snapshot.data?[index].name??'null');
+                                    if(confirm){
+                                      var success= await customerService.deleteCustomer(snapshot.data?[index].id??0);
+                                      if(success){
+                                        ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(content: Text("Mijoz o‘chirildi")),
+                                        );
+                                        setState(() {
+
+                                        });
+                                      }
+                                    }
+                                    },
                                       icon: Icon(
                                         Icons.delete,
                                         color: Colors.blue,

@@ -25,6 +25,9 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
       _phoneController.text,
       _infoController.text,
     );
+    if(result == false){
+      Navigator.pop( context,result);
+    }
     ProgressService.hide(context);
     if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
     if (!result)ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text('Login xatolik!')));
@@ -43,11 +46,11 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                 Icon(Icons.shopping_cart, color: Colors.white),
                 SizedBox(width: 8),
                 Text(
-                  'Customer Details',
+                  'Mijoz',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.white
                   ),
                 ),
               ],
@@ -60,7 +63,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Name', style: TextStyle(fontSize: 16)),
+                      Text('Ism', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       TextField(
                         onChanged: (value) {
@@ -71,7 +74,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Enter customer name',
+                          hintText: 'Ism kiriting',
                         ),
                       ),
                     ],
@@ -82,7 +85,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Phone', style: TextStyle(fontSize: 16)),
+                      Text('Telefon', style: TextStyle(fontSize: 16)),
                       SizedBox(height: 8),
                       TextField(
                         onChanged: (value) {
@@ -94,7 +97,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          hintText: 'Enter phone number',
+                          hintText: 'Telefon nomer kiting',
                         ),
                       ),
                     ],
@@ -102,26 +105,26 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            // Email maydoni
-            Text('Email', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 8),
-            TextField(
-              onChanged: (value) {
-                // newEmail = value;
-              },
+            // SizedBox(height: 16),
+            // // Email maydoni
+            // Text('Email', style: TextStyle(fontSize: 16)),
+            // SizedBox(height: 8),
+            // TextField(
+            //   onChanged: (value) {
+            //     // newEmail = value;
+            //   },
 
-              keyboardType: TextInputType.emailAddress,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                hintText: 'Enter email address',
-              ),
-            ),
+            //   keyboardType: TextInputType.emailAddress,
+            //   decoration: InputDecoration(
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     hintText: 'Enter email address',
+            //   ),
+            // ),
             SizedBox(height: 16),
             // Address maydoni
-            Text('Address', style: TextStyle(fontSize: 16)),
+            Text('Malumot', style: TextStyle(fontSize: 16)),
             SizedBox(height: 8),
             TextField(
               onChanged: (value) {
@@ -132,7 +135,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                hintText: 'Enter address',
+                hintText: 'Malumot kiriting',
               ),
             ),
             SizedBox(height: 16),
@@ -161,7 +164,7 @@ _handleAddCustomer(context);
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('SAVE'),
+                  child: Text('Saqlash'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -171,7 +174,7 @@ _handleAddCustomer(context);
                     backgroundColor: Colors.red, // CLOSE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('CLOSE'),
+                  child: Text('Yopish'),
                 ),
               ],
             ),
