@@ -165,7 +165,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                               Expanded(
                                 flex: 3,
                                 child: Text(
-                                  snapshot.data?[index].password ?? 'null',
+                                  snapshot.data?[index].phone ?? 'null',
                                 ),
                               ),
                               Expanded(
@@ -184,7 +184,7 @@ class _SupplierListPageState extends State<StaffsListPage> {
                                       onPressed: () {
                                         // Edit tugmasi bosilganda
                                         //   print('Edit bosildi: ${suppliers[index]['name']}');
-                                        
+
                                         setState(() {});
                                       },
                                       icon: Icon(

@@ -20,18 +20,6 @@ class CustomSidebar extends StatefulWidget {
 }
 
 class _CustomSidebarState extends State<CustomSidebar> {
-  final List<Map<String, dynamic>> menuItems = const [
-    {'icon': Icons.home, 'label': 'Bosh sahifa'},
-    {'icon': Icons.category, 'label': 'Kategoriyalar'},
-    {'icon': Icons.shopping_bag, 'label': 'Mahsulotlar'},
-    {'icon': Icons.shopping_cart_checkout, 'label': 'Mijozlar'},
-    // {'icon': Icons.local_shipping, 'label': 'Supplier'},
-    {'icon': Icons.lock, 'label': "To'lovlar"},
-    // {'icon': Icons.sell, 'label': 'Sales'},
-    {'icon': Icons.person, 'label': 'Ishchilar'},
-    {'icon': Icons.insert_chart, 'label': 'Hisoblatlar'},
-  ];
-
   final authservice = AuthService();
   final productService = ProductService();
 
@@ -78,6 +66,20 @@ class _CustomSidebarState extends State<CustomSidebar> {
         future: authservice.getUserInfo(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            final role = snapshot.data?.role ?? '';
+            final List<Map<String, dynamic>> menuItems = [
+              {'icon': Icons.home, 'label': 'Bosh sahifa'},
+              {'icon': Icons.category, 'label': 'Kategoriyalar'},
+              {'icon': Icons.shopping_bag, 'label': 'Mahsulotlar'},
+              {'icon': Icons.shopping_cart_checkout, 'label': 'Mijozlar'},
+              // {'icon': Icons.local_shipping, 'label': 'Supplier'},
+              {'icon': Icons.lock, 'label': "To'lovlar"},
+              // {'icon': Icons.sell, 'label': 'Sales'},
+              if (role == 'Director')
+                {'icon': Icons.person, 'label': 'Ishchilar'},
+              {'icon': Icons.insert_chart, 'label': 'Hisoblatlar'},
+            ];
+
             return Column(
               children: [
                 const SizedBox(height: 40),
@@ -142,8 +144,4 @@ class _CustomSidebarState extends State<CustomSidebar> {
       ),
     );
   }
-}
-
-extension on List<UserInfoModel>? {
-  get fullName => null;
 }
