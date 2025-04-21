@@ -74,7 +74,7 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                   Expanded(
                     flex: 3,
                     child: FutureBuilder(
-                      future: text.length==0? _productService.getAllProducts():_productService.searchAllProducts(text: text),
+                      future: text.isEmpty? _productService.getAllProducts():_productService.searchAllProducts(text: text),
                       builder: (context, snapshot) {
                         if(snapshot.hasData){
                           return  ProductGridWidget(

@@ -9,7 +9,7 @@ class CustomerSearchWidget extends StatefulWidget {
   final Function(String) onCustomerSelected;
   final void Function(CustomersearchModel)? onSelected;
   //final List<CustomersearchModel> customer;
-  CustomerSearchWidget({
+  const CustomerSearchWidget({
     required this.customers,
     required this.onCustomerSelected,
     required this.onChangedSearchCustomer,
@@ -31,34 +31,33 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
   void initState() {
     super.initState();
     filteredCustomers = widget.customers;
-    searchController.addListener(_filterCustomers);
+    // searchController.addListener(_filterCustomers);
   }
 
   void _filterCustomers() async {
-    String query = searchController.text.toLowerCase();
-    filteredCustomers = await customerService.searchAllCustomer(text: query);
-
+    // String query = searchController.text.toLowerCase();
+    // filteredCustomers =
   }
 
   @override
   void dispose() {
-    searchController.dispose();
+    // searchController.dispose();
     super.dispose();
   }
 
+  CustomersearchModel? selection;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Autocomplete<CustomersearchModel>(
-          optionsBuilder: (textEditingValue) {
+          optionsBuilder: (textEditingValue) async {
             if (textEditingValue.text.isEmpty) {
               return Iterable<CustomersearchModel>.empty();
             } else {
-              return filteredCustomers.where(
-                (customer) => customer.name.toLowerCase().contains(
-                  textEditingValue.text.toLowerCase(),
-                ),
+              await Future.delayed(Duration(seconds: 1));
+              return await customerService.searchAllCustomer(
+                text: textEditingValue.text,
               );
             }
           },
@@ -66,47 +65,46 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
             return customer.name;
           },
           onSelected: (CustomersearchModel selection) {
+            print(selection);
             searchController.text = selection.name;
             widget.onCustomerSelected(selection.name);
             if (widget.onSelected != null) {
               widget.onSelected!(selection);
             }
           },
-          fieldViewBuilder: (
-            context,
-            textEditingController,
-            focusNode,
-            onFieldSubmitted,
-          ) {
-            return TextField(
-              onChanged: (value) {
-                _filterCustomers();
-              },
-              controller: searchController,
-              focusNode: focusNode,
-              onEditingComplete: onFieldSubmitted,
-              decoration: InputDecoration(
-                hintText: 'Search Customer',
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
+          optionsViewBuilder: (BuildContext context,Function(CustomersearchModel) onSelected, options) {
+            return Align(
+              alignment: Alignment.topLeft,
+              child: Material(
+                elevation: 4.0,
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: 400,
+                  ), // bu yerda width nazorat qilinadi
+                  child: ListView.builder(
+                    padding: EdgeInsets.zero,
+                    shrinkWrap: true,
+                    itemCount: options.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      // final String option = options.elementAt(index);
+                      return ListTile(
+                        title: Text(
+                          options.elementAt(index).name,
+                          style: TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Text("(${options.elementAt(index).phone})"),
+                        onTap: ()=> onSelected(options.elementAt(index))
+                      );
+                    },
+                  ),
                 ),
               ),
             );
           },
-          optionsViewBuilder: (context, onSelected, options) {
-            return Material(
-              child: ListView.separated(
-                itemBuilder: (context, index) {
-                  final customer = options.elementAt(index);
-                  return ListTile(title: Text(customer.name));
-                },
-                separatorBuilder: (context, index) {
-                  return Divider();
-                },
-                itemCount: 5,
-              ),
-            );
-          },
+          fieldViewBuilder: fieldViewBuilder
         ),
         SizedBox(height: 8),
         DropdownButtonFormField<String>(
@@ -129,6 +127,26 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget fieldViewBuilder(
+    BuildContext context,
+    TextEditingController textEditingController,
+    FocusNode focusNode,
+    VoidCallback onFieldSubmitted,
+  ) {
+    return TextField(
+      controller: textEditingController,
+      focusNode: focusNode,
+      decoration: InputDecoration(
+        labelText: 'Mijoz qidirish',
+        hintText: 'Izlash',
+        prefixIcon: Icon(Icons.search),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(12.0)),
+        filled: true,
+        fillColor: Colors.grey.shade100,
+      ),
     );
   }
 }
