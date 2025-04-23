@@ -1,11 +1,11 @@
 class PaymentModel {
     int id;
-    String paymentMethod;
-    int amount;
-    String customerName;
-    String userFullName;
-    String customerPhone;
-    String createdAt;
+    String? paymentMethod;
+    int? amount;
+    String? customerName;
+    String? userFullName;
+    String? customerPhone;
+    String? createdAt;
 
     PaymentModel({
         required this.id,

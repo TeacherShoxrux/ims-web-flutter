@@ -1,9 +1,6 @@
 import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:file_picker/file_picker.dart';
 import 'package:ims_web/models/product_model.dart';
-
 import 'api_service.dart';
 
 class ProductService {

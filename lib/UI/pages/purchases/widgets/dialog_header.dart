@@ -1,13 +1,14 @@
 // Dialogning yuqori qismi widgeti
 import 'package:flutter/material.dart';
 import 'package:ims_web/models/customers_model/customerSearch_model.dart';
+import 'package:ims_web/models/customers_model/customer_model.dart';
 
 import 'customer_picker.dart';
 
 class DialogHeaderWidget extends StatelessWidget {
   final List<CustomersearchModel> customers;
 final Function(String) onChanged;
-  final Function(String) onCustomerSelected;
+  final Function(CustomersearchModel)? onCustomerSelected;
   final VoidCallback onClear;
   final VoidCallback onSave;
 

@@ -5,7 +5,7 @@ class ProductModel {
   num salePrice;
   num purchasePrice;
   int quantity;
-  int quantityPay =1;
+  int quantityPay=1;
   String? image;
 
   ProductModel({
@@ -16,6 +16,7 @@ class ProductModel {
     required this.purchasePrice,
     required this.quantity,
     required this.image,
+
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -40,12 +41,12 @@ class ProductModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
-    data['name'] = name;
+    // data['name'] = name;
     data['description'] = description;
-    data['salePrice'] = salePrice;
-    data['purchasePrice'] = purchasePrice;
-    data['quantity'] = quantity;
-    data['image'] = image;
+    data['price'] = salePrice;
+    // data['purchasePrice'] = purchasePrice;
+    data['quantity'] = quantityPay;
+    // data['image'] = image;
     return data;
   }
 }

@@ -152,7 +152,7 @@ class StatCard extends StatelessWidget {
   final Color color;
   final double screenWidth;
 
-  StatCard({
+  const StatCard({
     required this.title,
     required this.value,
     required this.icon,
@@ -191,15 +191,16 @@ class StatCard extends StatelessWidget {
                   Text(
                     title,
                     style: TextStyle(
-                      fontSize: screenWidth > 600 ? 16 : 14,
+                      fontSize: screenWidth > 600 ? 12 : 10,
                       color: Colors.grey[600],
                     ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  SizedBox(height: 8),
+                  SizedBox(height: 5),
                   Text(
                     value,
                     style: TextStyle(
-                      fontSize: screenWidth > 600 ? 20 : 18,
+                      fontSize: screenWidth > 600 ? 16 : 14,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
