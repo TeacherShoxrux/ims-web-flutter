@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../services/auth_service.dart';
 import '../../widgets/sidebar/customsidebar.dart';
 import '../category/category.dart';
 import '../customers/customers.dart';
@@ -25,11 +26,12 @@ class _HomePageState extends State<HomePage> {
     ProductsListPage(),
     CustomerListPage(),
     PurchasesListPage(),
-    StaffsListPage(),
+    if(AuthService.role!="Director")StaffsListPage(),
     ReportsPage(),
   ];
 
   void _onItemSelected(int index) {
+    print(AuthService.role);
     setState(() {
       _selectedIndex = index;
     });

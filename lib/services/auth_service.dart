@@ -5,7 +5,7 @@ import 'api_service.dart';
 
 class AuthService {
   final ApiService _api = ApiService();
-
+  static String role="";
   Future<bool> login(String phone, String password) async {
     try {
       final response = await _api.post('api/User/Login', {
@@ -29,21 +29,20 @@ class AuthService {
   try {
     final token = await AuthService().getToken;
     if (token == null) {
-      print("Token topilmadi");
       return null;
     }
 
     final response = await _api.get('api/User/info');
-    print("------------------");
-    print( response);
-    final data = response['user']; // bu yerda data = Map<String, dynamic>
+
+    final data = response['user'];
 
     if (data == null) {
       print('data null');
       return null;
     }
-
-    return UserInfoModel.fromJson(data["data"]);
+    var model=UserInfoModel.fromJson(data["data"]);
+    role=model.role;
+    return model;
   } catch (e) {
     print('getUserProfile error: $e');
     return null;

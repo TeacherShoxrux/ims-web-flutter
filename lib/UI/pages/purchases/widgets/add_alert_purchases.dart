@@ -59,12 +59,13 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
               onSave: () async{
                 ProgressService.show(context, message: "Iltimos kuting...");
                 await Future.delayed(Duration(seconds: 2));
-                // try{
+                try{
                var result= await  widget.paymentService.createPayment(
                       customerId: selectedCustomer?.id??0,
                       products: selectedProducts,
                       paymentMethod: 'Naqt');
                if(result.isSuccess){
+
                   ProgressService.hide(context);
                   Navigator.of(context).pop();
                   SnackbarService().showSuccess("Saqlash muvaffaqiyatli amalga oshdi!");
@@ -73,9 +74,9 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                  Navigator.of(context).pop(result);
                  SnackbarService().showError(result.errorMessage??"Xatolik yuz berdi");
                }
-                // }catch(e){
-                //   SnackbarService().showError(e.toString());
-                // }
+                }catch(e){
+                  SnackbarService().showError(e.toString());
+                }
 
 
 

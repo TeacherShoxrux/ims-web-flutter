@@ -20,7 +20,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  bool aht=true;
+  bool aht=false;
   getToken()async{
     var aht=(await  AuthService().getToken)==null;
     if(aht){
@@ -37,9 +37,9 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       scaffoldMessengerKey: messengerKey,
-      title: 'Sidebar Example',
+      title: 'e-baraka.uz',
       navigatorKey: navigatorKey, // 👈 muhim!
-      home: aht? HomePage() : LoginPage(),
+      home: aht?   LoginPage():HomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
