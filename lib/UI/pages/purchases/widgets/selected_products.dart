@@ -96,7 +96,7 @@ final _productService = ProductService();
                       ),
                       Expanded(
                         flex: 1,
-                        child: Text(amount.toStringAsFixed(2)),
+                        child: Text(amount.toStringAsFixed(1)),
                       ),
                       Expanded(
                         flex: 1,
@@ -125,7 +125,7 @@ final _productService = ProductService();
               ),
               SizedBox(width: 16),
               Text(
-                grandTotal.toStringAsFixed(2),
+                grandTotal.toStringAsFixed(0),
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
             ],

@@ -88,7 +88,7 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                                 bool exists = false;
                                 for (var item in selectedProducts) {
                                   if (item.name == product.name) {
-                                    item.salePrice += product.salePrice;
+                                    item.quantityPay += product.quantityPay;
                                     exists = true;
                                     break;
                                   }

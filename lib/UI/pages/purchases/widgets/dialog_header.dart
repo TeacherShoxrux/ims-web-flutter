@@ -68,7 +68,7 @@ final Function(String) onChanged;
             backgroundColor: Colors.purple,
             foregroundColor: Colors.white,
           ),
-          child: Text('SAVE'),
+          child: Text('Saqlah'),
         ),
         SizedBox(width: 8),
         ElevatedButton(
@@ -77,7 +77,7 @@ final Function(String) onChanged;
             backgroundColor: Colors.red,
             foregroundColor: Colors.white,
           ),
-          child: Text('Clear'),
+          child: Text('Yopish'),
         ),
       ],
     );

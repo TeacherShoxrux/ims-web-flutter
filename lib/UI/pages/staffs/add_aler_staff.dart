@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/Home/home.dart';
-import 'package:ims_web/UI/pages/saffs/staffs.dart';
+import 'package:ims_web/UI/pages/staffs/staffs.dart';
 import 'package:ims_web/services/auth_service.dart';
 import 'package:ims_web/services/progress_service.dart';
 import 'package:ims_web/services/staffs_service.dart';
 
 class AddAlerStaff extends StatefulWidget {
-final StaffsService authService;
-  const AddAlerStaff({super.key,required this.authService });
+  final StaffsService authService;
+  const AddAlerStaff({super.key, required this.authService});
 
   @override
   State<AddAlerStaff> createState() => _AddAlerStaffState();
@@ -27,8 +27,16 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
       _passwordController.text,
     );
     ProgressService.hide(context);
-    if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
-    if (!result)ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text('Login xatolik!')));
+    if (result)
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (c) => HomePage()),
+        (e) => true,
+      );
+    if (!result)
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Login xatolik!')));
   }
 
   void _showErrorDialog(BuildContext context, String message) {
@@ -63,14 +71,14 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
             // Sarlavha va ikonka
             Row(
               children: [
-                Icon(Icons.local_shipping, color: Colors.white),
+                Icon(Icons.local_shipping, color: Colors.black87),
                 SizedBox(width: 8),
                 Text(
-                  'Supplier Details',
+                  "Ishchi qo'shish",
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Colors.black87,
                   ),
                 ),
               ],

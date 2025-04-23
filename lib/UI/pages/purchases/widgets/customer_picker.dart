@@ -72,7 +72,11 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
               widget.onSelected!(selection);
             }
           },
-          optionsViewBuilder: (BuildContext context,Function(CustomersearchModel) onSelected, options) {
+          optionsViewBuilder: (
+            BuildContext context,
+            Function(CustomersearchModel) onSelected,
+            options,
+          ) {
             return Align(
               alignment: Alignment.topLeft,
               child: Material(
@@ -96,7 +100,7 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
                           ),
                         ),
                         subtitle: Text("(${options.elementAt(index).phone})"),
-                        onTap: ()=> onSelected(options.elementAt(index))
+                        onTap: () => onSelected(options.elementAt(index)),
                       );
                     },
                   ),
@@ -104,7 +108,7 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
               ),
             );
           },
-          fieldViewBuilder: fieldViewBuilder
+          fieldViewBuilder: fieldViewBuilder,
         ),
         SizedBox(height: 8),
         DropdownButtonFormField<String>(
@@ -113,7 +117,7 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
               filteredCustomers.map((customer) {
                 return DropdownMenuItem<String>(
                   value: customer.name,
-                  child: Text(customer.name!),
+                  child: Text(customer.name),
                 );
               }).toList(),
           onChanged: (String? newValue) {

@@ -6,7 +6,7 @@ import '../customers/customers.dart';
 import '../products/products.dart';
 import '../purchases/purchases.dart';
 import '../reports/reports.dart';
-import '../saffs/staffs.dart';
+import '../staffs/staffs.dart';
 import '../statsitics/statistics.dart';
 
 

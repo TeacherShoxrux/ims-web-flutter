@@ -93,7 +93,7 @@ final categoryDescriptionController=TextEditingController();
                   backgroundColor: Colors.purple, // SAVE tugmasi rangi
                   foregroundColor: Colors.white,
                 ),
-                child: Text('SAVE'),
+                child: Text('Saqlash'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -103,7 +103,7 @@ final categoryDescriptionController=TextEditingController();
                   backgroundColor: Colors.red, // CLOSE tugmasi rangi
                   foregroundColor: Colors.white,
                 ),
-                child: Text('CLOSE'),
+                child: Text('Yopish'),
               ),
             ],
           ),

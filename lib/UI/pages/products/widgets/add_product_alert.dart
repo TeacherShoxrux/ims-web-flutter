@@ -212,7 +212,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                         backgroundColor: Colors.purple,
                         foregroundColor: Colors.white,
                       ),
-                      child: Text('Browse'),
+                      child: Text('Yuklash'),
                     ),
 
                     SizedBox(height: 8),
@@ -267,7 +267,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('SAVE'),
+                  child: Text('Saqlash'),
                 ),
                 ElevatedButton(
                   onPressed: () {
@@ -277,7 +277,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
                     backgroundColor: Colors.red, // CLOSE tugmasi rangi
                     foregroundColor: Colors.white,
                   ),
-                  child: Text('CLOSE'),
+                  child: Text('Yopish'),
                 ),
               ],
             ),

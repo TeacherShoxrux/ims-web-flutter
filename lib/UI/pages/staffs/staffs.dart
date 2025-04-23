@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/category/widgets/add_alert.dart';
-import 'package:ims_web/UI/pages/saffs/add_aler_staff.dart';
+import 'package:ims_web/UI/pages/staffs/add_aler_staff.dart';
 import 'package:ims_web/services/staffs_service.dart';
 
 class StaffsListPage extends StatefulWidget {
