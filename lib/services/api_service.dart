@@ -54,18 +54,12 @@ class ApiService {
   }
 
   Future<dynamic> put(String endpoint, Map<String, dynamic> data) async {
-    final response = await httpClient.put(
-      Uri.parse('$baseUrl/$endpoint'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
-    );
+    final response = await httpClient.put(Uri.parse('$baseUrl/$endpoint'),headers: {'Content-Type': 'application/json'},body: jsonEncode(data));
     return _handleResponse(response);
   }
 
   Future<dynamic> delete(String endpoint) async {
-    final response = await httpClient.delete(
-      Uri.parse('$baseUrl/$endpoint'),
-    );
+    final response = await httpClient.delete(Uri.parse('$baseUrl/$endpoint'));
     return _handleResponse(response);
   }
 

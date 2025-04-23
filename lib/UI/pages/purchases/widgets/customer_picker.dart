@@ -6,7 +6,7 @@ import 'package:ims_web/services/customer_service.dart';
 class CustomerSearchWidget extends StatefulWidget {
   final Function(String) onChangedSearchCustomer;
   final List<CustomersearchModel> customers;
-  final Function(String) onCustomerSelected;
+  final Function(CustomersearchModel)? onCustomerSelected;
   final void Function(CustomersearchModel)? onSelected;
   //final List<CustomersearchModel> customer;
   const CustomerSearchWidget({
@@ -67,7 +67,7 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
           onSelected: (CustomersearchModel selection) {
             print(selection);
             searchController.text = selection.name;
-            widget.onCustomerSelected(selection.name);
+            widget.onCustomerSelected!(selection);
             if (widget.onSelected != null) {
               widget.onSelected!(selection);
             }
@@ -121,10 +121,10 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
                 );
               }).toList(),
           onChanged: (String? newValue) {
-            setState(() {
-              selectedCustomer = newValue!;
-              widget.onCustomerSelected(selectedCustomer);
-            });
+            // setState(() {
+            //   selectedCustomer = newValue!;
+            //   widget.onCustomerSelected!(selectedCustomer as CustomersearchModel);
+            // });
           },
           decoration: InputDecoration(
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
