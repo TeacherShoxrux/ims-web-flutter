@@ -124,25 +124,39 @@ class _ReportsPageState extends State<ReportsPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Qidiruv paneli
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     Container(
+            //       width: screenWidth > 1200 ? 400 : double.infinity,
+            //       child: TextField(
+            //         decoration: InputDecoration(
+            //           hintText: 'Search Here',
+            //           prefixIcon: Icon(Icons.search),
+            //           border: OutlineInputBorder(
+            //             borderRadius: BorderRadius.circular(10),
+            //             borderSide: BorderSide.none,
+            //           ),
+            //           filled: true,
+            //           fillColor: Colors.white,
+            //         ),
+            //       ),
+            //     ),
+              
+            //   ],
+            // ),
+         //   SizedBox(height: 16),
+            // Sarlavha
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  width: screenWidth > 1200 ? 400 : double.infinity,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Search Here',
-                      prefixIcon: Icon(Icons.search),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.white,
-                    ),
+                Text(
+                  'Hisobtlar',
+                  style: TextStyle(
+                    fontSize: screenWidth > 600 ? 24 : 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                ElevatedButton(
+                  ElevatedButton(
                   onPressed: () {
                     authService.logout();
                     Navigator.pushAndRemoveUntil(
@@ -161,15 +175,6 @@ class _ReportsPageState extends State<ReportsPage> {
                   ),
                 ),
               ],
-            ),
-            SizedBox(height: 16),
-            // Sarlavha
-            Text(
-              'Reports',
-              style: TextStyle(
-                fontSize: screenWidth > 600 ? 24 : 20,
-                fontWeight: FontWeight.bold,
-              ),
             ),
             SizedBox(height: 16),
             // Sana tanlash

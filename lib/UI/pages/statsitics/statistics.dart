@@ -61,7 +61,7 @@ getData()async{
               width: screenWidth > 1200 ? 400 : double.infinity,
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Search Here',
+                  hintText: 'Qidirish',
                   prefixIcon: Icon(Icons.search),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
@@ -75,7 +75,7 @@ getData()async{
             SizedBox(height: 16),
             // Sarlavha
             Text(
-              'Dashboard',
+              'Umumiy satistika',
               style: TextStyle(
                 fontSize: screenWidth > 600 ? 24 : 20,
                 fontWeight: FontWeight.bold,

@@ -120,7 +120,7 @@ final _productService = ProductService();
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
-                'Grand Total',
+                'Umumiy summa',
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
               ),
               SizedBox(width: 16),
