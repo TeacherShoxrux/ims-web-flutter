@@ -6,6 +6,8 @@ import 'package:ims_web/models/customers_model/customer_model.dart';
 import 'customer_picker.dart';
 
 class DialogHeaderWidget extends StatelessWidget {
+  final Function(String)? onPaymentMethodSelected;
+
   final List<CustomersearchModel> customers;
 final Function(String) onChanged;
   final Function(CustomersearchModel)? onCustomerSelected;
@@ -18,69 +20,73 @@ final Function(String) onChanged;
     required this.onClear,
     required this.onSave, 
     required this.onChanged,
-     required this. customers,
+     required this. customers, this.onPaymentMethodSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          flex: 2,
-          child: TextField(
-            onChanged: onChanged,
-            decoration: InputDecoration(
-              hintText: 'Search',
-              prefixIcon: Icon(Icons.search),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
+    return SingleChildScrollView(
+      child: Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: TextField(
+              onChanged: onChanged,
+              decoration: InputDecoration(
+                hintText: 'Search',
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                  borderSide: BorderSide.none,
+                ),
+                filled: true,
+                fillColor: Colors.white,
               ),
-              filled: true,
-              fillColor: Colors.white,
             ),
           ),
-        ),
-        SizedBox(width: 16),
-        Expanded(
-          flex: 1,
-          child: Text(
-            '15/10/2022',
-            style: TextStyle(fontSize: 16),
+          SizedBox(width: 16),
+          Expanded(
+            flex: 1,
+            child: Text(
+              '15/10/2022',
+              style: TextStyle(fontSize: 16),
+            ),
           ),
-        ),
-        SizedBox(width: 16),
-        Expanded(
-          flex: 2,
-          child: CustomerSearchWidget(onSelected: (p0) {
-            
-          },
-            onChangedSearchCustomer: (p0) {
+          SizedBox(width: 16),
+          Expanded(
+            flex: 2,
+            child: CustomerSearchWidget(onSelected: (p0) {
               
             },
-            customers: customers,
-            onCustomerSelected: onCustomerSelected,
+           
+              onChangedSearchCustomer: (p0) {
+                
+              },
+              onPaymentMethodSelected:onPaymentMethodSelected ,
+              customers: customers,
+              onCustomerSelected: onCustomerSelected,
+            ),
           ),
-        ),
-        SizedBox(width: 16),
-        ElevatedButton(
-          onPressed: onSave,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.purple,
-            foregroundColor: Colors.white,
+          SizedBox(width: 16),
+          ElevatedButton(
+            onPressed: onSave,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Saqlah'),
           ),
-          child: Text('Saqlah'),
-        ),
-        SizedBox(width: 8),
-        ElevatedButton(
-          onPressed: onClear,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.red,
-            foregroundColor: Colors.white,
+          SizedBox(width: 8),
+          ElevatedButton(
+            onPressed: onClear,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.red,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Yopish'),
           ),
-          child: Text('Yopish'),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

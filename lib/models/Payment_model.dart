@@ -1,6 +1,6 @@
 class PaymentModel {
     int id;
-    String? paymentMethod;
+    String paymentMethod;
     int? amount;
     String? customerName;
     String? userFullName;

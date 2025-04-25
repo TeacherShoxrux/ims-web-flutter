@@ -5,8 +5,9 @@ class ProductModel {
   num salePrice;
   num purchasePrice;
   int quantity;
-  int quantityPay=1;
+  int quantityPay = 1;
   String? image;
+ // String uint;
 
   ProductModel({
     required this.id,
@@ -16,7 +17,7 @@ class ProductModel {
     required this.purchasePrice,
     required this.quantity,
     required this.image,
-
+   // required this.uint,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -27,6 +28,7 @@ class ProductModel {
     double purchasePrice = json['purchasePrice'];
     int quantity = json['quantity'];
     String? image = json['image'];
+   // String unit = json['unit'];
     return ProductModel(
       id: id,
       name: name,
@@ -35,6 +37,7 @@ class ProductModel {
       purchasePrice: purchasePrice,
       quantity: quantity,
       image: image,
+      //uint: unit,
     );
   }
 
@@ -47,6 +50,7 @@ class ProductModel {
     // data['purchasePrice'] = purchasePrice;
     data['quantity'] = quantityPay;
     // data['image'] = image;
+    //data['unit']=uint;
     return data;
   }
 }

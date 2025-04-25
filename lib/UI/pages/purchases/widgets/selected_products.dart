@@ -26,7 +26,7 @@ final _productService = ProductService();
               Expanded(
                 flex: 2,
                 child: Text(
-                  'Product',
+                  'Mahsulot Nomi',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ final _productService = ProductService();
               Expanded(
                 flex: 1,
                 child: Text(
-                  'Qty',
+                  'Soni',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ final _productService = ProductService();
               Expanded(
                 flex: 1,
                 child: Text(
-                  'Price',
+                  'Narxi',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
@@ -56,7 +56,7 @@ final _productService = ProductService();
               Expanded(
                 flex: 1,
                 child: Text(
-                  'Amount',
+                  'Jami',
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,

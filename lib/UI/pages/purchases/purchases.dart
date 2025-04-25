@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/add_alert_purchases.dart';
+import 'package:ims_web/UI/pages/purchases/widgets/get_alert_chek.dart';
 import 'package:ims_web/services/paymetn_service.dart';
 
 class PurchasesListPage extends StatefulWidget {
@@ -8,14 +9,15 @@ class PurchasesListPage extends StatefulWidget {
 }
 
 class _PurchasesListPageState extends State<PurchasesListPage> {
-final paymentService = PaymentService();
+  final paymentService = PaymentService();
 
-
-  void _showAddPurchaseDialog()async {
-  bool? result = await  showDialog<bool>(
+  void _showAddPurchaseDialog() async {
+    bool? result = await showDialog<bool>(
       context: context,
-      builder: (BuildContext context) { return AddPurchaseDialog(paymentService: paymentService);});
-
+      builder: (BuildContext context) {
+        return AddPurchaseDialog(paymentService: paymentService);
+      },
+    );
   }
 
   @override
@@ -33,10 +35,7 @@ final paymentService = PaymentService();
               children: [
                 Text(
                   "To'lovlar",
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
                   onPressed: _showAddPurchaseDialog,
@@ -95,7 +94,7 @@ final paymentService = PaymentService();
                       ),
                     ),
                   ),
-                   Expanded(
+                  Expanded(
                     flex: 2,
                     child: Text(
                       'Summasi',
@@ -105,10 +104,7 @@ final paymentService = PaymentService();
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(),
-                  ),
+                  Expanded(flex: 1, child: SizedBox()),
                 ],
               ),
             ),
@@ -116,66 +112,103 @@ final paymentService = PaymentService();
               child: FutureBuilder(
                 future: paymentService.getPayment(),
                 builder: (context, snapshot) {
-                  if(snapshot.hasData){
-                    return   ListView.builder(
-                  itemCount: snapshot.data?.length??0,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      color: index % 2 == 0 ? Colors.white : Colors.grey[100],
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            flex: 1,
-                            child: Text("${index + 1}"),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text(snapshot.data?[index].customerName??'null'),
-                          ),
-                          Expanded(
-                            flex: 3,
-                            child: Text(snapshot.data?[index].createdAt??'null'),
-                          ),
-                            Expanded(
-                            flex: 2,
-                            child: Text('${snapshot.data?[index].userFullName}'),
-                          ),
-                          Expanded(
-                            flex: 2,
-                            child: Text('${snapshot.data?[index].amount}'),
-                          ),
-                          Expanded(
-                            flex: 1,
+                  if (snapshot.hasData) {
+                    return ListView.builder(
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return GetAlertDialogChek(
+                                  customerName:
+                                      snapshot.data?[index].customerName ??
+                                      'null',
+                                  sellerName:
+                                      snapshot.data?[index].userFullName ??
+                                      'null',
+                                  productName: '',
+                                  productNumber: snapshot.data![index].amount,
+                                  paymentType: snapshot.data?[index].paymentMethod??'',
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            color:
+                                index % 2 == 0
+                                    ? Colors.white
+                                    : Colors.grey[100],
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                              horizontal: 16,
+                            ),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                IconButton(
-                                  onPressed: () {
-                                    // print('Edit bosildi: ${purchases[index]['supplier']}');
-                                  },
-                                  icon: Icon(Icons.edit, color: Colors.yellow[700]),
+                                Expanded(flex: 1, child: Text("${index + 1}")),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    snapshot.data?[index].customerName ??
+                                        'null',
+                                  ),
                                 ),
-                                IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      // purchases.removeAt(index);
-                                    });
-                                  },
-                                  icon: Icon(Icons.delete, color: Colors.blue),
+                                Expanded(
+                                  flex: 3,
+                                  child: Text(
+                                    snapshot.data?[index].createdAt ?? 'null',
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    '${snapshot.data?[index].userFullName}',
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    '${snapshot.data?[index].amount}',
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () {
+                                          // print('Edit bosildi: ${purchases[index]['supplier']}');
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.yellow[700],
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            // purchases.removeAt(index);
+                                          });
+                                        },
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.blue,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
                           ),
-                        ],
-                      ),
+                        );
+                      },
                     );
-                  },
-                );
-                  }return Center(child: CircularProgressIndicator());
-                }
-                
-               
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
               ),
             ),
           ],
