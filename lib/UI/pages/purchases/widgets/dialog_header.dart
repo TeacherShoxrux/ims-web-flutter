@@ -9,18 +9,20 @@ class DialogHeaderWidget extends StatelessWidget {
   final Function(String)? onPaymentMethodSelected;
 
   final List<CustomersearchModel> customers;
-final Function(String) onChanged;
+  final Function(String) onChanged;
   final Function(CustomersearchModel)? onCustomerSelected;
   final VoidCallback onClear;
   final VoidCallback onSave;
 
-  DialogHeaderWidget({super.key, 
+  DialogHeaderWidget({
+    super.key,
     //required this.customer,
     required this.onCustomerSelected,
     required this.onClear,
-    required this.onSave, 
+    required this.onSave,
     required this.onChanged,
-     required this. customers, this.onPaymentMethodSelected,
+    required this.customers,
+    this.onPaymentMethodSelected,
   });
 
   @override
@@ -47,22 +49,15 @@ final Function(String) onChanged;
           SizedBox(width: 16),
           Expanded(
             flex: 1,
-            child: Text(
-              '15/10/2022',
-              style: TextStyle(fontSize: 16),
-            ),
+            child: Text('15/10/2022', style: TextStyle(fontSize: 16)),
           ),
           SizedBox(width: 16),
           Expanded(
             flex: 2,
-            child: CustomerSearchWidget(onSelected: (p0) {
-              
-            },
-           
-              onChangedSearchCustomer: (p0) {
-                
-              },
-              onPaymentMethodSelected:onPaymentMethodSelected ,
+            child: CustomerSearchWidget(
+              onSelected: (p0) {},
+              onChangedSearchCustomer: (p0) {},
+              onPaymentMethodSelected: onPaymentMethodSelected,
               customers: customers,
               onCustomerSelected: onCustomerSelected,
             ),

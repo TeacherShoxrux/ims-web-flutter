@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:ims_web/models/userInfo_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../UI/pages/login/login.dart';
+import '../main.dart';
 import 'api_service.dart';
 
 class AuthService {
@@ -66,8 +70,23 @@ Future<bool> updateImageUser( Map<String, dynamic> data) async {
   
 
   Future<void> logout() async {
+    Navigator.pushAndRemoveUntil(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (context) {
+          return LoginPage();
+        },
+      ),
+          (delate) => true,
+    );
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('jwt_token');
   }
-  get  getToken async=> (await SharedPreferences.getInstance()).getString("jwt_token");
+  String? _login;
+  Future<String?> get  getToken async{
+    _login??= (await SharedPreferences.getInstance()).getString("jwt_token");
+    if(_login==null)logout();
+  return _login;
+
+  }
 }

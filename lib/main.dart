@@ -13,7 +13,7 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
-   MyApp({super.key});
+   const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -38,7 +38,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       scaffoldMessengerKey: messengerKey,
       title: 'e-baraka.uz',
-      navigatorKey: navigatorKey, // 👈 muhim!
+      navigatorKey: navigatorKey,
       home: aht?   LoginPage():HomePage(),
       debugShowCheckedModeBanner: false,
     );

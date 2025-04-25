@@ -37,16 +37,10 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
   void initState() {
     super.initState();
     filteredCustomers = widget.customers;
-    // searchController.addListener(_filterCustomers);
-  }
-
-  void _filterCustomers() async {
-    // String query = searchController.text.toLowerCase();
-    // filteredCustomers =
   }
 
   List<String> cashList = ['Naxt', 'Terminal', 'Click'];
-  String  cashUnit = "To'lov usulini tanlang";
+  String?  cashUnit;
 
   @override
   void dispose() {
@@ -122,96 +116,32 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
           ),
           SizedBox(height: 8),
       
-          //  Expanded(
-          //   flex: 2,
-          //    child: DropdownButtonFormField<String>(
-          //      value: cashUnit,
-          //      items:
-          //          cashList.map((String value) {
-          //            return DropdownMenuItem<String>(
-          //              value: value,
-          //              child: Text(value),
-          //            );
-          //          }).toList(),
-          //      onChanged: (String? newValue) {
-          //        if (newValue != null) {
-          //          setState(() {
-          //            cashUnit = newValue;
-          //          });
-          //        }
-          //      },
-          //      decoration: InputDecoration(
-          //        border: OutlineInputBorder(
-          //          borderRadius: BorderRadius.circular(10),
-          //        ),
-          //        labelText: "To'lov usulini tanlang",
-          //      ),
-          //    ),
-          //  ),
-      
-      
-          Expanded(
-            flex: 1,
-            child: DropdownButtonFormField<String>(
-              value: cashUnit,
-             
-              items:
-                  cashList.map((String value) {
-                    
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-             onChanged: (String? newValue) {
-                if(newValue !=null){
-                  setState(() {
-                    cashUnit =newValue;
-                  });
-                  if(widget.onPaymentMethodSelected!(newValue));
-                }
-              },
-              decoration: InputDecoration(
-                labelText: "To'lov usulini tanlang",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+          DropdownButtonFormField<String>(
+            value: cashUnit,
+
+            items:
+                cashList.map((String value) {
+
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+           onChanged: (String? newValue) {
+              if(newValue !=null){
+                setState(() {
+                  cashUnit =newValue;
+                });
+                if(widget.onPaymentMethodSelected!(newValue));
+              }
+            },
+            decoration: InputDecoration(
+              labelText: "To'lov usulini tanlang",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
               ),
             ),
           ),
-      
-          // FutureBuilder<List<PaymentModel>>(
-          //   future: paymentService.getPayment(),
-          //   builder: (context, snapshot) {
-          //     if (snapshot.data is List) {
-          //       return DropdownButtonFormField<PaymentModel>(
-          //         value: _paymentModel,
-          //         items:
-          //             snapshot.data?.map((PaymentModel payment) {
-          //               return DropdownMenuItem<PaymentModel>(
-          //                 value: payment,
-          //                 child: Text("${payment.paymentMethod}"),
-          //               );
-          //             }).toList(),
-          //         onChanged: (PaymentModel? newValue) {
-          //           _paymentModel = newValue;
-          //           setState(() {});
-          //           // setState(() {
-          //           //   selectedCustomer = newValue!;
-          //           //   widget.onCustomerSelected!(selectedCustomer as CustomersearchModel);
-          //           // });
-          //         },
-          //         decoration: InputDecoration(
-          //           labelText: "To'lov usulini tanlang",
-          //           border: OutlineInputBorder(
-          //             borderRadius: BorderRadius.circular(10),
-          //           ),
-          //         ),
-          //       );
-          //     }
-          //     return Center(child: CircularProgressIndicator());
-          //   },
-          // ),
         ],
       ),
     );

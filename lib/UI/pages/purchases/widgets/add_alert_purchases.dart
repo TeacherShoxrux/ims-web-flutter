@@ -108,13 +108,8 @@ String paymentMethod='';
                               setState(() {
                                 bool exists = false;
                                 for (var item in selectedProducts) {
-// <<<<<<< HEAD
-//                                   if (item.name == product.name) {
-//                                     item.quantityPay += product.quantityPay;
-// =======
                                   if (item.id == product.id) {
                                     item.quantityPay += product.quantityPay;
-//>>>>>>> 58624a59bad4e65d648aa55f72696263747a8705
                                     exists = true;
                                     break;
                                   }
@@ -122,9 +117,6 @@ String paymentMethod='';
                                 if (!exists) {
                                   selectedProducts.add(product);
                                 }
-                                // if (exists) {
-                                //   selectedProducts.add(product);
-                                // }
                               });
                             },
                           );
