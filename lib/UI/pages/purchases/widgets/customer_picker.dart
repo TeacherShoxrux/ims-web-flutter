@@ -39,7 +39,7 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
     filteredCustomers = widget.customers;
   }
 
-  List<String> cashList = ['Naxt', 'Terminal', 'Click'];
+  List<String> cashList = ['Naqt', 'Terminal', 'Click'];
   String?  cashUnit;
 
   @override

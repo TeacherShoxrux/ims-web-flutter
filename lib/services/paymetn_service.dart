@@ -42,4 +42,13 @@ class PaymentService {
     // }
   }
 
+  Future<PaymentChekModel> getPaymentChekById(String id) async {
+    try {
+      final response = await _api.get('api/Payment/GetPaymentById/$id');
+      return PaymentChekModel.fromJson(response["data"]);
+    } catch (e) {
+      print("Kategoriya topilmadi: $e");
+      rethrow;
+    }
+  }
 }
