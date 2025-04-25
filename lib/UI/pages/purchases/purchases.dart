@@ -122,15 +122,8 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                               context: context,
                               builder: (context) {
                                 return GetAlertDialogChek(
-                                  customerName:
-                                      snapshot.data?[index].customerName ??
-                                      'null',
-                                  sellerName:
-                                      snapshot.data?[index].userFullName ??
-                                      'null',
-                                  productName: '',
-                                  productNumber: snapshot.data![index].amount,
-                                  paymentType: snapshot.data?[index].paymentMethod??'',
+                                  paymentService: PaymentService(),
+                                  id: snapshot.data![index].id,
                                 );
                               },
                             );

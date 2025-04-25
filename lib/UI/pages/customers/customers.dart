@@ -190,7 +190,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                             children: [
                               Expanded(flex: 1, child: Text("${index + 1}")),
                               Expanded(
-                                flex: 1,
+                                flex: 2,
                                 child: Text(
                                   snapshot.data?[index].name ?? 'null',
                                 ),
@@ -203,7 +203,7 @@ class _CustomerListPageState extends State<CustomerListPage> {
                               ),
                               Expanded(flex: 0, child: Text('')),
                               Expanded(
-                                flex: 2,
+                                flex: 3,
                                 child: Text(
                                   snapshot.data?[index].info ?? 'null',
                                 ),

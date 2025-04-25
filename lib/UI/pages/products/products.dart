@@ -103,7 +103,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Kategoriya',
+                      "Bo'lim",
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,

@@ -10,11 +10,11 @@ class PaymentModel {
     PaymentModel({
         required this.id,
         required this.paymentMethod,
-        required this.amount,
-        required this.customerName,
-        required this.userFullName,
-        required this.customerPhone,
-        required this.createdAt,
+         this.amount,
+         this.customerName,
+         this.userFullName,
+         this.customerPhone,
+         this.createdAt,
     });
 
     factory PaymentModel.fromJson(Map<String, dynamic> json) => PaymentModel(

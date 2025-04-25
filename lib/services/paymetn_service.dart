@@ -1,4 +1,5 @@
 import 'package:ims_web/models/Payment_model.dart';
+import 'package:ims_web/models/paymentchek_model.dart';
 import 'package:ims_web/models/product_model.dart';
 import 'package:ims_web/services/api_service.dart';
 
@@ -10,7 +11,9 @@ class PaymentService {
 
   Future<List<PaymentModel>> getPayment() async {
     try {
-      final response = await _api.get('api/Payment/GetPayments?page=1&pageSize=10');
+      final response = await _api.get(
+        'api/Payment/GetPayments?page=1&pageSize=10',
+      );
       print(response);
       final List<dynamic> data = response['data'];
       return data.map((e) => PaymentModel.fromJson(e)).toList();
@@ -20,21 +23,23 @@ class PaymentService {
       return [];
     }
   }
-  Future<BaseModel<PaymentModel>> createPayment(
-      {
-      required   int customerId,
-      required  List<ProductModel> products,
-      required  String paymentMethod}) async {
+
+  Future<BaseModel<PaymentModel>> createPayment({
+    required int customerId,
+    required List<ProductModel> products,
+    required String paymentMethod,
+  }) async {
     // try {
-      final response = await _api.post('api/Payment/Create',
-          {
-            "customerId": customerId,
-            "poducts": products.map((e)=>e.toJson()).toList(),
-            "paymentMethod": paymentMethod
-          }
-      );
-      print(response);
-      return BaseModel<PaymentModel>.fromJson(response,(e)=>PaymentModel.fromJson(e));
+    final response = await _api.post('api/Payment/Create', {
+      "customerId": customerId,
+      "poducts": products.map((e) => e.toJson()).toList(),
+      "paymentMethod": paymentMethod,
+    });
+    print(response);
+    return BaseModel<PaymentModel>.fromJson(
+      response,
+      (e) => PaymentModel.fromJson(e),
+    );
     //   data.cast<Map<String, dynamic>>();
     // } catch (e) {
     //   print("Mahsulotni olishda xatolik: $e");
@@ -42,4 +47,13 @@ class PaymentService {
     // }
   }
 
+  Future<PaymentChekModel> getPaymentChekById(String id) async {
+    try {
+      final response = await _api.get('api/Payment/GetPaymentById/$id');
+      return PaymentChekModel.fromJson(response["data"]);
+    } catch (e) {
+      print("Kategoriya topilmadi: $e");
+      rethrow;
+    }
+  }
 }
