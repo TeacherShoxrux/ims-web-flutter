@@ -25,11 +25,10 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
       _phoneController.text,
       _infoController.text,
     );
-    if(result == true){
-      Navigator.pop( context,result);
-    }
+
+
     ProgressService.hide(context);
- //   if (result)Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (c) => HomePage()),(e) => true,);
+    Navigator.pop(context,result);
     if (!result)ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text('Login xatolik!')));
   }
   @override
@@ -105,23 +104,6 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
                 ),
               ],
             ),
-            // SizedBox(height: 16),
-            // // Email maydoni
-            // Text('Email', style: TextStyle(fontSize: 16)),
-            // SizedBox(height: 8),
-            // TextField(
-            //   onChanged: (value) {
-            //     // newEmail = value;
-            //   },
-
-            //   keyboardType: TextInputType.emailAddress,
-            //   decoration: InputDecoration(
-            //     border: OutlineInputBorder(
-            //       borderRadius: BorderRadius.circular(10),
-            //     ),
-            //     hintText: 'Enter email address',
-            //   ),
-            // ),
             SizedBox(height: 16),
             // Address maydoni
             Text('Malumot', style: TextStyle(fontSize: 16)),
@@ -145,20 +127,7 @@ class _AddCustomerAlertState extends State<AddCustomerAlert> {
               children: [
                 ElevatedButton(
                   onPressed: () {
-_handleAddCustomer(context);
-                    // if (newCustomerName.isNotEmpty) {
-                    //   setState(() {
-                    //     // Yangi mijozni ro'yxatga qo'shish
-                    //     customers.insert(0, {
-                    //       'sr': (customers.length + 1).toString(),
-                    //       'name': newCustomerName,
-                    //       'phone': newPhone.isEmpty ? '-' : newPhone,
-                    //       'email': newEmail.isEmpty ? '-' : newEmail,
-                    //       'address': newAddress.isEmpty ? '-' : newAddress,
-                    //     });
-                    //   });
-                    //   Navigator.of(context).pop(); // Dialogni yopish
-                    // }
+                  _handleAddCustomer(context);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi

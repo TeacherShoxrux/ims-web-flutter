@@ -29,13 +29,6 @@ class _AddProductAlertState extends State<AddProductAlert> {
 
     if (file != null) {
       image = file;
-      //
-      // if (kDebugMode) {
-      //   print("-----------------------------------------------------------------------------------");
-      //   imageUrl=await uploadImage();
-      //   print(imageUrl);
-      //   print("-----------------------------------------------------------------------------------");
-      // }
       setState(() {});
     }
   }
@@ -47,10 +40,10 @@ class _AddProductAlertState extends State<AddProductAlert> {
     return null;
   }
 
-  List<String> unitList = ['dona', 'gram', 'kg', 'tonna', 'litr'];
-  String selectedUnit = 'dona';
+  List<String> unitList = ['dona', 'metr','gram', 'kg', 'tonna', 'litr'];
+  String? selectedUnit ;
 
-  static CategoryModel? _selectedCategory;
+  CategoryModel? _selectedCategory;
 
   @override
   void initState() {
@@ -139,16 +132,6 @@ class _AddProductAlertState extends State<AddProductAlert> {
 
                       SizedBox(height: 10),
 
-                      // TextField(
-                      //   controller: _quantity,
-                      //   keyboardType: TextInputType.number,
-                      //   decoration: InputDecoration(
-                      //     border: OutlineInputBorder(
-                      //       borderRadius: BorderRadius.circular(10),
-                      //     ),
-                      //     labelText: 'Soni',
-                      //   ),
-                      // ),
                       Row(
                         children: [
                           Expanded(
@@ -213,31 +196,6 @@ class _AddProductAlertState extends State<AddProductAlert> {
                           // ),
                         ],
                       ),
-
-                      // DropdownButton<String>(
-                      //   value: dropdownValue,
-                      //   icon: const Icon(Icons.arrow_downward),
-                      //   elevation: 16,
-                      //   style: const TextStyle(color: Colors.deepPurple),
-                      //   underline: Container(
-                      //     height: 2,
-                      //     width: 20,
-                      //     color: Colors.deepPurpleAccent,
-                      //   ),
-                      //   onChanged: (String? value) {
-                      //     // This is called when the user selects an item.
-                      //     setState(() {
-                      //       dropdownValue = value!;
-                      //     });
-                      //   },
-                      //   items:
-                      //       list.map<DropdownMenuItem<String>>((String value) {
-                      //         return DropdownMenuItem<String>(
-                      //           value: value,
-                      //           child: Text(value),
-                      //         );
-                      //       }).toList(),
-                      // ),
                     ],
                   ),
                 ),
@@ -351,13 +309,9 @@ class _AddProductAlertState extends State<AddProductAlert> {
                         "unit": selectedUnit,
                         "image": image,
                       });
-
-                      print("------------------------------------------------");
-                      print(result);
-                      print("------------------------------------------------");
                       ProgressService.hide(context);
                       if (result) {
-                        Navigator.of(context).pop();
+                        Navigator.of(context).pop<bool>(true);
                       }
                     } catch (e) {}
 

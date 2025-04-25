@@ -15,8 +15,8 @@ class _ProductsListPageState extends State<ProductsListPage> {
   final _productService = ProductService();
   // Ro'yxat uchun ma'lumotlar
 
-  void _showAddProductDialog() {
-    showDialog(
+  Future<bool?> _showAddProductDialog()async {
+    return  await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AddProductAlert(productService: _productService);
@@ -60,8 +60,14 @@ class _ProductsListPageState extends State<ProductsListPage> {
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 ),
                 ElevatedButton.icon(
-                  onPressed: () {
-                    _showAddProductDialog();
+                  onPressed: ()async {
+                   var result= await _showAddProductDialog()??false;
+                   if(result){
+                     setState(() {
+
+                     });
+                   }
+
                   },
                   icon: Icon(Icons.add),
                   label: Text('Yaratmoq'),
@@ -177,7 +183,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                             ),
                             Expanded(
                               flex: 2,
-                              child: Text("${snapshot.data?[index].name}"),
+                              child: Text("${snapshot.data?[index].categoryName}"),
                             ),
                             Expanded(
                               flex: 2,

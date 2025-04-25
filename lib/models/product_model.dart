@@ -7,6 +7,7 @@ class ProductModel {
   int quantity;
   int quantityPay = 1;
   String? image;
+  String? categoryName;
  // String uint;
 
   ProductModel({
@@ -17,6 +18,7 @@ class ProductModel {
     required this.purchasePrice,
     required this.quantity,
     required this.image,
+    required this.categoryName,
    // required this.uint,
   });
 
@@ -28,6 +30,7 @@ class ProductModel {
     double purchasePrice = json['purchasePrice'];
     int quantity = json['quantity'];
     String? image = json['image'];
+    String? categoryName = json['categoryName'];
    // String unit = json['unit'];
     return ProductModel(
       id: id,
@@ -37,6 +40,7 @@ class ProductModel {
       purchasePrice: purchasePrice,
       quantity: quantity,
       image: image,
+      categoryName: categoryName,
       //uint: unit,
     );
   }

@@ -13,12 +13,8 @@ class CustomerService {
         "phone": phone,
         "info": info,
       });
-      if (kDebugMode) {
-        print(response);
-      }
       return true;
     } catch (e) {
-      print('Login Error: $e');
       return false;
     }
   }

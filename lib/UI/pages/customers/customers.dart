@@ -9,58 +9,19 @@ class CustomerListPage extends StatefulWidget {
 }
 
 class _CustomerListPageState extends State<CustomerListPage> {
-  // Ro'yxat uchun ma'lumotlar
-  final List<Map<String, String>> customers = [
-    {
-      'sr': '1',
-      'name': 'Cash',
-      'phone': '-',
-      'email': 'cash@gmail.com',
-      'address': '-',
-    },
-    {
-      'sr': '2',
-      'name': 'Customer 2',
-      'phone': '25335',
-      'email': 'jkd@hotmail.com',
-      'address': '15353',
-    },
-    {
-      'sr': '3',
-      'name': 'Customer 1',
-      'phone': '0355',
-      'email': 'abc@gmail.com',
-      'address': 'New Address',
-    },
-  ];
 
   final customerService = CustomerService();
 
-  void _showAddCategoryDialog(BuildContext context) async {
+  _showAddCategoryDialog(BuildContext context) async {
     var result = await showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
         return AddCustomerAlert(customerService: customerService);
-      },
-    );
+      })??false;
     if (result == true) {
       setState(() {});
     }
   }
-  // void _showAddCustomerDialog() {
-  //   String name = '';
-  //   String newPhone = '';
-  //   String newEmail = '';
-  //   String newAddress = '';
-
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AddCustomerAlert();
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,8 +55,8 @@ class _CustomerListPageState extends State<CustomerListPage> {
                 ),
                 ElevatedButton.icon(
                   onPressed: () async{
-                    // Add New tugmasi bosilganda bajariladigan kod
-                    _showAddCategoryDialog(context);
+
+                  await _showAddCategoryDialog(context);
                   },
                   icon: Icon(Icons.add),
                   label: Text("Qo'shish"),

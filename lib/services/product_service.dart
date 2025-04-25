@@ -18,7 +18,7 @@ class ProductService {
     }
   }
   // Barcha mahsulotlarni olish
-  Future<List<ProductModel>> searchAllProducts({required String text,int page = 1,pageSize=10}) async {
+  Future<List<ProductModel>> searchAllProducts({required String text,int page = 1,pageSize=100}) async {
     try {
       List response = await _api.get('api/Product/GetAllProductsByStoreIdAndSearchTerm/$text?pageIndex=$page&pageSize=$pageSize');
       print(response);
