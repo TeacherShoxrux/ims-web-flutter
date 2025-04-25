@@ -10,7 +10,7 @@ class PaymentService {
 
   Future<List<PaymentModel>> getPayment() async {
     try {
-      final response = await _api.get('api/Payment/GetPayments?page=1&pageSize=10');
+      final response = await _api.get('api/Payment/GetPayments?page=1&pageSize=1000');
       print(response);
       final List<dynamic> data = response['data'];
       return data.map((e) => PaymentModel.fromJson(e)).toList();

@@ -5,6 +5,9 @@ class UserInfoModel {
     String? password;
     String? image;
     String? email;
+    String? storeName;
+    String? storeImage;
+    String? storeAddress;
     String role;
 
     UserInfoModel({
@@ -15,6 +18,9 @@ class UserInfoModel {
          this.image,
          this.email,
         required this.role,
+        this.storeName,
+        this.storeImage,
+        this.storeAddress,
     });
 
     factory UserInfoModel.fromJson(Map<String, dynamic> json) => UserInfoModel(
@@ -25,6 +31,9 @@ class UserInfoModel {
         image: json["image"],
         email: json["email"],
         role: json["role"],
+        storeName: json["storeName"],
+        storeImage: json["storeImage"],
+        storeAddress: json["storeAddress"],
     );
 
     Map<String, dynamic> toJson() => {

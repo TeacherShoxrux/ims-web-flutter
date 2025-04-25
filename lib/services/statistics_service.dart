@@ -17,7 +17,12 @@ class StatisticService {
       rethrow;
     }
   }
-
+    void downloadProductsExcel()async{
+      _api.downloadFileFromBackend(
+        url: 'api/Statistics/export-products',
+        fallbackFileName: 'products.xlsx',
+      );
+    }
   //
   // Future<int> getTotalUsers() async {
   //   try {

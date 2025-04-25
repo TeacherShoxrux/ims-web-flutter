@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/login/login.dart';
 import 'package:ims_web/services/auth_service.dart';
+import 'package:ims_web/services/statistics_service.dart';
 import 'package:intl/intl.dart'; // Sana formatlash uchun
 
 class ReportsPage extends StatefulWidget {
@@ -89,6 +90,7 @@ class _ReportsPageState extends State<ReportsPage> {
   }
 
   final authService = AuthService();
+  final statsService = StatisticService();
 
   @override
   Widget build(BuildContext context) {
@@ -123,34 +125,11 @@ class _ReportsPageState extends State<ReportsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Qidiruv paneli
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.start,
-            //   children: [
-            //     Container(
-            //       width: screenWidth > 1200 ? 400 : double.infinity,
-            //       child: TextField(
-            //         decoration: InputDecoration(
-            //           hintText: 'Search Here',
-            //           prefixIcon: Icon(Icons.search),
-            //           border: OutlineInputBorder(
-            //             borderRadius: BorderRadius.circular(10),
-            //             borderSide: BorderSide.none,
-            //           ),
-            //           filled: true,
-            //           fillColor: Colors.white,
-            //         ),
-            //       ),
-            //     ),
-              
-            //   ],
-            // ),
-         //   SizedBox(height: 16),
-            // Sarlavha
+
             Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Hisobtlar',
+                  'Hisobotlar',
                   style: TextStyle(
                     fontSize: screenWidth > 600 ? 24 : 20,
                     fontWeight: FontWeight.bold,
@@ -259,7 +238,11 @@ class _ReportsPageState extends State<ReportsPage> {
                     value: report['totalPurchasesAmount'].toStringAsFixed(2),
                     icon: Icons.attach_money,
                     color: Colors.purple,
-                    screenWidth: screenWidth,
+                    screenWidth: screenWidth, onTap: () {
+
+                      statsService.downloadProductsExcel();
+                  },
+
                   ),
                   // Number of Purchases karta
                   StatCard(
@@ -267,7 +250,7 @@ class _ReportsPageState extends State<ReportsPage> {
                     value: report['numberOfPurchases'].toString(),
                     icon: Icons.receipt,
                     color: Colors.blue,
-                    screenWidth: screenWidth,
+                    screenWidth: screenWidth, onTap: () {  },
                   ),
                   // Most Purchased Product karta
                   StatCard(
@@ -275,7 +258,7 @@ class _ReportsPageState extends State<ReportsPage> {
                     value: report['mostPurchasedProduct'],
                     icon: Icons.star,
                     color: Colors.orange,
-                    screenWidth: screenWidth,
+                    screenWidth: screenWidth, onTap: () {  },
                   ),
                 ],
               ),
@@ -294,61 +277,67 @@ class StatCard extends StatelessWidget {
   final IconData icon;
   final Color color;
   final double screenWidth;
+  final VoidCallback onTap;
 
   StatCard({
     required this.title,
     required this.value,
     required this.icon,
     required this.color,
-    required this.screenWidth,
+    required this.screenWidth, required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      child: Padding(
-        padding: EdgeInsets.all(screenWidth > 600 ? 16.0 : 12.0),
-        child: Row(
-          children: [
-            // Ikonka
-            CircleAvatar(
-              radius: screenWidth > 600 ? 30 : 25,
-              backgroundColor: color.withOpacity(0.2),
-              child: Icon(
-                icon,
-                size: screenWidth > 600 ? 30 : 25,
-                color: color,
+
+    return InkWell(
+      onTap: onTap,
+      child: Card(
+
+        elevation: 4,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+        child: Padding(
+          padding: EdgeInsets.all(screenWidth > 600 ? 16.0 : 12.0),
+          child: Row(
+            children: [
+              // Ikonka
+              CircleAvatar(
+                radius: screenWidth > 600 ? 30 : 25,
+                backgroundColor: color.withOpacity(0.2),
+                child: Icon(
+                  icon,
+                  size: screenWidth > 600 ? 30 : 25,
+                  color: color,
+                ),
               ),
-            ),
-            SizedBox(width: screenWidth > 600 ? 16 : 12),
-            // Matn qismi
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontSize: screenWidth > 600 ? 16 : 14,
-                      color: Colors.grey[600],
+              SizedBox(width: screenWidth > 600 ? 16 : 12),
+              // Matn qismi
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontSize: screenWidth > 600 ? 16 : 14,
+                        color: Colors.grey[600],
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 8),
-                  Text(
-                    value,
-                    style: TextStyle(
-                      fontSize: screenWidth > 600 ? 20 : 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                    SizedBox(height: 8),
+                    Text(
+                      value,
+                      style: TextStyle(
+                        fontSize: screenWidth > 600 ? 20 : 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

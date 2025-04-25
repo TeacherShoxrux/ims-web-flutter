@@ -14,11 +14,6 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final authService = AuthService();
-  // Oddiy autentifikatsiya ma'lumotlari (haqiqiy loyihada backenddan olinadi)
-  final String correctEmail = "admin";
-  final String correctPassword = "123";
-
-  // Loginni tekshirish funksiyasi
   void _handleLogin(BuildContext context)async {
     ProgressService.show(context, message: "Iltimos kuting...");
     var result= await authService.login(_emailController.text, _passwordController.text);

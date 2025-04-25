@@ -5,6 +5,8 @@ import 'package:ims_web/routes/urls.dart';
 import 'package:ims_web/services/auth_service.dart';
 import 'package:ims_web/services/product_service.dart';
 
+import '../image_viewer.dart';
+
 class CustomSidebar extends StatefulWidget {
   final int selectedIndex;
   final Function(int) onItemSelected;
@@ -33,13 +35,6 @@ class _CustomSidebarState extends State<CustomSidebar> {
 
     if (file != null) {
       image = file;
-      //
-      // if (kDebugMode) {
-      //   print("-----------------------------------------------------------------------------------");
-      //   imageUrl=await uploadImage();
-      //   print(imageUrl);
-      //   print("-----------------------------------------------------------------------------------");
-      // }
       setState(() {});
     }
   }
@@ -82,27 +77,43 @@ class _CustomSidebarState extends State<CustomSidebar> {
 
             return Column(
               children: [
-                const SizedBox(height: 40),
+                const SizedBox(height: 20),
+                Text(
+                  "${snapshot.data?.storeName} "?? 'null',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+                Text(
+                  "${snapshot.data?.phone}",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),Text(
+                  "(${snapshot.data?.storeAddress})",
+                  style: TextStyle(color: Colors.white, fontSize: 14),
+                ),
+                const SizedBox(height: 20),
                 GestureDetector(
-                  onTap: () async {
+                  onLongPress: () async {
                     await pickImageWeb();
                     var imagePath = await uploadImage();
-                    await authservice.updateImageUser({
+                    if(imagePath!=null) {
+                      await authservice.updateImageUser({
                       "image": imagePath,
                       "email": snapshot.data?.email ?? 'null',
                     });
+                      imagePath=null;
+                    }
                     setState(() {});
                   },
-                  child: CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                      "${Urls.baseUrlImage}/${snapshot.data?.image}",
-                    ),
-                  ),
+                  child: ImageViewer(imagePath: "${Urls.baseUrlImage}/${snapshot.data?.image}", width: 80, height: 80,borderRadius: 40,)
+                  // CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: NetworkImage(
+                  //     "${Urls.baseUrlImage}/${snapshot.data?.image}",
+                  //   ),
+                  // ),
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  snapshot.data?.fullName ?? 'null',
+                  snapshot.data?.role =='Director'? "Direktor":"Sotuvchi",
                   style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
                 const Divider(color: Colors.white54, height: 30),

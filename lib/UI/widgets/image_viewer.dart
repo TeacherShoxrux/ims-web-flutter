@@ -4,7 +4,8 @@ class ImageViewer extends StatelessWidget {
   final String imagePath;
   final double width;
   final double height;
-  const ImageViewer({super.key, required this.imagePath, required this.width, required this.height});
+  final double borderRadius;
+  const ImageViewer({super.key, required this.imagePath, required this.width, required this.height, this.borderRadius=8.0});
 
   void _showImageDialog(BuildContext context) {
     showDialog(
@@ -44,7 +45,7 @@ class ImageViewer extends StatelessWidget {
     return GestureDetector(
       onTap: () => _showImageDialog(context),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: Image.network(
           imagePath,
           height: height,

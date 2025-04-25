@@ -7,7 +7,7 @@ class ProductService {
   final ApiService _api = ApiService();
 
   // Barcha mahsulotlarni olish
-  Future<List<ProductModel>> getAllProducts({int page = 1,pageSize=10}) async {
+  Future<List<ProductModel>> getAllProducts({int page = 1,pageSize=1000}) async {
     try {
       List response = await _api.get('api/Product/GetAllProductsByStoreId?pageIndex=$page&pageSize=$pageSize');
       print(response);

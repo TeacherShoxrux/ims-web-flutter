@@ -24,7 +24,6 @@ class AuthService {
       await prefs.setString('jwt_token', token);
       return true;
     } catch (e) {
-      print('Login Error: $e');
       return false;
     }
   }
