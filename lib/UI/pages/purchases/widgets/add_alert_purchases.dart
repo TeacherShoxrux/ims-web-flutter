@@ -26,7 +26,6 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
   CustomersearchModel? selectedCustomer;
   List<ProductModel> products = [];
   final _productService = ProductService();
-  final _paymentService = PaymentService();
 
 String paymentMethod='';
   String text = '';
@@ -59,7 +58,7 @@ String paymentMethod='';
               },
               onPaymentMethodSelected: (method) {
                 setState(() {
-                  paymentMethod =method;
+                  paymentMethod=method;
                 });
               },
               onSave: () async{
@@ -69,7 +68,7 @@ String paymentMethod='';
                var result= await  widget.paymentService.createPayment(
                       customerId: selectedCustomer?.id??0,
                       products: selectedProducts,
-                      paymentMethod: "");
+                      paymentMethod: paymentMethod);
                if(result.isSuccess){
 
                   ProgressService.hide(context);
