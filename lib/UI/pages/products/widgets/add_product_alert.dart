@@ -7,7 +7,7 @@ import 'package:ims_web/services/product_service.dart';
 import '../../../../services/progress_service.dart';
 
 class AddProductAlert extends StatefulWidget {
- const AddProductAlert({super.key, required this.productService});
+  const AddProductAlert({super.key, required this.productService});
   final ProductService productService;
   @override
   State<AddProductAlert> createState() => _AddProductAlertState();
@@ -20,6 +20,7 @@ class _AddProductAlertState extends State<AddProductAlert> {
   final _salePrice = TextEditingController();
   final _quantity = TextEditingController();
   final _categoryService = CategoryService();
+
   PlatformFile? image;
   String? imageUrl;
   Future<void> pickImageWeb() async {
@@ -39,14 +40,23 @@ class _AddProductAlertState extends State<AddProductAlert> {
     }
   }
 
-  Future<String?> uploadImage()async{
-    if(image!=null) {
+  Future<String?> uploadImage() async {
+    if (image != null) {
       return await widget.productService.uploadImage(image!);
     }
     return null;
   }
 
+  List<String> unitList = ['dona', 'gram', 'kg', 'tonna', 'litr'];
+  String selectedUnit = 'dona';
+
   static CategoryModel? _selectedCategory;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,28 +139,114 @@ class _AddProductAlertState extends State<AddProductAlert> {
 
                       SizedBox(height: 10),
 
-                      TextField(
-                        controller: _quantity,
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
+                      // TextField(
+                      //   controller: _quantity,
+                      //   keyboardType: TextInputType.number,
+                      //   decoration: InputDecoration(
+                      //     border: OutlineInputBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //     ),
+                      //     labelText: 'Soni',
+                      //   ),
+                      // ),
+                      Row(
+                        children: [
+                          Expanded(
+                            flex: 2,
+                            child: TextField(
+                              controller: _quantity,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                labelText: 'Soni',
+                              ),
+                            ),
                           ),
-                          labelText: 'Soni',
-                        ),
+                          SizedBox(width: 10),
+                          Expanded(
+                            flex: 2,
+                            child: DropdownButtonFormField<String>(
+                              value: selectedUnit,
+                              items:
+                                  unitList.map((String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Text(value),
+                                    );
+                                  }).toList(),
+                              onChanged: (String? newValue) {
+                                if (newValue != null) {
+                                  setState(() {
+                                    selectedUnit = newValue;
+                                  });
+                                }
+                              },
+                              decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                labelText: "Birlik",
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          // ElevatedButton(
+                          //   onPressed: () {
+                          //     if (_quantity.text.isNotEmpty) {
+                          //       productAmounts.add({
+                          //      //   "amount": int.parse(_quantity.text),
+                          //         "unit": selectedUnit,
+                          //       });
+                          //       _quantity.clear();
+                          //       setState(() {});
+                          //     }
+                          //   },
+                          //   style: ElevatedButton.styleFrom(
+                          //     backgroundColor: Colors.purple,
+                          //     foregroundColor: Colors.white,
+                          //     shape: CircleBorder(),
+                          //     padding: EdgeInsets.all(12),
+                          //   ),
+                          //   child: Icon(Icons.add),
+                          // ),
+                        ],
                       ),
+
+                      // DropdownButton<String>(
+                      //   value: dropdownValue,
+                      //   icon: const Icon(Icons.arrow_downward),
+                      //   elevation: 16,
+                      //   style: const TextStyle(color: Colors.deepPurple),
+                      //   underline: Container(
+                      //     height: 2,
+                      //     width: 20,
+                      //     color: Colors.deepPurpleAccent,
+                      //   ),
+                      //   onChanged: (String? value) {
+                      //     // This is called when the user selects an item.
+                      //     setState(() {
+                      //       dropdownValue = value!;
+                      //     });
+                      //   },
+                      //   items:
+                      //       list.map<DropdownMenuItem<String>>((String value) {
+                      //         return DropdownMenuItem<String>(
+                      //           value: value,
+                      //           child: Text(value),
+                      //         );
+                      //       }).toList(),
+                      // ),
                     ],
                   ),
                 ),
-
               ],
             ),
             SizedBox(height: 16),
             // Category dropdown
             Row(
-              children: [
-                Text('Kategoriyasi', style: TextStyle(fontSize: 16)),
-              ],
+              children: [Text('Kategoriyasi', style: TextStyle(fontSize: 16))],
             ),
             SizedBox(height: 8),
             FutureBuilder<List<CategoryModel>>(
@@ -197,9 +293,14 @@ class _AddProductAlertState extends State<AddProductAlert> {
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Center(
-                        child: image != null
+                        child:
+                            image != null
                                 ? Image.memory(image!.bytes!)
-                                : Icon(Icons.image,size: 50, color: Colors.grey),
+                                : Icon(
+                                  Icons.image,
+                                  size: 50,
+                                  color: Colors.grey,
+                                ),
                       ),
                     ),
                   ],
@@ -219,7 +320,6 @@ class _AddProductAlertState extends State<AddProductAlert> {
 
                     IconButton(
                       onPressed: () {
-
                         print('Rasm o\'chirildi');
                       },
                       icon: Icon(Icons.delete, color: Colors.blue),
@@ -234,34 +334,34 @@ class _AddProductAlertState extends State<AddProductAlert> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 ElevatedButton(
-                  onPressed: ()async {
-                    try{
-                      ProgressService.show(context, message: "Iltimos kuting...");
-                      var image=await uploadImage();
-                      var result= await widget.productService.createProduct({
+                  onPressed: () async {
+                    try {
+                      ProgressService.show(
+                        context,
+                        message: "Iltimos kuting...",
+                      );
+                      var image = await uploadImage();
+                      var result = await widget.productService.createProduct({
                         "name": _productName.text,
                         "description": _productDescription.text,
                         "salePrice": int.parse(_salePrice.text),
                         "purchasePrice": int.parse(_purchasePrice.text),
                         "quantity": int.parse(_quantity.text),
                         "categoryId": _selectedCategory?.id,
-                        "image": image
+                        "unit": selectedUnit,
+                        "image": image,
                       });
 
                       print("------------------------------------------------");
                       print(result);
                       print("------------------------------------------------");
-                      ProgressService.hide (context);
-                      if(result){
+                      ProgressService.hide(context);
+                      if (result) {
                         Navigator.of(context).pop();
                       }
-                    }catch(e){
+                    } catch (e) {}
 
-                    }
-
-
-                       // Dialogni yopish
-
+                    // Dialogni yopish
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple, // SAVE tugmasi rangi

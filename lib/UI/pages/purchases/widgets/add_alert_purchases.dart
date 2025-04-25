@@ -28,6 +28,7 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
   final _productService = ProductService();
   final _paymentService = PaymentService();
 
+String paymentMethod='';
   String text = '';
 
   @override
@@ -56,6 +57,11 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                   selectedProducts.clear();
                 });
               },
+              onPaymentMethodSelected: (method) {
+                setState(() {
+                  paymentMethod =method;
+                });
+              },
               onSave: () async{
                 ProgressService.show(context, message: "Iltimos kuting...");
                 await Future.delayed(Duration(seconds: 2));
@@ -63,7 +69,7 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
                var result= await  widget.paymentService.createPayment(
                       customerId: selectedCustomer?.id??0,
                       products: selectedProducts,
-                      paymentMethod: 'Naqt');
+                      paymentMethod: "");
                if(result.isSuccess){
 
                   ProgressService.hide(context);
@@ -80,7 +86,7 @@ class _AddPurchaseDialogState extends State<AddPurchaseDialog> {
 
 
 
-              },
+              }, 
             ),
             SizedBox(height: 16),
             Expanded(

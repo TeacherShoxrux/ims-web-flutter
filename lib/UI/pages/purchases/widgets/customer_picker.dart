@@ -1,9 +1,13 @@
 // Mijozlarni qidirish va tanlash widgeti
 import 'package:flutter/material.dart';
+import 'package:ims_web/models/Payment_model.dart';
 import 'package:ims_web/models/customers_model/customerSearch_model.dart';
 import 'package:ims_web/services/customer_service.dart';
+import 'package:ims_web/services/paymetn_service.dart';
 
 class CustomerSearchWidget extends StatefulWidget {
+  final Function(String)? onPaymentMethodSelected;
+
   final Function(String) onChangedSearchCustomer;
   final List<CustomersearchModel> customers;
   final Function(CustomersearchModel)? onCustomerSelected;
@@ -14,7 +18,7 @@ class CustomerSearchWidget extends StatefulWidget {
     required this.onCustomerSelected,
     required this.onChangedSearchCustomer,
     //required this.customer,
-    this.onSelected,
+    this.onSelected, this.onPaymentMethodSelected,
   });
 
   @override
@@ -26,6 +30,8 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
   List<CustomersearchModel> filteredCustomers = [];
   TextEditingController searchController = TextEditingController();
   final customerService = CustomerService();
+  final paymentService = PaymentService();
+  static PaymentModel? _paymentModel;
 
   @override
   void initState() {
@@ -39,6 +45,9 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
     // filteredCustomers =
   }
 
+  List<String> cashList = ['Naxt', 'Terminal', 'Click'];
+  String  cashUnit = "To'lov usulini tanlang";
+
   @override
   void dispose() {
     // searchController.dispose();
@@ -48,89 +57,163 @@ class _CustomerSearchWidgetState extends State<CustomerSearchWidget> {
   CustomersearchModel? selection;
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Autocomplete<CustomersearchModel>(
-          optionsBuilder: (textEditingValue) async {
-            if (textEditingValue.text.isEmpty) {
-              return Iterable<CustomersearchModel>.empty();
-            } else {
-              await Future.delayed(Duration(seconds: 1));
-              return await customerService.searchAllCustomer(
-                text: textEditingValue.text,
-              );
-            }
-          },
-          displayStringForOption: (CustomersearchModel customer) {
-            return customer.name;
-          },
-          onSelected: (CustomersearchModel selection) {
-            print(selection);
-            searchController.text = selection.name;
-            widget.onCustomerSelected!(selection);
-            if (widget.onSelected != null) {
-              widget.onSelected!(selection);
-            }
-          },
-          optionsViewBuilder: (
-            BuildContext context,
-            Function(CustomersearchModel) onSelected,
-            options,
-          ) {
-            return Align(
-              alignment: Alignment.topLeft,
-              child: Material(
-                elevation: 4.0,
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: 400,
-                  ), // bu yerda width nazorat qilinadi
-                  child: ListView.builder(
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: options.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      // final String option = options.elementAt(index);
-                      return ListTile(
-                        title: Text(
-                          options.elementAt(index).name,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Autocomplete<CustomersearchModel>(
+            optionsBuilder: (textEditingValue) async {
+              if (textEditingValue.text.isEmpty) {
+                return Iterable<CustomersearchModel>.empty();
+              } else {
+                await Future.delayed(Duration(seconds: 1));
+                return await customerService.searchAllCustomer(
+                  text: textEditingValue.text,
+                );
+              }
+            },
+            displayStringForOption: (CustomersearchModel customer) {
+              return customer.name;
+            },
+            onSelected: (CustomersearchModel selection) {
+              print(selection);
+              searchController.text = selection.name;
+              widget.onCustomerSelected!(selection);
+              if (widget.onSelected != null) {
+                widget.onSelected!(selection);
+              }
+            },
+            optionsViewBuilder: (
+              BuildContext context,
+              Function(CustomersearchModel) onSelected,
+              options,
+            ) {
+              return Align(
+                alignment: Alignment.topLeft,
+                child: Material(
+                  elevation: 4.0,
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: 400,
+                    ), // bu yerda width nazorat qilinadi
+                    child: ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      itemCount: options.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        // final String option = options.elementAt(index);
+                        return ListTile(
+                          title: Text(
+                            options.elementAt(index).name,
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        subtitle: Text("(${options.elementAt(index).phone})"),
-                        onTap: () => onSelected(options.elementAt(index)),
-                      );
-                    },
+                          subtitle: Text("(${options.elementAt(index).phone})"),
+                          onTap: () => onSelected(options.elementAt(index)),
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
-            );
-          },
-          fieldViewBuilder: fieldViewBuilder,
-        ),
-        SizedBox(height: 8),
-        DropdownButtonFormField<String>(
-          value: selectedCustomer,
-          items:
-              filteredCustomers.map((customer) {
-                return DropdownMenuItem<String>(
-                  value: customer.name,
-                  child: Text(customer.name),
-                );
-              }).toList(),
-          onChanged: (String? newValue) {
-            // setState(() {
-            //   selectedCustomer = newValue!;
-            //   widget.onCustomerSelected!(selectedCustomer as CustomersearchModel);
-            // });
-          },
-          decoration: InputDecoration(
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
+              );
+            },
+            fieldViewBuilder: fieldViewBuilder,
           ),
-        ),
-      ],
+          SizedBox(height: 8),
+      
+          //  Expanded(
+          //   flex: 2,
+          //    child: DropdownButtonFormField<String>(
+          //      value: cashUnit,
+          //      items:
+          //          cashList.map((String value) {
+          //            return DropdownMenuItem<String>(
+          //              value: value,
+          //              child: Text(value),
+          //            );
+          //          }).toList(),
+          //      onChanged: (String? newValue) {
+          //        if (newValue != null) {
+          //          setState(() {
+          //            cashUnit = newValue;
+          //          });
+          //        }
+          //      },
+          //      decoration: InputDecoration(
+          //        border: OutlineInputBorder(
+          //          borderRadius: BorderRadius.circular(10),
+          //        ),
+          //        labelText: "To'lov usulini tanlang",
+          //      ),
+          //    ),
+          //  ),
+      
+      
+          Expanded(
+            flex: 1,
+            child: DropdownButtonFormField<String>(
+              value: cashUnit,
+             
+              items:
+                  cashList.map((String value) {
+                    
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+             onChanged: (String? newValue) {
+                if(newValue !=null){
+                  setState(() {
+                    cashUnit =newValue;
+                  });
+                  if(widget.onPaymentMethodSelected!(newValue));
+                }
+              },
+              decoration: InputDecoration(
+                labelText: "To'lov usulini tanlang",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+          ),
+      
+          // FutureBuilder<List<PaymentModel>>(
+          //   future: paymentService.getPayment(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.data is List) {
+          //       return DropdownButtonFormField<PaymentModel>(
+          //         value: _paymentModel,
+          //         items:
+          //             snapshot.data?.map((PaymentModel payment) {
+          //               return DropdownMenuItem<PaymentModel>(
+          //                 value: payment,
+          //                 child: Text("${payment.paymentMethod}"),
+          //               );
+          //             }).toList(),
+          //         onChanged: (PaymentModel? newValue) {
+          //           _paymentModel = newValue;
+          //           setState(() {});
+          //           // setState(() {
+          //           //   selectedCustomer = newValue!;
+          //           //   widget.onCustomerSelected!(selectedCustomer as CustomersearchModel);
+          //           // });
+          //         },
+          //         decoration: InputDecoration(
+          //           labelText: "To'lov usulini tanlang",
+          //           border: OutlineInputBorder(
+          //             borderRadius: BorderRadius.circular(10),
+          //           ),
+          //         ),
+          //       );
+          //     }
+          //     return Center(child: CircularProgressIndicator());
+          //   },
+          // ),
+        ],
+      ),
     );
   }
 
