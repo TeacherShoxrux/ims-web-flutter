@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-Future<bool> showDeleteConfirmationDialog(BuildContext context, String name) async {
+Future<bool> showDeleteConfirmationDialog(BuildContext context, String name, [String? title]) async {
   return await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
-      title: const Text("O'chirishni tasdiqlang"),
-      content: Text("“$name kategoriyasini o‘chirishni xohlaysizmi?"),
+      title:  Text(title??"O'chirishni tasdiqlang"),
+      content: Text("“$name"),
       actions: [
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),

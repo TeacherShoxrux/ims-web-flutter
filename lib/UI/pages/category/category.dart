@@ -140,7 +140,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                   ),
                                   IconButton(
                                     onPressed: ()async {
-                                    var confirm= await  showDeleteConfirmationDialog(context,snapshot.data?[index].name??'null');
+                                    var confirm= await  showDeleteConfirmationDialog(context,"{snapshot.data?[index].name}  kategoriyasini o‘chirishni xohlaysizmi?"??'null');
                                     if(confirm){
                                       var success = await categroyService.deleteCategory(snapshot.data?[index].id??0);
                                       if(success){

@@ -55,7 +55,7 @@ class GetAlertDialogChek extends StatelessWidget {
                     children: [
                       Text("Vaqti:", style: TextStyle(fontSize: 16)),
                       Text(
-                        snapshot.data?.createdAt.fmtDate()?? '',
+                        snapshot.data?.createdAt.fmtDate() ?? '',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
@@ -77,31 +77,36 @@ class GetAlertDialogChek extends StatelessWidget {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                   SizedBox(height: 12),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ...?snapshot.data?.products.map(
-                            (product) => Text(
-                              product.name,
-                              maxLines: 3,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          ...?snapshot.data?.products.map(
-                            (product) => Text(
-                              product.salePrice.som(),
 
-                              style: TextStyle(fontSize: 16),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ...?snapshot.data?.products.map(
+                        (product) => Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(color: Colors.grey),
                             ),
                           ),
-                        ],
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  product.name,
+                                  maxLines: 3,
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Text(
+                                product.salePrice.som(),
+
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -133,7 +138,6 @@ class GetAlertDialogChek extends StatelessWidget {
                 ],
               );
             }
-
             return Center(child: CircularProgressIndicator());
           },
         ),

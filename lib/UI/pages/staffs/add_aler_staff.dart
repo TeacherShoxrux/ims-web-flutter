@@ -27,12 +27,9 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
       _passwordController.text,
     );
     ProgressService.hide(context);
-    if (result)
-      Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(builder: (c) => HomePage()),
-        (e) => true,
-      );
+    if (result) {
+      Navigator.pop(context,true);
+    }
     if (!result)
       ScaffoldMessenger.of(
         context,
@@ -118,9 +115,9 @@ class _AddAlerStaffState extends State<AddAlerStaff> {
               ),
             ),
             SizedBox(height: 16),
-            // Email maydoni
-            Text('Email', style: TextStyle(fontSize: 16)),
-            SizedBox(height: 8),
+            // // Email maydoni
+            // Text('Email', style: TextStyle(fontSize: 16)),
+            // SizedBox(height: 8),
             TextField(
               onChanged: (value) {
                 // newEmail = value;

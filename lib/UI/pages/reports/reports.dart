@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/login/login.dart';
 import 'package:ims_web/services/auth_service.dart';
 import 'package:ims_web/services/statistics_service.dart';
-import 'package:intl/intl.dart'; // Sana formatlash uchun
+import 'package:intl/intl.dart';
+
+import '../category/widgets/delete_category_alert.dart'; // Sana formatlash uchun
 
 class ReportsPage extends StatefulWidget {
   @override
@@ -136,17 +138,20 @@ class _ReportsPageState extends State<ReportsPage> {
                   ),
                 ),
                   ElevatedButton(
-                  onPressed: () {
-                    authService.logout();
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return LoginPage();
-                        },
-                      ),
-                      (delate) => false,
-                    );
+                  onPressed: () async {
+                  var result = await  showDeleteConfirmationDialog(context,"Siz tizimdan chiqib ketyapsiz?","Tizimdan chiqish ");
+                    if(result){
+                      authService.logout();
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return LoginPage();
+                          },
+                        ),
+                            (delate) => false,
+                      );
+                    }
                   },
                   child: Text("Chiqish", style: TextStyle(color: Colors.white)),
                   style: ButtonStyle(

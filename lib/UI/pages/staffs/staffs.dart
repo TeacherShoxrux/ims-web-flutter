@@ -104,30 +104,30 @@ class _SupplierListPageState extends State<StaffsListPage> {
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 3,
-                    child: Text(
-                      'Email',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
+                  // Expanded(
+                  //   flex: 3,
+                  //   child: Text(
+                  //     'Email',
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontWeight: FontWeight.bold,
+                  //     ),
+                  //   ),
+                  // ),
                   Expanded(
                     flex: 2,
                     child: Text(
-                      'Ishchi',
+                      'Roli',
                       style: TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
-                  Expanded(
-                    flex: 1,
-                    child: SizedBox(), // Bo'sh joy ikonlar uchun
-                  ),
+                  // Expanded(
+                  //   flex: 1,
+                  //   child: SizedBox(), // Bo'sh joy ikonlar uchun
+                  // ),
                 ],
               ),
             ),
@@ -156,12 +156,12 @@ class _SupplierListPageState extends State<StaffsListPage> {
                                   snapshot.data?[index].fullName ?? 'null',
                                 ),
                               ),
-                              Expanded(
-                                flex: 2,
-                                child: Text(
-                                  snapshot.data?[index].phone ?? 'null',
-                                ),
-                              ),
+                              // Expanded(
+                              //   flex: 2,
+                              //   child: Text(
+                              //     snapshot.data?[index].phone ?? 'null',
+                              //   ),
+                              // ),
                               Expanded(
                                 flex: 3,
                                 child: Text(
@@ -171,42 +171,42 @@ class _SupplierListPageState extends State<StaffsListPage> {
                               Expanded(
                                 flex: 2,
                                 child: Text(
-                                  snapshot.data?[index].role ?? 'null',
+                                  snapshot.data?[index].role =="Director"?"Direktor":"Sotuvchi",
                                 ),
                               ),
 
-                              Expanded(
-                                flex: 1,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () {
-                                        // Edit tugmasi bosilganda
-                                        //   print('Edit bosildi: ${suppliers[index]['name']}');
-
-                                        setState(() {});
-                                      },
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.yellow[700],
-                                      ),
-                                    ),
-                                    IconButton(
-                                      onPressed: () {
-                                        // Delete tugmasi bosilganda
-                                        setState(() {
-                                          //  suppliers.removeAt(index);
-                                        });
-                                      },
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // Expanded(
+                              //   flex: 1,
+                              //   child: Row(
+                              //     mainAxisAlignment: MainAxisAlignment.end,
+                              //     children: [
+                              //       // IconButton(
+                              //       //   onPressed: () {
+                              //       //     // Edit tugmasi bosilganda
+                              //       //     //   print('Edit bosildi: ${suppliers[index]['name']}');
+                              //       //
+                              //       //     setState(() {});
+                              //       //   },
+                              //       //   icon: Icon(
+                              //       //     Icons.edit,
+                              //       //     color: Colors.yellow[700],
+                              //       //   ),
+                              //       // ),
+                              //       // IconButton(
+                              //       //   onPressed: () {
+                              //       //     // Delete tugmasi bosilganda
+                              //       //     setState(() {
+                              //       //       //  suppliers.removeAt(index);
+                              //       //     });
+                              //       //   },
+                              //       //   icon: Icon(
+                              //       //     Icons.delete,
+                              //       //     color: Colors.blue,
+                              //       //   ),
+                              //       // ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           ),
                         );

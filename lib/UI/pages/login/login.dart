@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/services/snackbar_service.dart';
 
 import '../../../services/auth_service.dart';
 import '../../../services/progress_service.dart';
@@ -15,11 +16,24 @@ class _LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   final authService = AuthService();
   void _handleLogin(BuildContext context)async {
-    ProgressService.show(context, message: "Iltimos kuting...");
-    var result= await authService.login(_emailController.text, _passwordController.text);
-    ProgressService.hide(context);
-   if(result)Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c)=>HomePage()), (e)=>true);
-   if(!result)  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Login xatolik!')),);
+    // ProgressService.show(context, message: "Iltimos kuting...");
+    var result=false;
+    try{
+
+     result = await authService.login(_emailController.text, _passwordController.text);
+
+      if(!result)SnackbarService().showError('Loginda xatolik!');
+      if(result)SnackbarService().showSuccess("Tizimga kirildi!!!");
+
+    }catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Nomalum xatolik yuz berdi $e')),);
+    }
+    await Future.delayed(Duration(seconds: 1));
+
+
+    if(result)Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (c)=>HomePage()), (e)=>false);
+
+
   }
 
   void _showErrorDialog(BuildContext context, String message) {
