@@ -34,18 +34,18 @@ class _CategoryListPageState extends State<CategoryListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Qidirish',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Qidirish',
+            //     prefixIcon: Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //       borderSide: BorderSide.none,
+            //     ),
+            //     filled: true,
+            //     fillColor: Colors.white,
+            //   ),
+            // ),
             SizedBox(height: 16),
             // Sarlavha va Add New tugmasi
             Row(
@@ -142,7 +142,7 @@ class _CategoryListPageState extends State<CategoryListPage> {
                                     onPressed: ()async {
                                     var confirm= await  showDeleteConfirmationDialog(context,snapshot.data?[index].name??'null');
                                     if(confirm){
-                                      var success= await categroyService.deleteCategory(snapshot.data?[index].id??0);
+                                      var success = await categroyService.deleteCategory(snapshot.data?[index].id??0);
                                       if(success){
                                         ScaffoldMessenger.of(context).showSnackBar(
                                           SnackBar(content: Text("Kategoriya o‘chirildi")),

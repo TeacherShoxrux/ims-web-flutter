@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/extensions/StringFormattingExtension.dart';
 
 import '../../../services/statistics_service.dart';
 
@@ -56,24 +57,6 @@ getData()async{
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Qidiruv paneli
-            Container(
-              width: screenWidth > 1200 ? 400 : double.infinity,
-              child: TextField(
-                decoration: InputDecoration(
-                  hintText: 'Qidirish',
-                  prefixIcon: Icon(Icons.search),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                    borderSide: BorderSide.none,
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                ),
-              ),
-            ),
-            SizedBox(height: 16),
-            // Sarlavha
             Text(
               'Umumiy satistika',
               style: TextStyle(
@@ -109,7 +92,7 @@ getData()async{
                       // Total Suppliers karta
                       StatCard(
                         title: 'Barcha Sotuvlar',
-                        value: "${snapshot.data?.totalSales}",
+                        value: "${snapshot.data?.totalSales.som()}",
                         icon: Icons.local_shipping,
                         color: Colors.green,
                         screenWidth: screenWidth,
@@ -124,7 +107,7 @@ getData()async{
                       ),
                       // Total Purchases Amount karta
                       StatCard(
-                        title: 'Top Mahsulot ',
+                        title: 'Top Mahsulot',
                         value: "${snapshot.data?.topProduct}",
                         icon: Icons.attach_money,
                         color: Colors.purple,
@@ -171,7 +154,6 @@ class StatCard extends StatelessWidget {
         padding: EdgeInsets.all(screenWidth > 600 ? 16.0 : 12.0),
         child: Row(
           children: [
-            // Ikonka
             CircleAvatar(
               radius: screenWidth > 600 ? 30 : 25,
               backgroundColor: color.withOpacity(0.2),
@@ -182,7 +164,6 @@ class StatCard extends StatelessWidget {
               ),
             ),
             SizedBox(width: screenWidth > 600 ? 16 : 12),
-            // Matn qismi
             Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -199,10 +180,12 @@ class StatCard extends StatelessWidget {
                   SizedBox(height: 5),
                   Text(
                     value,
+                    maxLines: 2,
                     style: TextStyle(
-                      fontSize: screenWidth > 600 ? 16 : 14,
-                      fontWeight: FontWeight.bold,
+                      fontSize: screenWidth > 600 ? 14 : 12,
+                      fontWeight: FontWeight.w100,
                       color: Colors.black,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],

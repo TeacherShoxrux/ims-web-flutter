@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ims_web/extensions/StringFormattingExtension.dart';
 import 'package:ims_web/services/paymetn_service.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -24,6 +25,7 @@ class GetAlertDialogChek extends StatelessWidget {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return Column(
+                mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
@@ -32,7 +34,6 @@ class GetAlertDialogChek extends StatelessWidget {
                   SizedBox(height: 26),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: [
                       Text(
                         "Mijoz:",
@@ -54,7 +55,7 @@ class GetAlertDialogChek extends StatelessWidget {
                     children: [
                       Text("Vaqti:", style: TextStyle(fontSize: 16)),
                       Text(
-                        snapshot.data?.createdAt.toString() ?? '',
+                        snapshot.data?.createdAt.fmtDate()?? '',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
@@ -70,28 +71,12 @@ class GetAlertDialogChek extends StatelessWidget {
                       ),
                     ],
                   ),
-                  //  SizedBox(height: 12),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     Text(
-                  //       "Mijoz ismi",
-                  //       style: TextStyle(
-                  //         fontSize: 16,
-                  //         fontWeight: FontWeight.w800,
-                  //       ),
-                  //     ),
-
-                  //     Text(snapshot.data?.customer.name, style: TextStyle(fontSize: 16)),
-                  //   ],
-                  // ),
                   SizedBox(height: 12),
                   Text(
                     "Mahsulotlar",
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                   SizedBox(height: 12),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -111,7 +96,7 @@ class GetAlertDialogChek extends StatelessWidget {
                         children: [
                           ...?snapshot.data?.products.map(
                             (product) => Text(
-                              "${product.quantity} ${product.unit} * ${product.salePrice}",
+                              product.salePrice.som(),
 
                               style: TextStyle(fontSize: 16),
                             ),
@@ -120,26 +105,9 @@ class GetAlertDialogChek extends StatelessWidget {
                       ),
                     ],
                   ),
-
-                  // SizedBox(height: 12),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                  //   children: [
-                  //     Text("Mahsulot soni", style: TextStyle(fontSize: 16)),
-                  //     ...?snapshot.data?.products.map(
-                  //       (product) => Text(
-                  //         product.quantity.toString(),
-                  //         style: TextStyle(fontSize: 16),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
                   SizedBox(height: 12),
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                     children: [
                       Text(
                         "Jami summa",
@@ -149,13 +117,12 @@ class GetAlertDialogChek extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        snapshot.data?.amount.toString() ?? '',
+                        snapshot.data?.amount.som() ?? '',
                         style: TextStyle(fontSize: 16),
                       ),
                     ],
                   ),
-                  // SizedBox(height: 22),
-                  Spacer(),
+                  // Spacer(),
                   Center(
                     child: QrImageView(
                       data: qrdata,

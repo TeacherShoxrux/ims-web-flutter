@@ -23,6 +23,24 @@ class StatisticService {
         fallbackFileName: 'products.xlsx',
       );
     }
+    void downloadMonthExcel()async{
+      _api.downloadFileFromBackend(
+        url: 'api/Statistics/export-sale-month',
+        fallbackFileName: 'products.xlsx',
+      );
+    }
+    void downloadWeekExcel()async{
+      _api.downloadFileFromBackend(
+        url: 'api/Statistics/export-sale-week',
+        fallbackFileName: 'products.xlsx',
+      );
+    }
+  void downloadDayExcel()async{
+    _api.downloadFileFromBackend(
+      url: 'api/Statistics/export-sale-day',
+      fallbackFileName: 'products.xlsx',
+    );
+  }
   //
   // Future<int> getTotalUsers() async {
   //   try {

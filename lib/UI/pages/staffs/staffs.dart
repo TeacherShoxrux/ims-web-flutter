@@ -32,19 +32,19 @@ class _SupplierListPageState extends State<StaffsListPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Qidiruv paneli
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Qidirmoq',
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10),
-                  borderSide: BorderSide.none,
-                ),
-                filled: true,
-                fillColor: Colors.white,
-              ),
-            ),
+            // // Qidiruv paneli
+            // TextField(
+            //   decoration: InputDecoration(
+            //     hintText: 'Qidirmoq',
+            //     prefixIcon: Icon(Icons.search),
+            //     border: OutlineInputBorder(
+            //       borderRadius: BorderRadius.circular(10),
+            //       borderSide: BorderSide.none,
+            //     ),
+            //     filled: true,
+            //     fillColor: Colors.white,
+            //   ),
+            // ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

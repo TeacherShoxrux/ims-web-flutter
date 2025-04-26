@@ -4,6 +4,7 @@ import 'package:ims_web/services/api_service.dart';
 
 import '../models/base_model.dart';
 import '../models/payment_info_model.dart';
+import '../models/paymentchek_model.dart';
 
 class PaymentService {
   final ApiService _api = ApiService();

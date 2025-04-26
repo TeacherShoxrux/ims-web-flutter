@@ -2,8 +2,8 @@ class ProductModel {
   int id;
   String name;
   String? description;
-  num salePrice;
-  num purchasePrice;
+  int salePrice;
+  int purchasePrice;
   int quantity;
   int quantityPay = 1;
   String? image;
@@ -26,8 +26,8 @@ class ProductModel {
     int id = json['id'];
     String name = json['name'];
     String? description = json['description'];
-    double salePrice = json['salePrice'];
-    double purchasePrice = json['purchasePrice'];
+    int salePrice = json['salePrice'];
+    int purchasePrice = json['purchasePrice'];
     int quantity = json['quantity'];
     String? image = json['image'];
     String? categoryName = json['categoryName'];

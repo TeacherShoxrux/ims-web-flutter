@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/products/widgets/add_product_alert.dart';
+import 'package:ims_web/extensions/StringFormattingExtension.dart';
 import 'package:ims_web/models/product_model.dart';
 import 'package:ims_web/routes/urls.dart';
 import 'package:ims_web/services/product_service.dart';
@@ -191,7 +192,7 @@ class _ProductsListPageState extends State<ProductsListPage> {
                             ),
                             Expanded(
                               flex: 2,
-                              child: Text("${snapshot.data?[index].salePrice}"),
+                              child: Text("${snapshot.data?[index].salePrice.som()}"),
                             ),
                             Expanded(
                               flex: 2,

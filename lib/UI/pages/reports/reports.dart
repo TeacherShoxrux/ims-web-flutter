@@ -157,68 +157,68 @@ class _ReportsPageState extends State<ReportsPage> {
             ),
             SizedBox(height: 16),
             // Sana tanlash
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Start Date', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () => _selectDate(context, true),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            startDate == null
-                                ? 'Select Start Date'
-                                : formatter.format(startDate!),
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('End Date', style: TextStyle(fontSize: 16)),
-                      SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () => _selectDate(context, false),
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 12,
-                            horizontal: 16,
-                          ),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Text(
-                            endDate == null
-                                ? 'Select End Date'
-                                : formatter.format(endDate!),
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(height: 16),
+            // Row(
+            //   children: [
+            //     Expanded(
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Text('Start Date', style: TextStyle(fontSize: 16)),
+            //           SizedBox(height: 8),
+            //           GestureDetector(
+            //             onTap: () => _selectDate(context, true),
+            //             child: Container(
+            //               padding: EdgeInsets.symmetric(
+            //                 vertical: 12,
+            //                 horizontal: 16,
+            //               ),
+            //               decoration: BoxDecoration(
+            //                 border: Border.all(color: Colors.grey),
+            //                 borderRadius: BorderRadius.circular(10),
+            //               ),
+            //               child: Text(
+            //                 startDate == null
+            //                     ? 'Select Start Date'
+            //                     : formatter.format(startDate!),
+            //                 style: TextStyle(fontSize: 16),
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //     SizedBox(width: 16),
+            //     Expanded(
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.start,
+            //         children: [
+            //           Text('End Date', style: TextStyle(fontSize: 16)),
+            //           SizedBox(height: 8),
+            //           GestureDetector(
+            //             onTap: () => _selectDate(context, false),
+            //             child: Container(
+            //               padding: EdgeInsets.symmetric(
+            //                 vertical: 12,
+            //                 horizontal: 16,
+            //               ),
+            //               decoration: BoxDecoration(
+            //                 border: Border.all(color: Colors.grey),
+            //                 borderRadius: BorderRadius.circular(10),
+            //               ),
+            //               child: Text(
+            //                 endDate == null
+            //                     ? 'Select End Date'
+            //                     : formatter.format(endDate!),
+            //                 style: TextStyle(fontSize: 16),
+            //               ),
+            //             ),
+            //           ),
+            //         ],
+            //       ),
+            //     ),
+            //   ],
+            // ),
+            // SizedBox(height: 16),
             // Statistik kartalar
             Expanded(
               child: GridView.count(
@@ -234,8 +234,8 @@ class _ReportsPageState extends State<ReportsPage> {
                 children: [
                   // Total Purchases Amount karta
                   StatCard(
-                    title: 'Total Purchases Amount',
-                    value: report['totalPurchasesAmount'].toStringAsFixed(2),
+                    title: 'Mahsulotlar barcha mahsulotlar',
+                    value: "excel formatda yuklash",
                     icon: Icons.attach_money,
                     color: Colors.purple,
                     screenWidth: screenWidth, onTap: () {
@@ -246,19 +246,33 @@ class _ReportsPageState extends State<ReportsPage> {
                   ),
                   // Number of Purchases karta
                   StatCard(
-                    title: 'Number of Purchases',
-                    value: report['numberOfPurchases'].toString(),
+                    title: 'Oylik savdo',
+                    value: "excel formatda yuklash",
                     icon: Icons.receipt,
                     color: Colors.blue,
-                    screenWidth: screenWidth, onTap: () {  },
+                    screenWidth: screenWidth,
+                    onTap: () {
+                      statsService.downloadProductsExcel();
+                    },
                   ),
                   // Most Purchased Product karta
                   StatCard(
-                    title: 'Most Purchased Product',
-                    value: report['mostPurchasedProduct'],
+                    title: 'Haftalik savdo',
+                    value: "excel formatda yuklash",
                     icon: Icons.star,
                     color: Colors.orange,
-                    screenWidth: screenWidth, onTap: () {  },
+                    screenWidth: screenWidth, onTap: () {
+                    statsService.downloadWeekExcel();
+                  },
+                  ),
+                  StatCard(
+                    title: 'Kunlik savdo',
+                    value: "excel formatda yuklash",
+                    icon: Icons.star,
+                    color: Colors.orange,
+                    screenWidth: screenWidth, onTap: () {
+                    statsService.downloadWeekExcel();
+                  },
                   ),
                 ],
               ),
@@ -300,7 +314,6 @@ class StatCard extends StatelessWidget {
           padding: EdgeInsets.all(screenWidth > 600 ? 16.0 : 12.0),
           child: Row(
             children: [
-              // Ikonka
               CircleAvatar(
                 radius: screenWidth > 600 ? 30 : 25,
                 backgroundColor: color.withOpacity(0.2),
@@ -311,12 +324,12 @@ class StatCard extends StatelessWidget {
                 ),
               ),
               SizedBox(width: screenWidth > 600 ? 16 : 12),
-              // Matn qismi
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+
                     Text(
                       title,
                       style: TextStyle(
@@ -324,15 +337,20 @@ class StatCard extends StatelessWidget {
                         color: Colors.grey[600],
                       ),
                     ),
+
                     SizedBox(height: 8),
+
                     Text(
                       value,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: TextStyle(
-                        fontSize: screenWidth > 600 ? 20 : 18,
+                        fontSize: screenWidth > 600 ? 14 : 12,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
                     ),
+
                   ],
                 ),
               ),

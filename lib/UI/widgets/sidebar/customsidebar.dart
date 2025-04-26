@@ -72,9 +72,8 @@ class _CustomSidebarState extends State<CustomSidebar> {
               // {'icon': Icons.sell, 'label': 'Sales'},
               if (role == 'Director')
                 {'icon': Icons.person, 'label': 'Ishchilar'},
-              {'icon': Icons.insert_chart, 'label': 'Hisoblatlar'},
+              {'icon': Icons.insert_chart, 'label': 'Hisobotlar'},
             ];
-
             return Column(
               children: [
                 const SizedBox(height: 20),

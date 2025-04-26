@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/add_alert_purchases.dart';
 import 'package:ims_web/UI/pages/purchases/widgets/get_alert_chek.dart';
+import 'package:ims_web/extensions/StringFormattingExtension.dart';
 import 'package:ims_web/services/paymetn_service.dart';
 
 class PurchasesListPage extends StatefulWidget {
@@ -150,7 +151,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                                 Expanded(
                                   flex: 3,
                                   child: Text(
-                                    snapshot.data?[index].createdAt ?? 'null',
+                                    "${snapshot.data?[index].createdAt?.fmtDate()}" ?? 'null',
                                   ),
                                 ),
                                 Expanded(
@@ -162,7 +163,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                                 Expanded(
                                   flex: 2,
                                   child: Text(
-                                    '${snapshot.data?[index].amount}',
+                                    '${snapshot.data?[index].amount?.som()}',
                                   ),
                                 ),
                                 Expanded(
@@ -170,26 +171,7 @@ class _PurchasesListPageState extends State<PurchasesListPage> {
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      IconButton(
-                                        onPressed: () {
-                                          // print('Edit bosildi: ${purchases[index]['supplier']}');
-                                        },
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color: Colors.yellow[700],
-                                        ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            // purchases.removeAt(index);
-                                          });
-                                        },
-                                        icon: Icon(
-                                          Icons.delete,
-                                          color: Colors.blue,
-                                        ),
-                                      ),
+
                                     ],
                                   ),
                                 ),

@@ -1,6 +1,6 @@
 class PaymentChekModel {
   int id;
-  DateTime createdAt;
+  String createdAt;
   int amount;
   String paymentMethod;
   int userId;
@@ -19,7 +19,7 @@ class PaymentChekModel {
 
   factory PaymentChekModel.fromJson(Map<String, dynamic> json) => PaymentChekModel(
     id: json["id"],
-    createdAt: DateTime.parse(json["createdAt"]),
+    createdAt:json["createdAt"],
     amount: json["amount"],
     paymentMethod: json["paymentMethod"],
     userId: json["userId"],
@@ -31,7 +31,7 @@ class PaymentChekModel {
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "createdAt": createdAt.toIso8601String(),
+    "createdAt": createdAt.toString(),
     "amount": amount,
     "paymentMethod": paymentMethod,
     "userId": userId,
